@@ -75,7 +75,13 @@ public class MainActivity extends ActionBarActivity {
 
         @Override
         public Fragment getItem(int position) {
-            return PlaceholderFragment.newInstance(position+1);
+            switch(position)
+            {
+                case 0:
+                    return PlaceholderFragment.newInstance(69);
+                default:
+                    return PlaceholderFragment.newInstance(position+1);
+            }
         }
 
         @Override
