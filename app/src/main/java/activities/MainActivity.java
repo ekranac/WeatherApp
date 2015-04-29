@@ -7,9 +7,10 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
-import android.widget.TextView;
 
 import com.example.ziga.weatherapp.R;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import fragments.PlaceholderFragment;
 
@@ -20,6 +21,12 @@ public class MainActivity extends ActionBarActivity {
     SectionsPagerAdapter mSectionsPagerAdapter;
 
     ViewPager mViewPager;
+
+    public class Thing
+    {
+        public String firstName;
+        public String lastName;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,33 +42,12 @@ public class MainActivity extends ActionBarActivity {
         mViewPager = (ViewPager) findViewById(R.id.pager);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
-        mViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int i, float v, int i2) {
+        Gson gson = new Gson();
+        Thing thing = gson.fromJson("{'id':1,'firstName':'Lokesh','lastName':'Gupta','roles':['ADMIN','MANAGER']}", Thing.class);
+        String s = thing.firstName;
+        String t = thing.lastName;
 
-            }
-
-            @Override
-            public void onPageSelected(int i) {
-                switch(i)
-                {
-                    case 0:
-                        Log.i("Page", "0");
-                        break;
-                    case 1:
-                        Log.i("Page", "1");
-                        break;
-                    case 2:
-                        Log.i("Page", "2");
-                        break;
-                }
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int i) {
-
-            }
-        });
+        Log.i("The name", s + " " + t);
 
 
     }
