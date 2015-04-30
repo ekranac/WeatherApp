@@ -22,12 +22,6 @@ public class MainActivity extends ActionBarActivity {
 
     ViewPager mViewPager;
 
-    public class Thing
-    {
-        public String firstName;
-        public String lastName;
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,13 +36,6 @@ public class MainActivity extends ActionBarActivity {
         mViewPager = (ViewPager) findViewById(R.id.pager);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
-        Gson gson = new Gson();
-        Thing thing = gson.fromJson("{'id':1,'firstName':'Lokesh','lastName':'Gupta','roles':['ADMIN','MANAGER']}", Thing.class);
-        String s = thing.firstName;
-        String t = thing.lastName;
-
-        Log.i("The name", s + " " + t);
-
 
     }
 
@@ -61,19 +48,13 @@ public class MainActivity extends ActionBarActivity {
 
         @Override
         public Fragment getItem(int position) {
-            switch(position)
-            {
-                case 0:
-                    return PlaceholderFragment.newInstance(69);
-                default:
-                    return PlaceholderFragment.newInstance(position+1);
-            }
+            return PlaceholderFragment.newInstance(position);
         }
 
         @Override
         public int getCount() {
             // Show 3 total pages.
-            return 3;
+            return 2;
         }
     }
 
