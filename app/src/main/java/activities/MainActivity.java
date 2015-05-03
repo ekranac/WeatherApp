@@ -13,6 +13,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import fragments.PlaceholderFragment;
+import fragments.SearchFragment;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -36,6 +37,8 @@ public class MainActivity extends ActionBarActivity {
         mViewPager = (ViewPager) findViewById(R.id.pager);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
+        mViewPager.setCurrentItem(1); // Sets the fragment @ index 1 onCreate
+
 
     }
 
@@ -48,13 +51,19 @@ public class MainActivity extends ActionBarActivity {
 
         @Override
         public Fragment getItem(int position) {
-            return PlaceholderFragment.newInstance(position);
+            switch(position)
+            {
+                case 0:
+                    return new SearchFragment();
+                default:
+                    return PlaceholderFragment.newInstance(position);
+            }
         }
 
         @Override
         public int getCount() {
             // Show 3 total pages.
-            return 2;
+            return 4;
         }
     }
 
