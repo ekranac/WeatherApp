@@ -6,11 +6,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 
 import com.example.ziga.weatherapp.R;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 import fragments.PlaceholderFragment;
 import fragments.SearchFragment;
@@ -37,7 +34,8 @@ public class MainActivity extends ActionBarActivity {
         mViewPager = (ViewPager) findViewById(R.id.pager);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
-        mViewPager.setCurrentItem(1); // Sets the fragment @ index 1 onCreate
+        // Sets the fragment @ index 1 onCreate
+        mViewPager.setCurrentItem(1);
 
 
     }
