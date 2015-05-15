@@ -1,11 +1,12 @@
 package activities;
 
-import android.support.v7.app.ActionBarActivity;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBarActivity;
+import android.view.WindowManager;
 
 import com.example.ziga.weatherapp.R;
 
@@ -37,6 +38,7 @@ public class MainActivity extends ActionBarActivity {
         // Sets the fragment @ index 1 onCreate
         mViewPager.setCurrentItem(1);
 
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
     }
 

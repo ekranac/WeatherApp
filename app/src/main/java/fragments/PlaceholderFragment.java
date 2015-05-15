@@ -1,14 +1,16 @@
 package fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 
 import com.example.ziga.weatherapp.R;
-import com.google.gson.Gson;
 
 
 
@@ -39,8 +41,9 @@ public class PlaceholderFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
         TextView tv = (TextView) rootView.findViewById(R.id.section_label);
 
-        int sectionNumber = getArguments().getInt("section_number");
+        // TODO if is keyboard is active/ visible---> do that
 
+        int sectionNumber = getArguments().getInt("section_number");
         tv.setText(Integer.toString(sectionNumber));
 
         return rootView;
