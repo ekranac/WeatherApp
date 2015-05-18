@@ -58,7 +58,7 @@ public class CityResult {
 
     @Override
     public String toString() {
-            return cityName + ", " + country;
+            return cityName + " [" + region + "], " + country;
 
     }
 }

@@ -5,8 +5,6 @@ package models;
  */
 public class Weather {
 
-    public String imageUrl;
-
     public Condition condition = new Condition();
     public Wind wind = new Wind();
     public Atmosphere atmosphere = new Atmosphere();
@@ -18,7 +16,7 @@ public class Weather {
     public String lastUpdate;
 
     public class Condition {
-        public  String description;
+        public  String text;
         public  int code;
         public  String date;
         public  int temp;

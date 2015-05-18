@@ -3,6 +3,7 @@ package fragments;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,7 +36,7 @@ public class SearchFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_search, container, false);
 
         final AutoCompleteTextView searchView = (AutoCompleteTextView) rootView.findViewById(R.id.city_search);
-        CityAdapter adpt = new CityAdapter(this.getActivity(), null);
+        final CityAdapter adpt = new CityAdapter(this.getActivity(), null);
         searchView.setAdapter(adpt);
 
         // Hide keyboard on select
@@ -44,6 +45,9 @@ public class SearchFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(searchView.getWindowToken(), 0);
+
+                // Get woeid, save to shared preferences and get weather info
+                Log.i("Item", adpt.getItem(position).getWoeid());
             }
         });
 
