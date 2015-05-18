@@ -21,7 +21,7 @@ public class YahooClient {
     public static String YAHOO_GEO_URL = "http://where.yahooapis.com/v1";
     public static String YAHOO_WEATHER_URL = "http://weather.yahooapis.com/forecastrss";
 
-    private static String APPID = "7655292f7edf8406f7c080d64baa1c43910976c0--";
+    private static String APPID = "";
 
     public static List<CityResult> getCityList(String cityName) {
         List<CityResult> result = new ArrayList<CityResult>();
