@@ -13,6 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Filter;
 import android.widget.Filterable;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.ziga.weatherapp.R;
@@ -35,6 +36,10 @@ public class SearchFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_search, container, false);
 
+
+        LinearLayout mainLayout = (LinearLayout) rootView.findViewById(R.id.search_layout);
+        mainLayout.requestFocus(); // Just so the clearFocus() on searchView works, because the method always sets focus back to the first focusable view in activity- to layout in this case
+
         final AutoCompleteTextView searchView = (AutoCompleteTextView) rootView.findViewById(R.id.city_search);
         final CityAdapter adpt = new CityAdapter(this.getActivity(), null);
         searchView.setAdapter(adpt);
@@ -45,6 +50,8 @@ public class SearchFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(searchView.getWindowToken(), 0);
+                searchView.setText("");
+                searchView.clearFocus();
 
                 // Get woeid, save to shared preferences and get weather info
                 Log.i("Item", adpt.getItem(position).getWoeid());

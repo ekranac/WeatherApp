@@ -21,7 +21,7 @@ public class YahooClient {
     public static String YAHOO_GEO_URL = "http://where.yahooapis.com/v1";
     public static String YAHOO_WEATHER_URL = "http://weather.yahooapis.com/forecastrss";
 
-    private static String APPID = "";
+    private static String APPID = "7655292f7edf8406f7c080d64baa1c43910976c0--";
 
     public static List<CityResult> getCityList(String cityName) {
         List<CityResult> result = new ArrayList<CityResult>();
@@ -203,7 +203,7 @@ public class YahooClient {
     private static String makeQueryCityURL(String cityName) {
         // We remove spaces in cityName
         cityName = cityName.replaceAll(" ", "%20");
-        return YAHOO_GEO_URL + "/places.q(" + cityName + "%2A);count=" + 10 + "?appid=" + APPID;
+        return YAHOO_GEO_URL + "/places.q(" + cityName + "%2A);count=" + 10 + "?appid=" + APPID; // 10- number of results
     }
 
     private static String makeWeatherURL(String woeid, String unit) {
