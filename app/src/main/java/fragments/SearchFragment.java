@@ -1,6 +1,7 @@
 package fragments;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -34,7 +35,7 @@ public class SearchFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_search, container, false);
+        final View rootView = inflater.inflate(R.layout.fragment_search, container, false);
 
 
         LinearLayout mainLayout = (LinearLayout) rootView.findViewById(R.id.search_layout);
@@ -53,8 +54,11 @@ public class SearchFragment extends Fragment {
                 searchView.setText("");
                 searchView.clearFocus();
 
-                // Get woeid, save to shared preferences and get weather info
+                // Get woeid, save to shared preferences
+                SharedPreferences prefs = rootView.getContext().getSharedPreferences("Woeids", Context.MODE_PRIVATE);
+                prefs.edit().putString("woeid" + adpt.getItem(position).getWoeid(), adpt.getItem(position).getWoeid()).apply();
                 Log.i("Item", adpt.getItem(position).getWoeid());
+                Log.i("Preferences", prefs.getAll().toString());
             }
         });
 
