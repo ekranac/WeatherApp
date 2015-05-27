@@ -2,6 +2,8 @@ package helpers;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.location.Location;
+import android.location.LocationManager;
 import android.util.Log;
 
 import org.xmlpull.v1.XmlPullParser;
@@ -291,5 +293,23 @@ public class YahooClient {
 
     public static interface WeatherClientListener {
         public void onWeatherResponse(Weather weather);
+    }
+
+
+    public static Location getLastKnownLocation(LocationManager mLocationManager, Context c) {
+        mLocationManager = (LocationManager) c.getApplicationContext().getSystemService(c.LOCATION_SERVICE);
+        List<String> providers = mLocationManager.getProviders(true);
+        Location bestLocation = null;
+        for (String provider : providers) {
+            Location l = mLocationManager.getLastKnownLocation(provider);
+            if (l == null) {
+                continue;
+            }
+            if (bestLocation == null || l.getAccuracy() < bestLocation.getAccuracy()) {
+                // Found best last known location: %s", l);
+                bestLocation = l;
+            }
+        }
+        return bestLocation;
     }
 }

@@ -33,11 +33,11 @@ public class PlaceholderFragment extends Fragment {
 
         if(sectionNumber==1)
         {
-
             LocationManager lm = (LocationManager) c.getSystemService(Context.LOCATION_SERVICE);
-            Location location  = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-            double longitude = location.getLongitude();
-            double latitude = location.getLatitude();
+            // Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+            Location location = YahooClient.getLastKnownLocation(lm, c);
+            Double longitude = location.getLongitude();
+            Double latitude = location.getLatitude();
 
             args.putDouble(LONGITUDE, longitude);
             args.putDouble(LATITUDE, latitude);

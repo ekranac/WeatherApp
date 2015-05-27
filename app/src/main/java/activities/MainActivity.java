@@ -56,7 +56,7 @@ public class MainActivity extends ActionBarActivity {
                 case 0:
                     return new SearchFragment();
                 default:
-                    return PlaceholderFragment.newInstance(position, getApplicationContext());
+                    return PlaceholderFragment.newInstance(position, getBaseContext());
             }
         }
 
