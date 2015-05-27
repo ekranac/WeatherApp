@@ -1,22 +1,18 @@
 package fragments;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 
 import com.example.ziga.weatherapp.R;
 
-import activities.MainActivity;
+import helpers.YahooClient;
 
 
 public class PlaceholderFragment extends Fragment {
@@ -66,7 +62,10 @@ public class PlaceholderFragment extends Fragment {
 
         if(sectionNumber==1)
         {
-            Log.i("Latitude::Longitude", Double.toString(getArguments().getDouble("current_latitude")) + "::" + Double.toString(getArguments().getDouble("current_longitude")));
+            String lat = Double.toString(getArguments().getDouble("current_latitude"));
+            String lon = Double.toString(getArguments().getDouble("current_longitude"));
+
+            YahooClient.getCurrentLocationWeather(lat, lon, this.getActivity().getBaseContext());
         }
         return rootView;
     }
