@@ -1,13 +1,10 @@
 package fragments;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,10 +22,9 @@ import com.example.ziga.weatherapp.R;
 import java.util.ArrayList;
 import java.util.List;
 
-import activities.MainActivity;
 import helpers.OtherHelper;
-import models.CityResult;
 import helpers.YahooClient;
+import models.CityResult;
 
 
 public class SearchFragment extends Fragment {
@@ -62,9 +58,9 @@ public class SearchFragment extends Fragment {
                 // Get woeid, save to shared preferences
                 OtherHelper.addWoeidToSharedPreferences(adpt.getItem(position).getWoeid(), null, getActivity().getBaseContext());
 
-                FragmentManager fm = getActivity().getSupportFragmentManager();
-                FragmentTransaction ft = fm.beginTransaction();
-                ft.add(R.id.pager, new PlaceholderFragment()).commit();
+                // FragmentManager fm = getActivity().getSupportFragmentManager();
+                // FragmentTransaction ft = fm.beginTransaction();
+                // ft.add(R.id.pager, new PlaceholderFragment()).commit();
 
                 // TODO - Add bundle for section number, getCount on create
                 // http://stackoverflow.com/questions/28829509/how-to-pass-arguments-to-fragment-from-activity

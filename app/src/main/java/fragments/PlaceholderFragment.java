@@ -5,6 +5,7 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,11 +37,10 @@ public class PlaceholderFragment extends Fragment {
             LocationManager lm = (LocationManager) c.getSystemService(Context.LOCATION_SERVICE);
             // Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
             Location location = YahooClient.getLastKnownLocation(lm, c);
-            Double longitude = location.getLongitude();
-            Double latitude = location.getLatitude();
+            String latitude = Double.toString(location.getLatitude());
+            String longitude = Double.toString(location.getLongitude());
 
-            args.putDouble(LONGITUDE, longitude);
-            args.putDouble(LATITUDE, latitude);
+            YahooClient.getCurrentLocationWoeid(latitude, longitude, c);
         }
         fragment.setArguments(args); // Where there is 'set', there is always 'get'!
         return fragment;
@@ -58,13 +58,6 @@ public class PlaceholderFragment extends Fragment {
         int sectionNumber = getArguments().getInt("section_number");
         tv.setText(Integer.toString(sectionNumber));
 
-        if(sectionNumber==2)
-        {
-            String lat = Double.toString(getArguments().getDouble("current_latitude"));
-            String lon = Double.toString(getArguments().getDouble("current_longitude"));
-
-            YahooClient.getCurrentLocationWoeid(lat, lon, this.getActivity().getBaseContext());
-        }
         return rootView;
     }
 }

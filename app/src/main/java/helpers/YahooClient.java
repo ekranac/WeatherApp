@@ -107,7 +107,6 @@ public class YahooClient {
                 Log.i("THE URL", url);
                 HttpURLConnection yahooHttpConn = null;
 
-
                 try {
                     yahooHttpConn = (HttpURLConnection) (new URL(url)).openConnection();
                     yahooHttpConn.connect();
@@ -128,8 +127,9 @@ public class YahooClient {
                         else if(event == XmlPullParser.TEXT)
                         {
                             if("woeid".equals(currentTag))
-                                Log.i("WOEID_PARSER", parser.getText());
+                            {
                                 OtherHelper.addWoeidToSharedPreferences(parser.getText(), 0, c);
+                            }
                         }
                         event = parser.next();
                     }
