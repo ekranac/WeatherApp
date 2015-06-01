@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="50dp"
     android:text="Ljubljana [Ljubljana], Slovenia"
-    android:textSize="20sp"
+    android:textSize="15sp"
     android:background="@color/white"
     android:gravity="center|left"
     android:paddingLeft="10dp"

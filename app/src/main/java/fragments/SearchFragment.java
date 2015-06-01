@@ -4,6 +4,9 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,6 +25,8 @@ import com.example.ziga.weatherapp.R;
 import java.util.ArrayList;
 import java.util.List;
 
+import activities.MainActivity;
+import helpers.OtherHelper;
 import models.CityResult;
 import helpers.YahooClient;
 
@@ -55,10 +60,14 @@ public class SearchFragment extends Fragment {
                 searchView.clearFocus();
 
                 // Get woeid, save to shared preferences
-                SharedPreferences prefs = rootView.getContext().getSharedPreferences("Woeids", Context.MODE_PRIVATE);
-                prefs.edit().putString("woeid" + adpt.getItem(position).getWoeid(), adpt.getItem(position).getWoeid()).apply();
-                Log.i("Item", adpt.getItem(position).getWoeid());
-                Log.i("Preferences", prefs.getAll().toString());
+                OtherHelper.addWoeidToSharedPreferences(adpt.getItem(position).getWoeid(), null, getActivity().getBaseContext());
+
+                FragmentManager fm = getActivity().getSupportFragmentManager();
+                FragmentTransaction ft = fm.beginTransaction();
+                ft.add(R.id.pager, new PlaceholderFragment()).commit();
+
+                // TODO - Add bundle for section number, getCount on create
+                // http://stackoverflow.com/questions/28829509/how-to-pass-arguments-to-fragment-from-activity
             }
         });
 
@@ -104,7 +113,7 @@ public class SearchFragment extends Fragment {
             }
 
             TextView tv = (TextView) result.findViewById(R.id.txtCityName);
-            tv.setText(cityList.get(position).getCityName() + " [" + cityList.get(position).getRegion() + "], " + cityList.get(position).getCountry());
+            tv.setText(cityList.get(position).getCityName() + ", " + cityList.get(position).getRegion() + ", " + cityList.get(position).getCountry());
 
             return result;
         }

@@ -31,7 +31,7 @@ public class PlaceholderFragment extends Fragment {
         Bundle args = new Bundle();
         args.putInt(ARG_SECTION_NUMBER, sectionNumber);
 
-        if(sectionNumber==1)
+        if(sectionNumber==2)
         {
             LocationManager lm = (LocationManager) c.getSystemService(Context.LOCATION_SERVICE);
             // Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
@@ -55,17 +55,15 @@ public class PlaceholderFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
         TextView tv = (TextView) rootView.findViewById(R.id.section_label);
 
-        // TODO if is keyboard is active/ visible---> do that
-
         int sectionNumber = getArguments().getInt("section_number");
         tv.setText(Integer.toString(sectionNumber));
 
-        if(sectionNumber==1)
+        if(sectionNumber==2)
         {
             String lat = Double.toString(getArguments().getDouble("current_latitude"));
             String lon = Double.toString(getArguments().getDouble("current_longitude"));
 
-            YahooClient.getCurrentLocationWeather(lat, lon, this.getActivity().getBaseContext());
+            YahooClient.getCurrentLocationWoeid(lat, lon, this.getActivity().getBaseContext());
         }
         return rootView;
     }

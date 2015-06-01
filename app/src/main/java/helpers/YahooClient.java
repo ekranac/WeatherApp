@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.location.Location;
 import android.location.LocationManager;
+import android.text.TextUtils;
 import android.util.Log;
 
 import org.xmlpull.v1.XmlPullParser;
@@ -13,6 +14,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import activities.MainActivity;
@@ -95,9 +97,8 @@ public class YahooClient {
         return result;
     }
 
-    public static void getCurrentLocationWeather(final String lat, final String lon, final Context c)
+    public static void getCurrentLocationWoeid(final String lat, final String lon, final Context c)
     {
-
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -115,7 +116,6 @@ public class YahooClient {
 
                     int event = parser.getEventType();
 
-                    CityResult cty = null;
                     String tagName = null;
                     String currentTag = null;
                     while(event!=XmlPullParser.END_DOCUMENT)
@@ -123,32 +123,13 @@ public class YahooClient {
                         tagName = parser.getName();
 
                         if (event == XmlPullParser.START_TAG) {
-                            if (tagName.equals("Result")) {
-                                cty = new CityResult();
-                                // place Tag Found so we create a new CityResult
-                            }
                             currentTag = tagName;
                         }
                         else if(event == XmlPullParser.TEXT)
                         {
                             if("woeid".equals(currentTag))
-                                cty.setWoeid(parser.getText());
-                            else if("city".equals(currentTag))
-                                cty.setCityName(parser.getText());
-                            else if("country".equals(currentTag))
-                                cty.setCountry(parser.getText());
-                        }
-                        else if(event == XmlPullParser.END_TAG)
-                        {
-                            if("Result".equals(tagName))
-                            {
-                                SharedPreferences prefs = c.getSharedPreferences("Woeids", Context.MODE_PRIVATE);
-                                prefs.edit().putString("woeidCurrent", cty.getWoeid()).apply();
-
-                                Log.i("CURRENT_WOEID", cty.getWoeid());
-                                Log.i("Preferences", prefs.getAll().toString());
-
-                            }
+                                Log.i("WOEID_PARSER", parser.getText());
+                                OtherHelper.addWoeidToSharedPreferences(parser.getText(), 0, c);
                         }
                         event = parser.next();
                     }
@@ -156,6 +137,7 @@ public class YahooClient {
                     t.printStackTrace();
                     // Log.e("Error in getCityList", t.getMessage());
                 }
+
             }
         }).start();
 

@@ -1,5 +1,6 @@
 package activities;
 
+import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -10,8 +11,10 @@ import android.view.WindowManager;
 
 import com.example.ziga.weatherapp.R;
 
+import fragments.CityListFragment;
 import fragments.PlaceholderFragment;
 import fragments.SearchFragment;
+import helpers.OtherHelper;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -36,7 +39,7 @@ public class MainActivity extends ActionBarActivity {
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
         // Sets the fragment @ index 1 onCreate
-        mViewPager.setCurrentItem(1);
+        mViewPager.setCurrentItem(2);
 
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
@@ -54,6 +57,8 @@ public class MainActivity extends ActionBarActivity {
             switch(position)
             {
                 case 0:
+                    return new CityListFragment();
+                case 1:
                     return new SearchFragment();
                 default:
                     return PlaceholderFragment.newInstance(position, getBaseContext());
@@ -62,8 +67,8 @@ public class MainActivity extends ActionBarActivity {
 
         @Override
         public int getCount() {
-            // Show 2 total pages.
-            return 2;
+            // Show 3 total pages.
+            return 3;
         }
     }
 
