@@ -1,4 +1,4 @@
-package models;
+package adapters;
 
 import android.content.Context;
 import android.support.v4.app.Fragment;

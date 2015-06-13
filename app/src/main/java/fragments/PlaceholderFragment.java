@@ -6,7 +6,6 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +16,6 @@ import com.example.ziga.weatherapp.R;
 import java.util.Arrays;
 import java.util.List;
 
-import activities.MainActivity;
 import helpers.OtherHelper;
 import helpers.YahooClient;
 
@@ -42,7 +40,6 @@ public class PlaceholderFragment extends Fragment {
         {
             try {
                 LocationManager lm = (LocationManager) c.getSystemService(Context.LOCATION_SERVICE);
-                // Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
                 Location location = YahooClient.getLastKnownLocation(lm, c);
                 String latitude = Double.toString(location.getLatitude());
                 String longitude = Double.toString(location.getLongitude());

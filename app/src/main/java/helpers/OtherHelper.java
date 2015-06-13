@@ -3,7 +3,6 @@ package helpers;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.text.TextUtils;
-import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -24,30 +23,40 @@ public class OtherHelper {
 
     public void addWoeidToSharedPreferences(String woeid, Integer position)
     {
+        Boolean alreadyExists = false; // To check whether the woeid is already saved in preferences
         SharedPreferences prefs = this.getMyPreferences();
         ArrayList<String> woeidList = new ArrayList<String>();
         if(prefs.getString("Woeids", null)!=null)
         {
             String woeidString = prefs.getString("Woeids", null);
             List<String> list = Arrays.asList(woeidString.split(","));
-            for(String id : list)
+            for(String id : list) // Go throught every woeid, check if it's equal to the one you want to add, reposition to ArrayList
             {
+                if(id.equals(woeid))
+                {
+                    alreadyExists = true;
+                }
                 woeidList.add(id);
             }
         }
 
-        if(position==null)
+
+        if(alreadyExists == false) // Add the woeid only if it doesn't exist
         {
-            woeidList.add(woeid);
-        }
-        else
-        {
-            if(woeidList.isEmpty())
+            if(position==null)
             {
-                woeidList.add(0, "null");
+                woeidList.add(woeid);
             }
-            woeidList.set(position, woeid);
+            else
+            {
+                if(woeidList.isEmpty())
+                {
+                    woeidList.add(0, "null");
+                }
+                woeidList.set(position, woeid);
+            }
         }
+
 
         prefs.edit().putString("Woeids", TextUtils.join(",", woeidList)).apply();
     }

@@ -6,7 +6,7 @@ import android.support.v7.app.ActionBarActivity;
 
 import com.example.ziga.weatherapp.R;
 
-import models.SectionsPagerAdapter;
+import adapters.SectionsPagerAdapter;
 
 
 public class MainActivity extends ActionBarActivity {
