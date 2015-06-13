@@ -58,7 +58,7 @@ public class PlaceholderFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-        TextView tv = (TextView) rootView.findViewById(R.id.section_label);
+        TextView tv = (TextView) rootView.findViewById(R.id.tv_woeid);
         OtherHelper helper = new OtherHelper(getActivity().getBaseContext());
 
         int sectionNumber = getArguments().getInt("section_number");

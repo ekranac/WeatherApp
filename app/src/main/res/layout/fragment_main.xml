@@ -4,7 +4,31 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity$PlaceholderFragment">
 
-    <TextView android:id="@+id/section_label" android:layout_width="wrap_content"
-        android:layout_height="wrap_content" android:text="OMG IT FUCKING WORKS"/>
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_woeid"
+        android:text="Woeid" />
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_city"
+        android:text="City"
+        android:layout_below="@id/tv_woeid"/>
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_current_temp"
+        android:text="Current Temperature"
+        android:layout_below="@id/tv_city"/>
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_condition"
+        android:text="Condition"
+        android:layout_below="@id/tv_current_temp"/>
 
 </RelativeLayout>
