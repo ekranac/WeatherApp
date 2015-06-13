@@ -3,8 +3,8 @@ package fragments;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,23 +12,20 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.Filter;
-import android.widget.Filterable;
 import android.widget.LinearLayout;
-import android.widget.TextView;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 
 import com.example.ziga.weatherapp.R;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import adapters.CityAdapter;
 import helpers.OtherHelper;
-import helpers.YahooClient;
-import models.CityResult;
 
 
 public class SearchFragment extends Fragment {
 
+    private static int MAX_PAGES = 12; // Including the list of all locations & search fragment
+    CityAdapter adpt;
 
     public SearchFragment() {
     }
@@ -42,8 +39,10 @@ public class SearchFragment extends Fragment {
         LinearLayout mainLayout = (LinearLayout) rootView.findViewById(R.id.search_layout);
         mainLayout.requestFocus(); // Just so the clearFocus() on searchView works, because the method always sets focus back to the first focusable view in activity- to layout in this case
 
+        final OtherHelper helper = new OtherHelper(getActivity().getBaseContext());
+
         final AutoCompleteTextView searchView = (AutoCompleteTextView) rootView.findViewById(R.id.city_search);
-        final CityAdapter adpt = new CityAdapter(this.getActivity(), null);
+        adpt = new CityAdapter(this.getActivity(), null);
         searchView.setAdapter(adpt);
 
         // Hide keyboard on select
@@ -55,98 +54,19 @@ public class SearchFragment extends Fragment {
                 searchView.setText("");
                 searchView.clearFocus();
 
+
                 // Get woeid, save to shared preferences
-                OtherHelper.addWoeidToSharedPreferences(adpt.getItem(position).getWoeid(), null, getActivity().getBaseContext());
+                if (helper.getCityCount() < MAX_PAGES) {
+                    helper.addWoeidToSharedPreferences(adpt.getItem(position).getWoeid(), null);
+                    ViewPager vp = (ViewPager) getActivity().findViewById(R.id.pager);
+                    vp.getAdapter().notifyDataSetChanged();
+                }
 
-                // FragmentManager fm = getActivity().getSupportFragmentManager();
-                // FragmentTransaction ft = fm.beginTransaction();
-                // ft.add(R.id.pager, new PlaceholderFragment()).commit();
-
-                // TODO - Add bundle for section number, getCount on create
-                // http://stackoverflow.com/questions/28829509/how-to-pass-arguments-to-fragment-from-activity
             }
         });
 
         return rootView;
     }
 
-    private class CityAdapter extends ArrayAdapter<CityResult> implements Filterable {
 
-        private Context ctx;
-        private List<CityResult> cityList = new ArrayList<CityResult>();
-
-        public CityAdapter(Context ctx, List<CityResult> cityList) {
-            super(ctx, R.layout.list_detail, cityList);
-            this.cityList = cityList;
-            this.ctx = ctx;
-        }
-
-
-        @Override
-        public CityResult getItem(int position) {
-            if (cityList != null)
-                return cityList.get(position);
-
-            return null;
-        }
-
-        @Override
-        public int getCount() {
-            if (cityList != null)
-                return cityList.size();
-
-            return 0;
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            View result = convertView;
-
-            if (result == null) {
-                LayoutInflater inf = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                result = inf.inflate(R.layout.list_detail, parent, false);
-
-            }
-
-            TextView tv = (TextView) result.findViewById(R.id.txtCityName);
-            tv.setText(cityList.get(position).getCityName() + ", " + cityList.get(position).getRegion() + ", " + cityList.get(position).getCountry());
-
-            return result;
-        }
-
-        @Override
-        public long getItemId(int position) {
-            if (cityList != null)
-                return cityList.get(position).hashCode();
-
-            return 0;
-        }
-
-        @Override
-        public Filter getFilter() {
-            Filter cityFilter = new Filter() {
-
-
-                @Override
-                protected FilterResults performFiltering(CharSequence constraint) {
-                    FilterResults results = new Filter.FilterResults();
-                    if (constraint == null || constraint.length() < 2)
-                        return results;
-
-                    List<CityResult> cityResultList = YahooClient.getCityList(constraint.toString());
-                    results.values = cityResultList;
-                    results.count = cityResultList.size();
-                    return results;
-                }
-
-                @Override
-                protected void publishResults(CharSequence constraint, FilterResults results) {
-                    cityList = (List) results.values;
-                    notifyDataSetChanged();
-                }
-            };
-
-            return cityFilter;
-        }
-    }
 }

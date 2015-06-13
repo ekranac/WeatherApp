@@ -1,6 +1,7 @@
 package fragments;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
@@ -13,6 +14,11 @@ import android.widget.TextView;
 
 import com.example.ziga.weatherapp.R;
 
+import java.util.Arrays;
+import java.util.List;
+
+import activities.MainActivity;
+import helpers.OtherHelper;
 import helpers.YahooClient;
 
 
@@ -34,13 +40,15 @@ public class PlaceholderFragment extends Fragment {
 
         if(sectionNumber==2)
         {
-            LocationManager lm = (LocationManager) c.getSystemService(Context.LOCATION_SERVICE);
-            // Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-            Location location = YahooClient.getLastKnownLocation(lm, c);
-            String latitude = Double.toString(location.getLatitude());
-            String longitude = Double.toString(location.getLongitude());
+            try {
+                LocationManager lm = (LocationManager) c.getSystemService(Context.LOCATION_SERVICE);
+                // Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                Location location = YahooClient.getLastKnownLocation(lm, c);
+                String latitude = Double.toString(location.getLatitude());
+                String longitude = Double.toString(location.getLongitude());
 
-            YahooClient.getCurrentLocationWoeid(latitude, longitude, c);
+                YahooClient.getCurrentLocationWoeid(latitude, longitude, c);
+            } catch(Throwable t) {}
         }
         fragment.setArguments(args); // Where there is 'set', there is always 'get'!
         return fragment;
@@ -54,9 +62,20 @@ public class PlaceholderFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
         TextView tv = (TextView) rootView.findViewById(R.id.section_label);
+        OtherHelper helper = new OtherHelper(getActivity().getBaseContext());
 
         int sectionNumber = getArguments().getInt("section_number");
-        tv.setText(Integer.toString(sectionNumber));
+        String woeid = Integer.toString(sectionNumber);
+
+        try {
+            SharedPreferences prefs = helper.getMyPreferences();
+            List<String> list = Arrays.asList(prefs.getString("Woeids", null).split(","));
+            if (list.get(sectionNumber-2) != null) {
+                woeid = list.get(sectionNumber-2);
+            }
+        } catch(Throwable t) {}
+
+        tv.setText(woeid);
 
         return rootView;
     }

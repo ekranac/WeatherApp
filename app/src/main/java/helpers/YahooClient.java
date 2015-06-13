@@ -1,10 +1,8 @@
 package helpers;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.location.Location;
 import android.location.LocationManager;
-import android.text.TextUtils;
 import android.util.Log;
 
 import org.xmlpull.v1.XmlPullParser;
@@ -14,11 +12,8 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
-import activities.MainActivity;
-import fragments.PlaceholderFragment;
 import models.CityResult;
 import models.Weather;
 
@@ -128,7 +123,8 @@ public class YahooClient {
                         {
                             if("woeid".equals(currentTag))
                             {
-                                OtherHelper.addWoeidToSharedPreferences(parser.getText(), 0, c);
+                                OtherHelper helper = new OtherHelper(c);
+                                helper.addWoeidToSharedPreferences(parser.getText(), 0);
                             }
                         }
                         event = parser.next();

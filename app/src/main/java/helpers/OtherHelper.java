@@ -14,10 +14,17 @@ import java.util.List;
  */
 public class OtherHelper {
 
-    public static void addWoeidToSharedPreferences(String woeid, Integer position, Context context)
-    {
-        SharedPreferences prefs = context.getSharedPreferences("MyPreferences", Context.MODE_PRIVATE);
+    Context context;
 
+    public OtherHelper(Context context)
+    {
+        this.context = context;
+    }
+
+
+    public void addWoeidToSharedPreferences(String woeid, Integer position)
+    {
+        SharedPreferences prefs = this.getMyPreferences();
         ArrayList<String> woeidList = new ArrayList<String>();
         if(prefs.getString("Woeids", null)!=null)
         {
@@ -45,12 +52,29 @@ public class OtherHelper {
         prefs.edit().putString("Woeids", TextUtils.join(",", woeidList)).apply();
     }
 
-    public static int getCityCount(Context context)
+    public int getCityCount()
     {
         SharedPreferences prefs = context.getSharedPreferences("MyPreferences", Context.MODE_PRIVATE);
-        List<String> woeidsList = Arrays.asList(prefs.getString("Woeids", null).split(","));
+        List<String> woeidsList = null;
+        try {
+            woeidsList = Arrays.asList(prefs.getString("Woeids", null).split(","));
+        } catch(Throwable t) {}
 
-        return woeidsList.size();
+        if(woeidsList==null || woeidsList.size()==1)
+        {
+            return 3;
+        }
+        else
+        {
+            return woeidsList.size() + 2;
+        }
 
     }
+
+    public SharedPreferences getMyPreferences()
+    {
+        SharedPreferences prefs = context.getSharedPreferences("MyPreferences", Context.MODE_PRIVATE);
+        return prefs;
+    }
+
 }
