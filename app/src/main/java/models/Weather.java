@@ -20,6 +20,7 @@ public class Weather {
         public  int code;
         public  String date;
         public  int temp;
+        public String description;
     }
 
     public  class Forecast {

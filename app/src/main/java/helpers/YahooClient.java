@@ -5,10 +5,17 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.util.Log;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserFactory;
 
 import java.io.InputStreamReader;
+import java.io.StringReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
@@ -139,117 +146,10 @@ public class YahooClient {
 
     }
 
-    /*public static void getWeather(String woeid, String unit, RequestQueue rq, final WeatherClientListener listener) {
-        String url2Call = makeWeatherURL(woeid, unit);
-        // Log.d("SwA", "Weather URL ["+url2Call+"]");
-        final Weather result = new Weather();
-        StringRequest req = new StringRequest(Request.Method.GET, url2Call, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String s) {
-                parseResponse(s, result);
-                listener.onWeatherResponse(result);
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError volleyError) {
+    public void getWeather()
+    {
 
-            }
-        });
-
-        rq.add(req);
     }
-
-    private static Weather parseResponse (String resp, Weather result) {
-        // Log.d("SwA", "Response ["+resp+"]");
-        try {
-            XmlPullParser parser = XmlPullParserFactory.newInstance().newPullParser();
-            parser.setInput(new StringReader(resp));
-
-            String tagName = null;
-            String currentTag = null;
-
-            int event = parser.getEventType();
-            boolean isFirstDayForecast = true;
-            while (event != XmlPullParser.END_DOCUMENT) {
-                tagName = parser.getName();
-
-                if (event == XmlPullParser.START_TAG) {
-                    if (tagName.equals("yweather:wind")) {
-                        // Log.d("SwA", "Tag [Wind]");
-                        result.wind.chill = Integer.parseInt(parser.getAttributeValue(null, "chill"));
-                        result.wind.direction = Integer.parseInt(parser.getAttributeValue(null, "direction"));
-                        result.wind.speed  = (int) Float.parseFloat(parser.getAttributeValue(null, "speed"));
-                    }
-                    else if (tagName.equals("yweather:atmosphere")) {
-                        // Log.d("SwA", "Tag [Atmos]");
-                        result.atmosphere.humidity = Integer.parseInt(parser.getAttributeValue(null, "humidity"));
-                        result.atmosphere.visibility = Float.parseFloat(parser.getAttributeValue(null, "visibility"));
-                        result.atmosphere.pressure = Float.parseFloat(parser.getAttributeValue(null, "pressure"));
-                        result.atmosphere.rising = Integer.parseInt(parser.getAttributeValue(null, "rising"));
-                    }
-                    else if (tagName.equals("yweather:forecast")) {
-                        //  Log.d("SwA", "Tag [Fore]");
-                        if (isFirstDayForecast) {
-                            result.forecast.code = Integer.parseInt(parser.getAttributeValue(null, "code"));
-                            result.forecast.tempMin = Integer.parseInt(parser.getAttributeValue(null, "low"));
-                            result.forecast.tempMax = Integer.parseInt(parser.getAttributeValue(null, "high"));
-                            isFirstDayForecast = false;
-                        }
-                    }
-                    else if (tagName.equals("yweather:condition")) {
-                        //  Log.d("SwA", "Tag [Condition]");
-                        result.condition.code = Integer.parseInt(parser.getAttributeValue(null, "code"));
-                        result.condition.description = parser.getAttributeValue(null, "text");
-                        result.condition.temp = Integer.parseInt(parser.getAttributeValue(null, "temp"));
-                        result.condition.date = parser.getAttributeValue(null, "date");
-                    }
-                    else if (tagName.equals("yweather:units")) {
-                        //   Log.d("SwA", "Tag [units]");
-                        result.units.temperature = "°" + parser.getAttributeValue(null, "temperature");
-                        result.units.pressure = parser.getAttributeValue(null, "pressure");
-                        result.units.distance = parser.getAttributeValue(null, "distance");
-                        result.units.speed = parser.getAttributeValue(null, "speed");
-                    }
-                    else if (tagName.equals("yweather:location")) {
-                        result.location.name = parser.getAttributeValue(null, "city");
-                        result.location.region = parser.getAttributeValue(null, "region");
-                        result.location.country = parser.getAttributeValue(null, "country");
-                    }
-                    else if (tagName.equals("image"))
-                        currentTag = "image";
-                    else if (tagName.equals("url")) {
-                        if (currentTag == null) {
-                            result.imageUrl = parser.getAttributeValue(null, "src");
-                        }
-                    }
-                    else if (tagName.equals("lastBuildDate")) {
-                        currentTag="update";
-                    }
-                    else if (tagName.equals("yweather:astronomy")) {
-                        result.astronomy.sunRise = parser.getAttributeValue(null, "sunrise");
-                        result.astronomy.sunSet = parser.getAttributeValue(null, "sunset");
-                    }
-
-                }
-                else if (event == XmlPullParser.END_TAG) {
-                    if ("image".equals(currentTag)) {
-                        currentTag = null;
-                    }
-                }
-                else if (event == XmlPullParser.TEXT) {
-                    if ("update".equals(currentTag))
-                        result.lastUpdate = parser.getText();
-                }
-                event = parser.next();
-            }
-
-        }
-        catch(Throwable t) {
-            t.printStackTrace();
-        }
-
-        return result;
-    }*/
 
     private static String makeQueryCityURL(String cityName) {
         // We remove spaces in cityName
@@ -257,7 +157,7 @@ public class YahooClient {
         return YAHOO_GEO_URL + "/places.q(" + cityName + "%2A);count=" + 10 + "?appid=" + APPID; // 10- number of results
     }
 
-    private static String makeWeatherURL(String woeid, String unit) {
+    public static String makeWeatherURL(String woeid, String unit) {
         return  YAHOO_WEATHER_URL + "?w=" + woeid + "&u=" + unit;
     }
 
@@ -265,14 +165,6 @@ public class YahooClient {
     {
         return YAHOO_CURRENT_LOCATION_URL + lat + "%2C" + lon + "%22%20and%20gflags%3D%22R%22&format=xml";
     }
-
-
-    /* Pubblic listener interface */
-
-    public static interface WeatherClientListener {
-        public void onWeatherResponse(Weather weather);
-    }
-
 
     public static Location getLastKnownLocation(LocationManager mLocationManager, Context c) {
         mLocationManager = (LocationManager) c.getApplicationContext().getSystemService(c.LOCATION_SERVICE);

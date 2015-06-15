@@ -6,6 +6,7 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,6 +46,12 @@ public class PlaceholderFragment extends Fragment {
                 String longitude = Double.toString(location.getLongitude());
 
                 YahooClient.getCurrentLocationWoeid(latitude, longitude, c);
+
+                // Temporary fix to get the current location woeid on first onCreate
+                try
+                {
+                    Thread.sleep(500);
+                }catch(InterruptedException e) {}
             } catch(Throwable t) {}
         }
         fragment.setArguments(args); // Where there is 'set', there is always 'get'!
@@ -57,12 +64,14 @@ public class PlaceholderFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-        TextView tv = (TextView) rootView.findViewById(R.id.tv_woeid);
+        final View rootView = inflater.inflate(R.layout.fragment_main, container, false);
+
         OtherHelper helper = new OtherHelper(getActivity().getBaseContext());
+
 
         int sectionNumber = getArguments().getInt("section_number");
         String woeid = Integer.toString(sectionNumber);
+
 
         try {
             SharedPreferences prefs = helper.getMyPreferences();
@@ -72,7 +81,9 @@ public class PlaceholderFragment extends Fragment {
             }
         } catch(Throwable t) {}
 
-        tv.setText(woeid);
+        TextView tv_woeid = (TextView) rootView.findViewById(R.id.tv_woeid);
+        tv_woeid.setText(woeid);
+        Log.i("WEATHER URL", YahooClient.makeWeatherURL(woeid, "c"));
 
         return rootView;
     }

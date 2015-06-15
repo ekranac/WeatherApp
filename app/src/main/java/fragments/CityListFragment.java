@@ -34,7 +34,6 @@ public class CityListFragment extends Fragment {
         SharedPreferences prefs = helper.getMyPreferences();
         try {
             List<String> woeids = Arrays.asList(prefs.getString("Woeids", null).split(","));
-
             mAdapter = new ArrayAdapter<String>(
                     this.getActivity().getBaseContext(),
                     R.layout.list_city,
