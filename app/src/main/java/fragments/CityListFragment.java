@@ -47,27 +47,4 @@ public class CityListFragment extends Fragment {
         return rootView;
     }
 
-    @Override
-    public void onResume()
-    {
-        super.onResume();
-
-        helper = new OtherHelper(getActivity().getBaseContext());
-
-        SharedPreferences prefs = helper.getMyPreferences();
-        try {
-            List<String> woeids = Arrays.asList(prefs.getString("Woeids", null).split(","));
-
-            mAdapter = new ArrayAdapter<String>(
-                    this.getActivity().getBaseContext(),
-                    R.layout.list_city,
-                    R.id.list_city_textview,
-                    woeids
-            );
-
-            ListView listView = (ListView) getActivity().findViewById(R.id.city_listview);
-            listView.setAdapter(mAdapter);
-        } catch(Throwable t) {}
-    }
-
 }

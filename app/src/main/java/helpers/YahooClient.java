@@ -5,24 +5,16 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.util.Log;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserFactory;
 
 import java.io.InputStreamReader;
-import java.io.StringReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
 import models.CityResult;
-import models.Weather;
 
 /**
  * Created by ziga on 15.5.2015.
@@ -99,53 +91,6 @@ public class YahooClient {
         return result;
     }
 
-    public static void getCurrentLocationWoeid(final String lat, final String lon, final Context c)
-    {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-
-                String url = YahooClient.makeCurrentLocationURL(lat, lon);
-                Log.i("THE URL", url);
-                HttpURLConnection yahooHttpConn = null;
-
-                try {
-                    yahooHttpConn = (HttpURLConnection) (new URL(url)).openConnection();
-                    yahooHttpConn.connect();
-                    XmlPullParser parser = XmlPullParserFactory.newInstance().newPullParser();
-                    parser.setInput(new InputStreamReader(yahooHttpConn.getInputStream()));
-
-                    int event = parser.getEventType();
-
-                    String tagName = null;
-                    String currentTag = null;
-                    while(event!=XmlPullParser.END_DOCUMENT)
-                    {
-                        tagName = parser.getName();
-
-                        if (event == XmlPullParser.START_TAG) {
-                            currentTag = tagName;
-                        }
-                        else if(event == XmlPullParser.TEXT)
-                        {
-                            if("woeid".equals(currentTag))
-                            {
-                                OtherHelper helper = new OtherHelper(c);
-                                helper.addWoeidToSharedPreferences(parser.getText(), 0);
-                            }
-                        }
-                        event = parser.next();
-                    }
-                }catch(Throwable t) {
-                    t.printStackTrace();
-                    // Log.e("Error in getCityList", t.getMessage());
-                }
-
-            }
-        }).start();
-
-    }
-
     public void getWeather()
     {
 
@@ -183,3 +128,5 @@ public class YahooClient {
         return bestLocation;
     }
 }
+
+
