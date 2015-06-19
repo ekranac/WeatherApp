@@ -46,5 +46,5 @@ public class CityListFragment extends Fragment {
         } catch(Throwable t) {}
         return rootView;
     }
-
 }
+

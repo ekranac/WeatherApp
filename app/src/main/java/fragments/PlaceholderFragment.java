@@ -7,11 +7,13 @@ import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.LoaderManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.ziga.weatherapp.R;
 
@@ -31,14 +33,8 @@ import helpers.YahooClient;
 public class PlaceholderFragment extends Fragment {
 
     private static final String ARG_SECTION_NUMBER = "section_number";
-    private static final String LONGITUDE = "current_longitude";
-    private static final String LATITUDE = "current_latitude";
 
-    /**
-     * Returns a new instance of this fragment for the given section
-     * number.
-     */
-    public static PlaceholderFragment newInstance(int sectionNumber, Context c) {
+    public static PlaceholderFragment newInstance(int sectionNumber) {
 
         PlaceholderFragment fragment = new PlaceholderFragment();
         Bundle args = new Bundle();
@@ -57,106 +53,63 @@ public class PlaceholderFragment extends Fragment {
         final View rootView = inflater.inflate(R.layout.fragment_main, container, false);
         int sectionNumber = getArguments().getInt("section_number");
 
-        OtherHelper helper = new OtherHelper(getActivity().getBaseContext());
+        Context c = getActivity().getBaseContext();
 
+        Log.i("POSITION", Integer.toString(sectionNumber));
 
-        if(sectionNumber==2)
-        {
-            Context c = getActivity().getBaseContext();
-            LocationManager lm = (LocationManager) c.getSystemService(Context.LOCATION_SERVICE);
-            Location location = YahooClient.getLastKnownLocation(lm, c);
-            String latitude = Double.toString(location.getLatitude());
-            String longitude = Double.toString(location.getLongitude());
-
-            new getCurrentLocationWoeid(c, latitude, longitude, rootView).execute();
-        }
-        else
-        {
-            String woeid = Integer.toString(sectionNumber);
-
-            try {
-                SharedPreferences prefs = helper.getMyPreferences();
-                List<String> list = Arrays.asList(prefs.getString("Woeids", null).split(","));
-                if (list.get(sectionNumber-2) != null) {
-                    woeid = list.get(sectionNumber-2);
-                }
-            } catch(Throwable t) {}
-
-            TextView tv_woeid = (TextView) rootView.findViewById(R.id.tv_woeid);
-            tv_woeid.setText(woeid);
-        }
+        new getWeather(c, rootView, sectionNumber).execute();
         return rootView;
     }
 }
 
-class getCurrentLocationWoeid extends AsyncTask<String, Void, String>
+
+class getWeather extends AsyncTask<Void, Void, String>
 {
 
     Context c;
-    String lat;
-    String lon;
     View rootView;
+    Integer position;
 
-    public getCurrentLocationWoeid(Context c, String lat, String lon, View rootView)
+    public getWeather(Context c, View rootView, Integer position)
     {
         super();
         this.c = c;
-        this.lat = lat;
-        this.lon = lon;
         this.rootView = rootView;
+        this.position = position;
     }
 
     @Override
-    protected String doInBackground(String... params)
+    protected String doInBackground(Void... params)
     {
+        OtherHelper h = new OtherHelper(c);
 
-        String url = YahooClient.makeCurrentLocationURL(lat, lon);
-        Log.i("THE URL", url);
-        HttpURLConnection yahooHttpConn = null;
-
-        String result = "";
-
-        try {
-            yahooHttpConn = (HttpURLConnection) (new URL(url)).openConnection();
-            yahooHttpConn.connect();
-            XmlPullParser parser = XmlPullParserFactory.newInstance().newPullParser();
-            parser.setInput(new InputStreamReader(yahooHttpConn.getInputStream()));
-
-            int event = parser.getEventType();
-
-            String tagName = null;
-            String currentTag = null;
-            while(event!=XmlPullParser.END_DOCUMENT)
-            {
-                tagName = parser.getName();
-
-                if (event == XmlPullParser.START_TAG) {
-                    currentTag = tagName;
-                }
-                else if(event == XmlPullParser.TEXT)
-                {
-                    if("woeid".equals(currentTag))
-                    {
-                        OtherHelper helper = new OtherHelper(c);
-                        helper.addWoeidToSharedPreferences(parser.getText(), 0);
-
-                        result = parser.getText();
-                    }
-                }
-                event = parser.next();
-            }
-        }catch(Throwable t) {
-            t.printStackTrace();
-            // Log.e("Error in getCityList", t.getMessage());
+        if(position==3)
+        {
+            h.setCurrentLocationWoeid();
         }
 
-        return result;
+        SharedPreferences prefs = h.getMyPreferences();
+        List<String> list = Arrays.asList(prefs.getString("Woeids", null).split(","));
+
+        String url="";
+        if(position>1)
+        {
+            url = list.get(position-2);
+        }
+
+
+        return url;
+
     }
 
     @Override
-    protected void onPostExecute(String result)
+    protected void onPostExecute(String url)
     {
-        TextView tv_woeid = (TextView) rootView.findViewById(R.id.tv_woeid);
-        tv_woeid.setText(result);
+        if(position>1)
+        {
+            TextView tv_woeid = (TextView) rootView.findViewById(R.id.tv_woeid);
+            tv_woeid.setText(url);
+        }
+
     }
 }

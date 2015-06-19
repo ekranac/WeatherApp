@@ -2,8 +2,17 @@ package helpers;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.location.Location;
+import android.location.LocationManager;
 import android.text.TextUtils;
+import android.util.Log;
 
+import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserFactory;
+
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -73,6 +82,7 @@ public class OtherHelper {
         {
             return 3;
         }
+
         else
         {
             return woeidsList.size() + 2;
@@ -84,6 +94,48 @@ public class OtherHelper {
     {
         SharedPreferences prefs = context.getSharedPreferences("MyPreferences", Context.MODE_PRIVATE);
         return prefs;
+    }
+
+    public void setCurrentLocationWoeid()
+    {
+        LocationManager lm = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+        Location location = YahooClient.getLastKnownLocation(lm, context);
+        String latitude = Double.toString(location.getLatitude());
+        String longitude = Double.toString(location.getLongitude());
+
+        String url = YahooClient.makeCurrentLocationURL(latitude, longitude); // Creates URL based on current location
+        Log.i("THE URL", url);
+        HttpURLConnection yahooHttpConn = null;
+
+        try {
+            yahooHttpConn = (HttpURLConnection) (new URL(url)).openConnection();
+            yahooHttpConn.connect();
+            XmlPullParser parser = XmlPullParserFactory.newInstance().newPullParser();
+            parser.setInput(new InputStreamReader(yahooHttpConn.getInputStream()));
+
+            int event = parser.getEventType();
+
+            String tagName = null;
+            String currentTag = null;
+            while(event!=XmlPullParser.END_DOCUMENT) // Loop through XML data
+            {
+                tagName = parser.getName();
+
+                if (event == XmlPullParser.START_TAG) {
+                    currentTag = tagName;
+                }
+                else if(event == XmlPullParser.TEXT)
+                {
+                    if("woeid".equals(currentTag)) // If tag is woeid
+                    {
+                        this.addWoeidToSharedPreferences(parser.getText(), 0); // Add the woeid to shared preferences
+                    }
+                }
+                event = parser.next();
+            }
+        }catch(Throwable t) {
+            t.printStackTrace();
+        }
     }
 
 }

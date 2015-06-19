@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.util.Log;
 
 import fragments.CityListFragment;
 import fragments.PlaceholderFragment;
@@ -28,7 +29,8 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
             case 1:
                 return new SearchFragment();
             default:
-                return PlaceholderFragment.newInstance(position, context);
+                return PlaceholderFragment.newInstance(position);
+
         }
     }
 

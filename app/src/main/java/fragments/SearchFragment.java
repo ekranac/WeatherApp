@@ -53,8 +53,9 @@ public class SearchFragment extends Fragment {
                 searchView.clearFocus();
 
 
-                // Get woeid, save to shared preferences
-                if (helper.getCityCount() < MAX_PAGES) {
+                // Get woeid, save to SharedPreferences
+                if (helper.getCityCount() < MAX_PAGES)
+                {
                     helper.addWoeidToSharedPreferences(adpt.getItem(position).getWoeid(), null);
                     ViewPager vp = (ViewPager) getActivity().findViewById(R.id.pager);
                     vp.getAdapter().notifyDataSetChanged();
