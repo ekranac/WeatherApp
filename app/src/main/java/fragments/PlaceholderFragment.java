@@ -28,6 +28,7 @@ import java.util.List;
 
 import helpers.OtherHelper;
 import helpers.YahooClient;
+import models.Weather;
 
 
 public class PlaceholderFragment extends Fragment {
@@ -96,7 +97,8 @@ class getWeather extends AsyncTask<Void, Void, String>
         String url="";
         if(position>1)
         {
-            url = list.get(position-2);
+            url = YahooClient.makeWeatherURL(list.get(position-2), "c");
+            Weather weather = new Weather();
         }
 
 
@@ -111,6 +113,8 @@ class getWeather extends AsyncTask<Void, Void, String>
         {
             TextView tv_woeid = (TextView) rootView.findViewById(R.id.tv_woeid);
             tv_woeid.setText(url);
+
+            Log.i("WEATHER URL", url);
         }
 
     }
