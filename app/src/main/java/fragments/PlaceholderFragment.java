@@ -83,7 +83,7 @@ class getWeather extends AsyncTask<Void, Void, String>
     {
         OtherHelper h = new OtherHelper(c);
 
-        if(position==3)
+        if(position==2)
         {
             h.setCurrentLocationWoeid();
         }
@@ -91,6 +91,8 @@ class getWeather extends AsyncTask<Void, Void, String>
         SharedPreferences prefs = h.getMyPreferences();
         List<String> list = Arrays.asList(prefs.getString("Woeids", null).split(","));
 
+        // TODO
+        // Create url, parse through it, get data, write it in a model
         String url="";
         if(position>1)
         {
