@@ -28,6 +28,7 @@ import java.util.List;
 
 import helpers.OtherHelper;
 import helpers.YahooClient;
+import models.CityResult;
 import models.Weather;
 
 
@@ -64,7 +65,7 @@ public class PlaceholderFragment extends Fragment {
 }
 
 
-class getWeather extends AsyncTask<Void, Void, String>
+class getWeather extends AsyncTask<Void, Void, Weather>
 {
 
     Context c;
@@ -80,7 +81,7 @@ class getWeather extends AsyncTask<Void, Void, String>
     }
 
     @Override
-    protected String doInBackground(Void... params)
+    protected Weather doInBackground(Void... params)
     {
         OtherHelper h = new OtherHelper(c);
 
@@ -95,26 +96,83 @@ class getWeather extends AsyncTask<Void, Void, String>
         // TODO
         // Create url, parse through it, get data, write it in a model
         String url="";
+        String woeid="";
+        Weather weather = new Weather();
+        HttpURLConnection yahooHttpConn = null;
         if(position>1)
         {
-            url = YahooClient.makeWeatherURL(list.get(position-2), "c");
-            Weather weather = new Weather();
+            try {
+                woeid = list.get(position-2);
+                url = YahooClient.makeWeatherURL(woeid, "c");
+
+                yahooHttpConn = (HttpURLConnection) (new URL(url)).openConnection();
+                yahooHttpConn.connect();
+                XmlPullParser parser = XmlPullParserFactory.newInstance().newPullParser();
+                parser.setInput(new InputStreamReader(yahooHttpConn.getInputStream()));
+
+                int event = parser.getEventType();
+
+                String tagName = null;
+                while(event!=XmlPullParser.END_DOCUMENT) // Loop through XML data
+                {
+                    tagName = parser.getName();
+
+                    if (event == XmlPullParser.START_TAG) {
+                        if(tagName.equals("yweather:wind"))
+                        {
+                            weather.wind.setSpeed(parser.getAttributeValue(null, "speed"));
+                        }
+
+                        else if(tagName.equals("yweather:atmosphere"))
+                        {
+                            weather.atmosphere.setHumidity(parser.getAttributeValue(null, "humidity"));
+                            weather.atmosphere.setPressure(parser.getAttributeValue(null, "pressure"));
+                            weather.atmosphere.setVisibility(parser.getAttributeValue(null, "visibility"));
+                        }
+
+                        else if (tagName.equals("yweather:condition")) {
+                            weather.condition.setTemp(parser.getAttributeValue(null, "temp"));
+                            weather.condition.setText(parser.getAttributeValue(null, "text"));
+                        }
+
+                        else if (tagName.equals("yweather:units")) {
+                            weather.units.setPressure(parser.getAttributeValue(null, "pressure"));
+                            weather.units.setDistance(parser.getAttributeValue(null, "distance"));
+                            weather.units.setSpeed(parser.getAttributeValue(null, "speed"));
+                            weather.units.setTemperature("°" + parser.getAttributeValue(null, "temperature"));
+                        }
+
+                        else if (tagName.equals("yweather:location")) {
+                            weather.location.setCity(parser.getAttributeValue(null, "city"));
+                            weather.location.setCountry(parser.getAttributeValue(null, "country"));
+                            weather.location.setRegion(parser.getAttributeValue(null, "region"));
+                        }
+                    }
+                    event = parser.next();
+                }
+            }catch(Throwable t) {
+                t.printStackTrace();
+            }
         }
 
 
-        return url;
+        return weather;
 
     }
 
     @Override
-    protected void onPostExecute(String url)
+    protected void onPostExecute(Weather weather)
     {
         if(position>1)
         {
-            TextView tv_woeid = (TextView) rootView.findViewById(R.id.tv_woeid);
-            tv_woeid.setText(url);
+            TextView tv_city = (TextView) rootView.findViewById(R.id.tv_city);
+            TextView tv_temp = (TextView) rootView.findViewById(R.id.tv_current_temp);
+            TextView tv_condition = (TextView) rootView.findViewById(R.id.tv_condition);
 
-            Log.i("WEATHER URL", url);
+            tv_city.setText(weather.location.getCity());
+            tv_temp.setText(weather.condition.getTemp() + weather.units.getTemperature());
+            tv_condition.setText(weather.condition.getText());
+
         }
 
     }

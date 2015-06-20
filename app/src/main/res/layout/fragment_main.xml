@@ -7,15 +7,8 @@
     <TextView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/tv_woeid"
-        android:text="Woeid" />
-
-    <TextView
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
         android:id="@+id/tv_city"
-        android:text="City"
-        android:layout_below="@id/tv_woeid"/>
+        android:text="City"/>
 
     <TextView
         android:layout_width="fill_parent"
