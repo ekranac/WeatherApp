@@ -2,18 +2,14 @@ package fragments;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.location.Location;
-import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.LoaderManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.ziga.weatherapp.R;
 
@@ -28,7 +24,6 @@ import java.util.List;
 
 import helpers.OtherHelper;
 import helpers.YahooClient;
-import models.CityResult;
 import models.Weather;
 
 
@@ -93,8 +88,6 @@ class getWeather extends AsyncTask<Void, Void, Weather>
         SharedPreferences prefs = h.getMyPreferences();
         List<String> list = Arrays.asList(prefs.getString("Woeids", null).split(","));
 
-        // TODO
-        // Create url, parse through it, get data, write it in a model
         String url="";
         String woeid="";
         Weather weather = new Weather();
@@ -147,6 +140,28 @@ class getWeather extends AsyncTask<Void, Void, Weather>
                             weather.location.setCountry(parser.getAttributeValue(null, "country"));
                             weather.location.setRegion(parser.getAttributeValue(null, "region"));
                         }
+
+                        else if (tagName.equals("yweather:forecast")) {
+                            weather.forecast.addUpForecast();
+
+                            if(weather.forecast.getForecastCount() < 5)
+                            {
+                                weather.forecast.setDay(weather.forecast.getDay() + parser.getAttributeValue(null, "day") + ",");
+                                weather.forecast.setDate(weather.forecast.getDate() + parser.getAttributeValue(null, "date") + ",");
+                                weather.forecast.setLow(weather.forecast.getLow() + parser.getAttributeValue(null, "low") + ",");
+                                weather.forecast.setHigh(weather.forecast.getHigh() + parser.getAttributeValue(null, "high") + ",");
+                                weather.forecast.setText(weather.forecast.getText() + parser.getAttributeValue(null, "text") + ",");
+                            }
+                            else if(weather.forecast.getForecastCount() == 5)
+                            {
+                                weather.forecast.setDay(weather.forecast.getDay() + parser.getAttributeValue(null, "day"));
+                                weather.forecast.setDate(weather.forecast.getDate() + parser.getAttributeValue(null, "date"));
+                                weather.forecast.setLow(weather.forecast.getLow() + parser.getAttributeValue(null, "low"));
+                                weather.forecast.setHigh(weather.forecast.getHigh() + parser.getAttributeValue(null, "high"));
+                                weather.forecast.setText(weather.forecast.getText() + parser.getAttributeValue(null, "text"));
+                            }
+                        }
+
                     }
                     event = parser.next();
                 }
@@ -171,7 +186,7 @@ class getWeather extends AsyncTask<Void, Void, Weather>
 
             tv_city.setText(weather.location.getCity());
             tv_temp.setText(weather.condition.getTemp() + weather.units.getTemperature());
-            tv_condition.setText(weather.condition.getText());
+            tv_condition.setText(weather.forecast.getHigh());
 
         }
 

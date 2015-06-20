@@ -8,6 +8,7 @@ public class Weather {
     public Atmosphere atmosphere = new Atmosphere();
     public Astronomy astronomy = new Astronomy();
     public Condition condition = new Condition();
+    public Forecast forecast = new Forecast();
 
 
     public class Location
@@ -176,6 +177,68 @@ public class Weather {
 
         public void setTemp(String temp) {
             this.temp = temp;
+        }
+    }
+
+    public class Forecast
+    {
+        private String day = "";
+        private String date = "";
+        private String low = "";
+        private String high = "";
+        private String text = "";
+        private Integer forecastCount = 0;
+
+        public String getDay() {
+            return day;
+        }
+
+        public void setDay(String day) {
+            this.day = day;
+        }
+
+        public String getDate() {
+            return date;
+        }
+
+        public void setDate(String date) {
+            this.date = date;
+        }
+
+        public String getLow() {
+            return low;
+        }
+
+        public void setLow(String low) {
+            this.low = low;
+        }
+
+        public String getHigh() {
+            return high;
+        }
+
+        public void setHigh(String high) {
+            this.high = high;
+        }
+
+        public String getText() {
+            return text;
+        }
+
+        public void setText(String text) {
+            this.text = text;
+        }
+
+        public Integer getForecastCount() {
+            return forecastCount;
+        }
+
+        public void setForecastCount(Integer forecastCount) {
+            this.forecastCount = forecastCount;
+        }
+
+        public void addUpForecast(){
+            this.forecastCount+=1;
         }
     }
 
