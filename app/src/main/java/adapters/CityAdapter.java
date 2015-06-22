@@ -59,7 +59,9 @@ public class CityAdapter extends ArrayAdapter<CityResult> implements Filterable 
         }
 
         TextView tv = (TextView) result.findViewById(R.id.txtCityName);
-        tv.setText(cityList.get(position).getCityName() + ", " + cityList.get(position).getRegion() + ", " + cityList.get(position).getCountry());
+        String text =  cityList.get(position).getCityName() + " [" + cityList.get(position).getCountry() + "]";
+
+        tv.setText(text);
 
         return result;
     }

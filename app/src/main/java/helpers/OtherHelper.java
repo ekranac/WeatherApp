@@ -17,9 +17,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-/**
- * Created by ziga on 28.5.2015.
- */
+
 public class OtherHelper {
 
     Context context;
@@ -35,6 +33,7 @@ public class OtherHelper {
         Boolean alreadyExists = false; // To check whether the woeid is already saved in preferences
         SharedPreferences prefs = this.getMyPreferences();
         ArrayList<String> woeidList = new ArrayList<String>();
+
         if(prefs.getString("Woeids", null)!=null)
         {
             String woeidString = prefs.getString("Woeids", null);
@@ -45,12 +44,12 @@ public class OtherHelper {
                 {
                     alreadyExists = true;
                 }
-                woeidList.add(id);
+                woeidList.add(id); // Add the existent ones to an ArrayList
             }
         }
 
 
-        if(alreadyExists == false) // Add the woeid only if it doesn't exist
+        if(alreadyExists == false) // Add the NEW woeid only if it doesn't exist
         {
             if(position==null)
             {
@@ -66,8 +65,48 @@ public class OtherHelper {
             }
         }
 
-
         prefs.edit().putString("Woeids", TextUtils.join(",", woeidList)).apply();
+    }
+
+    public void addCityToSharedPreferences(String city, Integer position)
+    {
+        Boolean alreadyExists = false;
+        SharedPreferences prefs = this.getMyPreferences();
+        ArrayList<String> cityList = new ArrayList<String>();
+
+        if(prefs.getString("Cities", null)!=null)
+        {
+            String woeidString = prefs.getString("Cities", null);
+            List<String> list = Arrays.asList(woeidString.split(","));
+            for(String cityName : list)
+            {
+                if(cityName.equals(city))
+                {
+                    alreadyExists = true;
+                }
+                cityList.add(cityName);
+            }
+        }
+
+
+        if(alreadyExists == false)
+        {
+            if(position==null)
+            {
+                cityList.add(city);
+            }
+            else
+            {
+                if(cityList.isEmpty())
+                {
+                    cityList.add(0, "null");
+                }
+                cityList.set(position, city);
+            }
+        }
+
+
+        prefs.edit().putString("Cities", TextUtils.join(",", cityList)).apply();
     }
 
     public int getCityCount()
@@ -96,7 +135,7 @@ public class OtherHelper {
         return prefs;
     }
 
-    public void setCurrentLocationWoeid()
+    public void setCurrentLocationData()
     {
         LocationManager lm = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
         Location location = YahooClient.getLastKnownLocation(lm, context);
@@ -104,7 +143,7 @@ public class OtherHelper {
         String longitude = Double.toString(location.getLongitude());
 
         String url = YahooClient.makeCurrentLocationURL(latitude, longitude); // Creates URL based on current location
-        Log.i("THE URL", url);
+        Log.i("CURRENT URL", url);
         HttpURLConnection yahooHttpConn = null;
 
         try {
@@ -130,12 +169,45 @@ public class OtherHelper {
                     {
                         this.addWoeidToSharedPreferences(parser.getText(), 0); // Add the woeid to shared preferences
                     }
+                    else if("city".equals(currentTag))
+                    {
+                        this.addCityToSharedPreferences(parser.getText(), 0);
+                    }
                 }
                 event = parser.next();
             }
         }catch(Throwable t) {
             t.printStackTrace();
         }
+    }
+
+    public void addCityName(String name)
+    {
+        SharedPreferences prefs = this.getMyPreferences();
+        ArrayList<String> cityList = new ArrayList<String>();
+
+        String cityString = prefs.getString("Cities", null);
+        List<String> list = Arrays.asList(cityString.split(","));
+
+        for(String city : list)
+        {
+            cityList.add(city);
+            Log.i("LOOP CITY", city);
+        }
+
+        cityList.add(name);
+
+
+        prefs.edit().putString("Cities", TextUtils.join(",", cityList)).apply();
+
+    }
+
+    public String getCurrentCity()
+    {
+        SharedPreferences prefs = this.getMyPreferences();
+        List<String> cityList = Arrays.asList(prefs.getString("Cities", null).split(","));
+
+        return cityList.get(0);
     }
 
 }

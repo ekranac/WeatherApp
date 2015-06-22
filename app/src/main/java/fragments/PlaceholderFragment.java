@@ -5,7 +5,6 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,12 +12,7 @@ import android.widget.TextView;
 
 import com.example.ziga.weatherapp.R;
 
-import org.xmlpull.v1.XmlPullParser;
-import org.xmlpull.v1.XmlPullParserFactory;
-
-import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
 
@@ -52,8 +46,6 @@ public class PlaceholderFragment extends Fragment {
 
         Context c = getActivity().getBaseContext();
 
-        Log.i("POSITION", Integer.toString(sectionNumber));
-
         new getWeather(c, rootView, sectionNumber).execute();
         return rootView;
     }
@@ -66,6 +58,7 @@ class getWeather extends AsyncTask<Void, Void, Weather>
     Context c;
     View rootView;
     Integer position;
+    OtherHelper h;
 
     public getWeather(Context c, View rootView, Integer position)
     {
@@ -73,16 +66,15 @@ class getWeather extends AsyncTask<Void, Void, Weather>
         this.c = c;
         this.rootView = rootView;
         this.position = position;
+        this.h = new OtherHelper(c);
     }
 
     @Override
     protected Weather doInBackground(Void... params)
     {
-        OtherHelper h = new OtherHelper(c);
-
         if(position==2)
         {
-            h.setCurrentLocationWoeid();
+            h.setCurrentLocationData();
         }
 
         SharedPreferences prefs = h.getMyPreferences();
@@ -92,84 +84,13 @@ class getWeather extends AsyncTask<Void, Void, Weather>
         String woeid="";
         Weather weather = new Weather();
         HttpURLConnection yahooHttpConn = null;
+
         if(position>1)
         {
-            try {
-                woeid = list.get(position-2);
-                url = YahooClient.makeWeatherURL(woeid, "c");
-
-                yahooHttpConn = (HttpURLConnection) (new URL(url)).openConnection();
-                yahooHttpConn.connect();
-                XmlPullParser parser = XmlPullParserFactory.newInstance().newPullParser();
-                parser.setInput(new InputStreamReader(yahooHttpConn.getInputStream()));
-
-                int event = parser.getEventType();
-
-                String tagName = null;
-                while(event!=XmlPullParser.END_DOCUMENT) // Loop through XML data
-                {
-                    tagName = parser.getName();
-
-                    if (event == XmlPullParser.START_TAG) {
-                        if(tagName.equals("yweather:wind"))
-                        {
-                            weather.wind.setSpeed(parser.getAttributeValue(null, "speed"));
-                        }
-
-                        else if(tagName.equals("yweather:atmosphere"))
-                        {
-                            weather.atmosphere.setHumidity(parser.getAttributeValue(null, "humidity"));
-                            weather.atmosphere.setPressure(parser.getAttributeValue(null, "pressure"));
-                            weather.atmosphere.setVisibility(parser.getAttributeValue(null, "visibility"));
-                        }
-
-                        else if (tagName.equals("yweather:condition")) {
-                            weather.condition.setTemp(parser.getAttributeValue(null, "temp"));
-                            weather.condition.setText(parser.getAttributeValue(null, "text"));
-                        }
-
-                        else if (tagName.equals("yweather:units")) {
-                            weather.units.setPressure(parser.getAttributeValue(null, "pressure"));
-                            weather.units.setDistance(parser.getAttributeValue(null, "distance"));
-                            weather.units.setSpeed(parser.getAttributeValue(null, "speed"));
-                            weather.units.setTemperature("°" + parser.getAttributeValue(null, "temperature"));
-                        }
-
-                        else if (tagName.equals("yweather:location")) {
-                            weather.location.setCity(parser.getAttributeValue(null, "city"));
-                            weather.location.setCountry(parser.getAttributeValue(null, "country"));
-                            weather.location.setRegion(parser.getAttributeValue(null, "region"));
-                        }
-
-                        else if (tagName.equals("yweather:forecast")) {
-                            weather.forecast.addUpForecast();
-
-                            if(weather.forecast.getForecastCount() < 5)
-                            {
-                                weather.forecast.setDay(weather.forecast.getDay() + parser.getAttributeValue(null, "day") + ",");
-                                weather.forecast.setDate(weather.forecast.getDate() + parser.getAttributeValue(null, "date") + ",");
-                                weather.forecast.setLow(weather.forecast.getLow() + parser.getAttributeValue(null, "low") + ",");
-                                weather.forecast.setHigh(weather.forecast.getHigh() + parser.getAttributeValue(null, "high") + ",");
-                                weather.forecast.setText(weather.forecast.getText() + parser.getAttributeValue(null, "text") + ",");
-                            }
-                            else if(weather.forecast.getForecastCount() == 5)
-                            {
-                                weather.forecast.setDay(weather.forecast.getDay() + parser.getAttributeValue(null, "day"));
-                                weather.forecast.setDate(weather.forecast.getDate() + parser.getAttributeValue(null, "date"));
-                                weather.forecast.setLow(weather.forecast.getLow() + parser.getAttributeValue(null, "low"));
-                                weather.forecast.setHigh(weather.forecast.getHigh() + parser.getAttributeValue(null, "high"));
-                                weather.forecast.setText(weather.forecast.getText() + parser.getAttributeValue(null, "text"));
-                            }
-                        }
-
-                    }
-                    event = parser.next();
-                }
-            }catch(Throwable t) {
-                t.printStackTrace();
-            }
+            woeid = list.get(position-2);
+            url = YahooClient.makeWeatherURL(woeid, "c");
+            weather = YahooClient.getWeatherData(woeid, url, yahooHttpConn);
         }
-
 
         return weather;
 
@@ -184,9 +105,16 @@ class getWeather extends AsyncTask<Void, Void, Weather>
             TextView tv_temp = (TextView) rootView.findViewById(R.id.tv_current_temp);
             TextView tv_condition = (TextView) rootView.findViewById(R.id.tv_condition);
 
-            tv_city.setText(weather.location.getCity());
+            if(position==2)
+            {
+                tv_city.setText(h.getCurrentCity());
+            }
+            else
+            {
+                tv_city.setText(weather.location.getCity());
+            }
             tv_temp.setText(weather.condition.getTemp() + weather.units.getTemperature());
-            tv_condition.setText(weather.forecast.getHigh());
+            tv_condition.setText(weather.condition.getText());
 
         }
 

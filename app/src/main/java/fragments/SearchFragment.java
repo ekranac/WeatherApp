@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import com.example.ziga.weatherapp.R;
 
 import adapters.CityAdapter;
 import helpers.OtherHelper;
+import helpers.YahooClient;
 
 
 public class SearchFragment extends Fragment {
@@ -59,6 +61,10 @@ public class SearchFragment extends Fragment {
                     helper.addWoeidToSharedPreferences(adpt.getItem(position).getWoeid(), null);
                     ViewPager vp = (ViewPager) getActivity().findViewById(R.id.pager);
                     vp.getAdapter().notifyDataSetChanged();
+
+                    String city = parent.getItemAtPosition(position).toString();
+                    Log.i("SELECTED CITY", parent.getItemAtPosition(position).toString());
+                    helper.addCityName(city);
                 }
 
             }

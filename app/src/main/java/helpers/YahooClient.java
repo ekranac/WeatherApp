@@ -15,11 +15,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import models.CityResult;
+import models.Weather;
 
 /**
  * Created by ziga on 15.5.2015.
  */
 public class YahooClient {
+
     public static String YAHOO_GEO_URL = "http://where.yahooapis.com/v1";
     public static String YAHOO_WEATHER_URL = "http://weather.yahooapis.com/forecastrss";
     public static String YAHOO_CURRENT_LOCATION_URL = "http://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20geo.placefinder%20where%20text%3D%22";
@@ -31,12 +33,10 @@ public class YahooClient {
         HttpURLConnection yahooHttpConn = null;
         try {
             String query = makeQueryCityURL(cityName);
-            // Log.d("Swa", "URL [" + query + "]");
             yahooHttpConn= (HttpURLConnection) (new URL(query)).openConnection();
             yahooHttpConn.connect();
             XmlPullParser parser = XmlPullParserFactory.newInstance().newPullParser();
             parser.setInput(new InputStreamReader(yahooHttpConn.getInputStream()));
-            Log.d("Swa", "XML Parser ok");
             int event = parser.getEventType();
 
             CityResult cty = null;
@@ -51,10 +51,9 @@ public class YahooClient {
                     if (tagName.equals("place")) {
                         // place Tag Found so we create a new CityResult
                         cty = new CityResult();
-                        //  Log.d("Swa", "New City found");
+
                     }
                     currentTag = tagName;
-                    // Log.d("Swa", "Tag ["+tagName+"]");
                 }
                 else if (event == XmlPullParser.TEXT) {
                     // We found some text. let's see the tagName to know the tag related to the text
@@ -79,7 +78,6 @@ public class YahooClient {
         }
         catch(Throwable t) {
             t.printStackTrace();
-            // Log.e("Error in getCityList", t.getMessage());
         }
         finally {
             try {
@@ -91,9 +89,89 @@ public class YahooClient {
         return result;
     }
 
-    public void getWeather()
+    public static Weather getWeatherData(String woeid, String url, HttpURLConnection yahooHttpConn)
     {
+        Weather weather = new Weather();
+        try {
 
+            yahooHttpConn = (HttpURLConnection) (new URL(url)).openConnection();
+            yahooHttpConn.connect();
+            XmlPullParser parser = XmlPullParserFactory.newInstance().newPullParser();
+            parser.setInput(new InputStreamReader(yahooHttpConn.getInputStream()));
+
+            int event = parser.getEventType();
+
+            String tagName = null;
+            while(event!=XmlPullParser.END_DOCUMENT) // Loop through XML data
+            {
+                tagName = parser.getName();
+
+                if (event == XmlPullParser.START_TAG) {
+                    if(tagName.equals("yweather:wind"))
+                    {
+                        weather.wind.setSpeed(parser.getAttributeValue(null, "speed"));
+                    }
+
+                    else if(tagName.equals("yweather:atmosphere"))
+                    {
+                        weather.atmosphere.setHumidity(parser.getAttributeValue(null, "humidity"));
+                        weather.atmosphere.setPressure(parser.getAttributeValue(null, "pressure"));
+                        weather.atmosphere.setVisibility(parser.getAttributeValue(null, "visibility"));
+                    }
+
+                    else if (tagName.equals("yweather:condition")) {
+                        weather.condition.setTemp(parser.getAttributeValue(null, "temp"));
+                        weather.condition.setText(parser.getAttributeValue(null, "text"));
+                    }
+
+                    else if (tagName.equals("yweather:units")) {
+                        weather.units.setPressure(parser.getAttributeValue(null, "pressure"));
+                        weather.units.setDistance(parser.getAttributeValue(null, "distance"));
+                        weather.units.setSpeed(parser.getAttributeValue(null, "speed"));
+                        weather.units.setTemperature("°" + parser.getAttributeValue(null, "temperature"));
+                    }
+
+                    else if (tagName.equals("yweather:location")) {
+                        weather.location.setCity(parser.getAttributeValue(null, "city"));
+                        weather.location.setCountry(parser.getAttributeValue(null, "country"));
+                        weather.location.setRegion(parser.getAttributeValue(null, "region"));
+                    }
+
+                    else if (tagName.equals("yweather:forecast")) {
+                        weather.forecast.addUpForecast();
+
+                        if(weather.forecast.getForecastCount() < 5)
+                        {
+                            weather.forecast.setDay(weather.forecast.getDay() + parser.getAttributeValue(null, "day") + ",");
+                            weather.forecast.setDate(weather.forecast.getDate() + parser.getAttributeValue(null, "date") + ",");
+                            weather.forecast.setLow(weather.forecast.getLow() + parser.getAttributeValue(null, "low") + ",");
+                            weather.forecast.setHigh(weather.forecast.getHigh() + parser.getAttributeValue(null, "high") + ",");
+                            weather.forecast.setText(weather.forecast.getText() + parser.getAttributeValue(null, "text") + ",");
+                        }
+                        else if(weather.forecast.getForecastCount() == 5)
+                        {
+                            weather.forecast.setDay(weather.forecast.getDay() + parser.getAttributeValue(null, "day"));
+                            weather.forecast.setDate(weather.forecast.getDate() + parser.getAttributeValue(null, "date"));
+                            weather.forecast.setLow(weather.forecast.getLow() + parser.getAttributeValue(null, "low"));
+                            weather.forecast.setHigh(weather.forecast.getHigh() + parser.getAttributeValue(null, "high"));
+                            weather.forecast.setText(weather.forecast.getText() + parser.getAttributeValue(null, "text"));
+                        }
+                    }
+
+                    else if(tagName.equals("yweather:astronomy"))
+                    {
+                        weather.astronomy.setSunrise(parser.getAttributeValue(null, "sunrise"));
+                        weather.astronomy.setSunset(parser.getAttributeValue(null, "sunset"));
+                    }
+
+                }
+                event = parser.next();
+            }
+        }catch(Throwable t) {
+            t.printStackTrace();
+        }
+
+        return weather;
     }
 
     private static String makeQueryCityURL(String cityName) {
