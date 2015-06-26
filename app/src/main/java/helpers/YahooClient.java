@@ -89,7 +89,7 @@ public class YahooClient {
         return result;
     }
 
-    public static Weather getWeatherData(String woeid, String url, HttpURLConnection yahooHttpConn)
+    public static Weather getWeatherData(String url, HttpURLConnection yahooHttpConn)
     {
         Weather weather = new Weather();
         try {

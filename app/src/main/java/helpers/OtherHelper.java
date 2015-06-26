@@ -1,11 +1,17 @@
 package helpers;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.location.Location;
 import android.location.LocationManager;
-import android.text.TextUtils;
+import android.support.v4.view.ViewPager;
 import android.util.Log;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.Toast;
+
+import com.example.ziga.weatherapp.R;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserFactory;
@@ -13,7 +19,6 @@ import org.xmlpull.v1.XmlPullParserFactory;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -32,89 +37,93 @@ public class OtherHelper {
     {
         Boolean alreadyExists = false; // To check whether the woeid is already saved in preferences
         SharedPreferences prefs = this.getMyPreferences();
-        ArrayList<String> woeidList = new ArrayList<String>();
+        String woeidString = "";
 
         if(prefs.getString("Woeids", null)!=null)
         {
-            String woeidString = prefs.getString("Woeids", null);
-            List<String> list = Arrays.asList(woeidString.split(","));
+            woeidString = prefs.getString("Woeids", null);
+            List<String> list = Arrays.asList(woeidString.split("  "));
             for(String id : list) // Go throught every woeid, check if it's equal to the one you want to add, reposition to ArrayList
             {
                 if(id.equals(woeid))
                 {
                     alreadyExists = true;
                 }
-                woeidList.add(id); // Add the existent ones to an ArrayList
             }
         }
 
 
         if(alreadyExists == false) // Add the NEW woeid only if it doesn't exist
         {
+            woeidString = prefs.getString("Woeids", null);
+
             if(position==null)
             {
-                woeidList.add(woeid);
+                woeidString = woeidString + woeid + "  ";
             }
+
             else
             {
-                if(woeidList.isEmpty())
+                if(woeidString==null || woeidString=="")
                 {
-                    woeidList.add(0, "null");
+                    woeidString="";
                 }
-                woeidList.set(position, woeid);
+                woeidString = woeid + "  " + woeidString;
             }
         }
 
-        prefs.edit().putString("Woeids", TextUtils.join(",", woeidList)).apply();
+        prefs.edit().putString("Woeids", woeidString).apply();
     }
 
     public void addCityToSharedPreferences(String city, Integer position)
     {
         Boolean alreadyExists = false;
         SharedPreferences prefs = this.getMyPreferences();
-        ArrayList<String> cityList = new ArrayList<String>();
+        String cityString = "";
 
         if(prefs.getString("Cities", null)!=null)
         {
-            String woeidString = prefs.getString("Cities", null);
-            List<String> list = Arrays.asList(woeidString.split(","));
+            cityString = prefs.getString("Cities", null);
+            List<String> list = Arrays.asList(cityString.split("  "));
             for(String cityName : list)
             {
                 if(cityName.equals(city))
                 {
                     alreadyExists = true;
                 }
-                cityList.add(cityName);
             }
         }
 
 
         if(alreadyExists == false)
         {
+            cityString = prefs.getString("Woeids", null);
+
             if(position==null)
             {
-                cityList.add(city);
+                cityString = cityString + city + "  ";
             }
+
             else
             {
-                if(cityList.isEmpty())
+                if(cityString==null || cityString=="")
                 {
-                    cityList.add(0, "null");
+                    cityString="";
                 }
-                cityList.set(position, city);
+                cityString = city + "  " + cityString;
             }
         }
 
 
-        prefs.edit().putString("Cities", TextUtils.join(",", cityList)).apply();
+        prefs.edit().putString("Cities", cityString).apply();
     }
 
     public int getCityCount()
     {
-        SharedPreferences prefs = context.getSharedPreferences("MyPreferences", Context.MODE_PRIVATE);
+        SharedPreferences prefs = this.getMyPreferences();
         List<String> woeidsList = null;
         try {
-            woeidsList = Arrays.asList(prefs.getString("Woeids", null).split(","));
+            woeidsList = Arrays.asList(prefs.getString("Woeids", null).split("  "));
         } catch(Throwable t) {}
 
         if(woeidsList==null || woeidsList.size()==1)
@@ -184,30 +193,63 @@ public class OtherHelper {
     public void addCityName(String name)
     {
         SharedPreferences prefs = this.getMyPreferences();
-        ArrayList<String> cityList = new ArrayList<String>();
 
         String cityString = prefs.getString("Cities", null);
-        List<String> list = Arrays.asList(cityString.split(","));
-
-        for(String city : list)
-        {
-            cityList.add(city);
-            Log.i("LOOP CITY", city);
-        }
-
-        cityList.add(name);
+        cityString = cityString + name + "  ";
 
 
-        prefs.edit().putString("Cities", TextUtils.join(",", cityList)).apply();
+        prefs.edit().putString("Cities", cityString).apply();
 
     }
 
     public String getCurrentCity()
     {
         SharedPreferences prefs = this.getMyPreferences();
-        List<String> cityList = Arrays.asList(prefs.getString("Cities", null).split(","));
+        List<String> cityList = Arrays.asList(prefs.getString("Cities", null).split("  "));
 
         return cityList.get(0);
     }
 
+    public void removeCity(Integer position, ListView listView,  Activity activity)
+    {
+        SharedPreferences prefs = this.getMyPreferences();
+
+        String cityString = prefs.getString("Cities", null);
+        String woeidString = prefs.getString("Woeids", null);
+        List<String> cities = Arrays.asList(cityString.split("  "));
+        List<String> woeids = Arrays.asList(woeidString.split("  "));
+
+        String city = cities.get(position) + "  ";
+        String woeid = woeids.get(position) + "  ";
+
+        cityString = cityString.replace(city, "");
+        woeidString = woeidString.replace(woeid, "");
+
+        prefs.edit().putString("Cities", cityString).apply();
+        prefs.edit().putString("Woeids", woeidString).apply();
+
+
+
+        ViewPager vp = (ViewPager) activity.findViewById(R.id.pager);
+        vp.getAdapter().notifyDataSetChanged();
+        this.refreshListViewAdapter(activity);
+
+
+        Toast.makeText(context, "Removed :)", Toast.LENGTH_SHORT).show();
+    }
+
+    public void refreshListViewAdapter(Activity activity)
+    {
+        SharedPreferences prefs = this.getMyPreferences();
+        List<String> cities = Arrays.asList(prefs.getString("Cities", null).split("  "));
+        ArrayAdapter<String> mAdapter = new ArrayAdapter<String>(
+                context,
+                R.layout.list_city,
+                R.id.list_city_textview,
+                cities
+        );
+
+        ListView listView = (ListView) activity.findViewById(R.id.city_listview);
+        listView.setAdapter(mAdapter);
+    }
 }

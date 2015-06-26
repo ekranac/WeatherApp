@@ -58,7 +58,16 @@ public class CityResult {
 
     @Override
     public String toString() {
-        String result = cityName + " [" + country + "]";
+        String result = "";
+
+        if(region==cityName || region==country)
+        {
+            result = cityName + ", " + country;
+        }
+        else
+        {
+            result = cityName + ", " + region + ", " + country;
+        }
 
         return result;
     }

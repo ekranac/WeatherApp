@@ -1,6 +1,7 @@
 package fragments;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -10,10 +11,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 
 import com.example.ziga.weatherapp.R;
+
+import java.util.Arrays;
+import java.util.List;
 
 import adapters.CityAdapter;
 import helpers.OtherHelper;
@@ -32,7 +38,6 @@ public class SearchFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.fragment_search, container, false);
-
 
         LinearLayout mainLayout = (LinearLayout) rootView.findViewById(R.id.search_layout);
         mainLayout.requestFocus(); // Just so the clearFocus() on searchView works, because the method always sets focus back to the first focusable view in activity- to layout in this case
@@ -63,8 +68,9 @@ public class SearchFragment extends Fragment {
                     vp.getAdapter().notifyDataSetChanged();
 
                     String city = parent.getItemAtPosition(position).toString();
-                    Log.i("SELECTED CITY", parent.getItemAtPosition(position).toString());
                     helper.addCityName(city);
+
+                    helper.refreshListViewAdapter(getActivity());
                 }
 
             }

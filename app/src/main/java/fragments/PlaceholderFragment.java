@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -78,7 +79,7 @@ class getWeather extends AsyncTask<Void, Void, Weather>
         }
 
         SharedPreferences prefs = h.getMyPreferences();
-        List<String> list = Arrays.asList(prefs.getString("Woeids", null).split(","));
+        List<String> list = Arrays.asList(prefs.getString("Woeids", null).split("  "));
 
         String url="";
         String woeid="";
@@ -89,7 +90,7 @@ class getWeather extends AsyncTask<Void, Void, Weather>
         {
             woeid = list.get(position-2);
             url = YahooClient.makeWeatherURL(woeid, "c");
-            weather = YahooClient.getWeatherData(woeid, url, yahooHttpConn);
+            weather = YahooClient.getWeatherData(url, yahooHttpConn);
         }
 
         return weather;

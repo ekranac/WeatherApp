@@ -6,7 +6,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,14 +17,10 @@ import android.widget.Toast;
 
 import com.example.ziga.weatherapp.R;
 
-import java.net.HttpURLConnection;
 import java.util.Arrays;
 import java.util.List;
 
-import activities.MainActivity;
 import helpers.OtherHelper;
-import helpers.YahooClient;
-import models.Weather;
 
 
 public class CityListFragment extends Fragment {
@@ -42,11 +37,11 @@ public class CityListFragment extends Fragment {
         final View rootView = inflater.inflate(R.layout.fragment_list, container, false);
         helper = new OtherHelper(getActivity().getBaseContext());
 
-        ListView listView = (ListView) rootView.findViewById(R.id.city_listview);
+        final ListView listView = (ListView) rootView.findViewById(R.id.city_listview);
 
-        SharedPreferences prefs = helper.getMyPreferences();
+        final SharedPreferences prefs = helper.getMyPreferences();
         try {
-            List<String> cities = Arrays.asList(prefs.getString("Cities", null).split(","));
+            List<String> cities = Arrays.asList(prefs.getString("Cities", null).split("  "));
 
             mAdapter = new ArrayAdapter<String>(
                     this.getActivity().getBaseContext(),
@@ -60,26 +55,29 @@ public class CityListFragment extends Fragment {
 
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                new AlertDialog.Builder(getActivity())
-                        .setTitle("Remove city")
-                        .setMessage("Are you sure you want to remove this city?")
-                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                Toast.makeText(getActivity().getBaseContext(), "Removed :)", Toast.LENGTH_SHORT).show();
-                            }
-                        })
+            public boolean onItemLongClick(final AdapterView<?> parent, View view, final int position, long id) {
+                if(position!=0)
+                {
+                    new AlertDialog.Builder(getActivity())
+                            .setTitle("Remove city")
+                            .setMessage("Are you sure you want to remove this city?")
+                            .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    helper.removeCity(position, listView, getActivity());
+                                }
+                            })
 
-                        .setNegativeButton("Nevermind", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                // do nothing
-                            }
-                        })
+                            .setNegativeButton("Nevermind", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    // do nothing
+                                }
+                            })
 
-                        .setIcon(R.mipmap.ic_launcher)
-                        .show();
+                            .setIcon(R.mipmap.ic_launcher)
+                            .show();
+                }
 
                 return false;
             }
