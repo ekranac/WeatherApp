@@ -195,10 +195,16 @@ public class OtherHelper {
         SharedPreferences prefs = this.getMyPreferences();
 
         String cityString = prefs.getString("Cities", null);
-        cityString = cityString + name + "  ";
+        if(!cityString.contains(name))
+        {
+            cityString = cityString + name + "  ";
+            prefs.edit().putString("Cities", cityString).apply();
+        }
+        else
+        {
+            Toast.makeText(context, "Already added " + name, Toast.LENGTH_SHORT).show();
+        }
 
-
-        prefs.edit().putString("Cities", cityString).apply();
 
     }
 

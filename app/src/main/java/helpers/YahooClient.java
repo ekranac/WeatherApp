@@ -142,11 +142,11 @@ public class YahooClient {
 
                         if(weather.forecast.getForecastCount() < 5)
                         {
-                            weather.forecast.setDay(weather.forecast.getDay() + parser.getAttributeValue(null, "day") + ",");
-                            weather.forecast.setDate(weather.forecast.getDate() + parser.getAttributeValue(null, "date") + ",");
-                            weather.forecast.setLow(weather.forecast.getLow() + parser.getAttributeValue(null, "low") + ",");
-                            weather.forecast.setHigh(weather.forecast.getHigh() + parser.getAttributeValue(null, "high") + ",");
-                            weather.forecast.setText(weather.forecast.getText() + parser.getAttributeValue(null, "text") + ",");
+                            weather.forecast.setDay(weather.forecast.getDay() + parser.getAttributeValue(null, "day") + "  ");
+                            weather.forecast.setDate(weather.forecast.getDate() + parser.getAttributeValue(null, "date") + "  ");
+                            weather.forecast.setLow(weather.forecast.getLow() + parser.getAttributeValue(null, "low") + "  ");
+                            weather.forecast.setHigh(weather.forecast.getHigh() + parser.getAttributeValue(null, "high") + "  ");
+                            weather.forecast.setText(weather.forecast.getText() + parser.getAttributeValue(null, "text") + "  ");
                         }
                         else if(weather.forecast.getForecastCount() == 5)
                         {
