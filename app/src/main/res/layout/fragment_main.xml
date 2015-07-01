@@ -11,6 +11,8 @@
         android:layout_centerInParent="true"
         android:id="@+id/progress_bar"/>
 
+
+
     <TextView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"

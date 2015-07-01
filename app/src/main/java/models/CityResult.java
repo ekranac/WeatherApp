@@ -49,10 +49,43 @@ public class CityResult {
     }
 
     public String getCountry() {
+
+        switch(country)
+        {
+            case "United States":
+                country = "US";
+                break;
+            case "United Kingdom":
+                country = "UK";
+                break;
+            case "United Arab Emirates":
+                country = "UAE";
+                break;
+            case "Democratic Republic of Congo":
+                country = "DOC";
+                break;
+        }
+
         return country;
     }
 
     public void setCountry(String country) {
+
+        switch(country)
+        {
+            case "United States":
+                country = "US";
+                break;
+            case "United Kingdom":
+                country = "UK";
+                break;
+            case "United Arab Emirates":
+                country = "UAE";
+                break;
+            case "Democratic Republic of Congo":
+                country = "DOC";
+                break;
+        }
         this.country = country;
     }
 

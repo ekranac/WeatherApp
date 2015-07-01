@@ -70,7 +70,15 @@ public class CityAdapter extends ArrayAdapter<CityResult> implements Filterable 
         }
         else
         {
-            text = cityName + ", " + region + ", " + country;
+            if(region!=null || region!="" || region!="null")
+            {
+                text = cityName + ", " + region + ", " + country;
+            }
+            else
+            {
+                text = cityName + ", " + country;
+            }
+
         }
 
         tv.setText(text);
