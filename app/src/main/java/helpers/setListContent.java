@@ -25,6 +25,7 @@ public class setListContent extends AsyncTask<Void, Void, List<CityListItem>>
     ListView listView;
     OtherHelper helper;
     Context c;
+    Boolean isFahrenheit;
 
     public setListContent(ListView listView, OtherHelper helper, Context c)
     {
@@ -32,6 +33,8 @@ public class setListContent extends AsyncTask<Void, Void, List<CityListItem>>
         this.listView = listView;
         this.helper = helper;
         this.c = c;
+        this.isFahrenheit = helper.getUnits();
+
     }
 
     @Override
@@ -47,7 +50,16 @@ public class setListContent extends AsyncTask<Void, Void, List<CityListItem>>
         {
             String woeid = woeids.get(i);
             String city = cities.get(i);
-            String url = YahooClient.makeWeatherURL(woeid, "c");
+            String url = "";
+
+            if(!isFahrenheit)
+            {
+                url = YahooClient.makeWeatherURL(woeid, "c");
+            }
+            else
+            {
+                url = YahooClient.makeWeatherURL(woeid, "f");
+            }
 
             Weather weather = YahooClient.getWeatherData(url, null);
             CityListItem item = new CityListItem(city, weather.condition.getTemp() + weather.units.getTemperature());

@@ -61,6 +61,7 @@ class getWeather extends AsyncTask<Void, Void, Weather>
     View rootView;
     Integer position;
     OtherHelper h;
+    Boolean isFahrenheit;
 
     public getWeather(Context c, View rootView, Integer position)
     {
@@ -69,6 +70,7 @@ class getWeather extends AsyncTask<Void, Void, Weather>
         this.rootView = rootView;
         this.position = position;
         this.h = new OtherHelper(c);
+        this.isFahrenheit = h.getUnits();
     }
 
     @Override
@@ -89,8 +91,15 @@ class getWeather extends AsyncTask<Void, Void, Weather>
 
         if(position>1)
         {
-            woeid = list.get(position-2);
-            url = YahooClient.makeWeatherURL(woeid, "c");
+            woeid = list.get(position - 2);
+            if(!isFahrenheit)
+            {
+                url = YahooClient.makeWeatherURL(woeid, "c");
+            }
+            else
+            {
+                url = YahooClient.makeWeatherURL(woeid, "f");
+            }
             weather = YahooClient.getWeatherData(url, yahooHttpConn);
         }
 

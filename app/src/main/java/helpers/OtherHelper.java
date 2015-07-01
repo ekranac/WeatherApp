@@ -221,5 +221,12 @@ public class OtherHelper {
         Toast.makeText(context, "Removed :)", Toast.LENGTH_SHORT).show();
     }
 
+    public boolean getUnits()
+    {
+        SharedPreferences prefs = this.getMyPreferences();
+        Boolean isFahrenheit = prefs.getBoolean("isFahrenheit", false);
+
+        return isFahrenheit;
+    }
 
 }

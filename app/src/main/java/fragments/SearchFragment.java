@@ -13,8 +13,11 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.ziga.weatherapp.R;
@@ -49,7 +52,22 @@ public class SearchFragment extends Fragment {
         adpt = new CityAdapter(this.getActivity(), null);
         searchView.setAdapter(adpt);
 
+        Switch mSwitch = (Switch) rootView.findViewById(R.id.units_switch);
+        final TextView tv_unit = (TextView) rootView.findViewById(R.id.tv_unit);
+
         final OtherHelper helper = new OtherHelper(getActivity().getBaseContext());
+
+        Boolean isFahrenheit = helper.getUnits();
+        if(!isFahrenheit)
+        {
+            mSwitch.setChecked(false);
+            tv_unit.setText("°C");
+        }
+        else
+        {
+            mSwitch.setChecked(true);
+            tv_unit.setText("°F");
+        }
 
 
         searchView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -78,6 +96,23 @@ public class SearchFragment extends Fragment {
                     Toast.makeText(getActivity().getBaseContext(), "Added", Toast.LENGTH_SHORT).show();
                 }
 
+            }
+        });
+
+
+        final SharedPreferences prefs = helper.getMyPreferences();
+        mSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                prefs.edit().putBoolean("isFahrenheit", isChecked).apply();
+                if(isChecked)
+                {
+                    tv_unit.setText("°F");
+                }
+                else
+                {
+                    tv_unit.setText("°C");
+                }
             }
         });
 
