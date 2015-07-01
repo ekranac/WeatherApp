@@ -35,87 +35,80 @@ public class OtherHelper {
 
     public void addWoeidToSharedPreferences(String woeid, Integer position)
     {
-        Boolean alreadyExists = false; // To check whether the woeid is already saved in preferences
         SharedPreferences prefs = this.getMyPreferences();
         String woeidString = "";
 
-        if(prefs.getString("Woeids", null)!=null)
+        if(prefs.getString("Woeids", null)==null)
         {
-            woeidString = prefs.getString("Woeids", null);
-            List<String> list = Arrays.asList(woeidString.split("  "));
-            for(String id : list) // Go throught every woeid, check if it's equal to the one you want to add, reposition to ArrayList
-            {
-                if(id.equals(woeid))
-                {
-                    alreadyExists = true;
-                }
-            }
+            prefs.edit().putString("Woeids", woeid + "  ").apply();
         }
-
-
-        if(alreadyExists == false) // Add the NEW woeid only if it doesn't exist
+        else
         {
+
             woeidString = prefs.getString("Woeids", null);
 
-            if(position==null)
+            if(!woeidString.contains(woeid))
             {
-                woeidString = woeidString + woeid + "  ";
+
+                if(position==null)
+                {
+                    woeidString = woeidString + woeid + "  ";
+                }
+
+                else
+                {
+                    if(woeidString==null || woeidString=="")
+                    {
+                        woeidString="";
+                    }
+                    woeidString = woeid + "  " + woeidString;
+                }
+
             }
 
-            else
-            {
-                if(woeidString==null || woeidString=="")
-                {
-                    woeidString="";
-                }
-                woeidString = woeid + "  " + woeidString;
-            }
+            prefs.edit().putString("Woeids", woeidString).apply();
         }
 
-        prefs.edit().putString("Woeids", woeidString).apply();
     }
 
     public void addCityToSharedPreferences(String city, Integer position)
     {
-        Boolean alreadyExists = false;
         SharedPreferences prefs = this.getMyPreferences();
         String cityString = "";
 
-        if(prefs.getString("Cities", null)!=null)
+        if(prefs.getString("Cities", null)==null)
+        {
+            prefs.edit().putString("Cities", city + "  ").apply();
+        }
+        else
         {
             cityString = prefs.getString("Cities", null);
-            List<String> list = Arrays.asList(cityString.split("  "));
-            for(String cityName : list)
+
+            if(!cityString.contains(city))
             {
-                if(cityName.equals(city))
+
+                if(position==null)
                 {
-                    alreadyExists = true;
+                    cityString = cityString + city + "  ";
                 }
+
+                else
+                {
+                    if(cityString==null || cityString=="")
+                    {
+                        cityString="";
+                    }
+                    cityString = city + "  " + cityString;
+                }
+
             }
-        }
-
-
-        if(alreadyExists == false)
-        {
-            cityString = prefs.getString("Woeids", null);
-
-            if(position==null)
-            {
-                cityString = cityString + city + "  ";
-            }
-
             else
             {
-                if(cityString==null || cityString=="")
-                {
-                    cityString="";
-                }
-                cityString = city + "  " + cityString;
+                Toast.makeText(context, "Already added " + city, Toast.LENGTH_SHORT).show();
             }
+
+            prefs.edit().putString("Cities", cityString).apply();
         }
-
-
-        prefs.edit().putString("Cities", cityString).apply();
     }
 
     public int getCityCount()
@@ -190,28 +183,11 @@ public class OtherHelper {
         }
     }
 
-    public void addCityName(String name)
-    {
-        SharedPreferences prefs = this.getMyPreferences();
-
-        String cityString = prefs.getString("Cities", null);
-        if(!cityString.contains(name))
-        {
-            cityString = cityString + name + "  ";
-            prefs.edit().putString("Cities", cityString).apply();
-        }
-        else
-        {
-            Toast.makeText(context, "Already added " + name, Toast.LENGTH_SHORT).show();
-        }
-
-
-    }
-
     public String getCurrentCity()
     {
         SharedPreferences prefs = this.getMyPreferences();
         List<String> cityList = Arrays.asList(prefs.getString("Cities", null).split("  "));
+
 
         return cityList.get(0);
     }
@@ -238,24 +214,11 @@ public class OtherHelper {
 
         ViewPager vp = (ViewPager) activity.findViewById(R.id.pager);
         vp.getAdapter().notifyDataSetChanged();
-        this.refreshListViewAdapter(activity);
+        new setListContent(listView, new OtherHelper(context), context).execute(); // Refresh list
 
 
         Toast.makeText(context, "Removed :)", Toast.LENGTH_SHORT).show();
     }
 
-    public void refreshListViewAdapter(Activity activity)
-    {
-        SharedPreferences prefs = this.getMyPreferences();
-        List<String> cities = Arrays.asList(prefs.getString("Cities", null).split("  "));
-        ArrayAdapter<String> mAdapter = new ArrayAdapter<String>(
-                context,
-                R.layout.list_city,
-                R.id.list_city_textview,
-                cities
-        );
 
-        ListView listView = (ListView) activity.findViewById(R.id.city_listview);
-        listView.setAdapter(mAdapter);
-    }
 }

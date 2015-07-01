@@ -15,6 +15,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.ziga.weatherapp.R;
 
@@ -24,6 +25,7 @@ import java.util.List;
 import adapters.CityAdapter;
 import helpers.OtherHelper;
 import helpers.YahooClient;
+import helpers.setListContent;
 
 
 public class SearchFragment extends Fragment {
@@ -68,9 +70,12 @@ public class SearchFragment extends Fragment {
                     vp.getAdapter().notifyDataSetChanged();
 
                     String city = parent.getItemAtPosition(position).toString();
-                    helper.addCityName(city);
+                    helper.addCityToSharedPreferences(city, null);
 
-                    helper.refreshListViewAdapter(getActivity());
+                    ListView listView = (ListView) getActivity().findViewById(R.id.city_listview);
+                    new setListContent(listView, helper, getActivity().getBaseContext()).execute(); // Refresh list
+
+                    Toast.makeText(getActivity().getBaseContext(), "Added", Toast.LENGTH_SHORT).show();
                 }
 
             }
