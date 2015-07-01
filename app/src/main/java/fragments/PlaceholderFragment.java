@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.ziga.weatherapp.R;
@@ -100,6 +101,10 @@ class getWeather extends AsyncTask<Void, Void, Weather>
     @Override
     protected void onPostExecute(Weather weather)
     {
+
+        ProgressBar bar = (ProgressBar) rootView.findViewById(R.id.progress_bar);
+        bar.setVisibility(View.INVISIBLE);
+
         if(position>1)
         {
             TextView tv_city = (TextView) rootView.findViewById(R.id.tv_city);

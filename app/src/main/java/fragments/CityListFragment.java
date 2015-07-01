@@ -58,7 +58,7 @@ public class CityListFragment extends Fragment {
             listView.setAdapter(mAdapter);
         } catch(Throwable t) {}*/
 
-        new setListContent(listView, helper, getActivity().getBaseContext()).execute();
+        new setListContent(listView, helper, getActivity()).execute();
 
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
