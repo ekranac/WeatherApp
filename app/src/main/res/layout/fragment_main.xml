@@ -48,17 +48,16 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/tv_condition"
                     android:textSize="35sp"
-                    android:layout_centerHorizontal="true"
-                    android:text="Clear"/>
+                    android:layout_centerHorizontal="true" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/tv_city"
                     android:textSize="25sp"
+                    android:text="Loading..."
                     android:layout_centerHorizontal="true"
-                    android:layout_below="@id/tv_condition"
-                    android:text="City Name, Country"/>
+                    android:layout_below="@id/tv_condition" />
 
 
                 <!-- Start forecast layout half (banner) -->
@@ -81,16 +80,12 @@
                         <!-- This one manipulates the height of the banner -->
                         <TextView
                             android:layout_width="fill_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="fill_parent"
+                            android:gravity="center_vertical"
+                            android:paddingBottom="10dp"
+                            android:paddingTop="10dp"
                             android:id="@+id/tv_current_temp"
-                            android:textSize="35sp"
-                            android:text="31°C"/>
-
-                        <TextView
-                            android:layout_width="fill_parent"
-                            android:layout_height="wrap_content"
-                            android:textSize="20sp"
-                            android:text="H 34  L 14"/>
+                            android:textSize="45sp" />
 
                     </LinearLayout>
 
@@ -111,9 +106,9 @@
                             android:layout_width="fill_parent"
                             android:layout_height="0dp"
                             android:layout_weight="0.36"
-                            android:text="Thu"
                             android:textSize="20sp"
-                            android:gravity="center_horizontal"/>
+                            android:gravity="center_horizontal"
+                            android:id="@+id/tv_forecast_d1" />
 
                     </LinearLayout>
 
@@ -134,9 +129,9 @@
                             android:layout_width="fill_parent"
                             android:layout_height="0dp"
                             android:layout_weight="0.36"
-                            android:text="Fri"
                             android:textSize="20sp"
-                            android:gravity="center_horizontal"/>
+                            android:gravity="center_horizontal"
+                            android:id="@+id/tv_forecast_d2" />
 
                     </LinearLayout>
 
@@ -157,9 +152,9 @@
                             android:layout_width="fill_parent"
                             android:layout_height="0dp"
                             android:layout_weight="0.36"
-                            android:text="Sat"
                             android:textSize="20sp"
-                            android:gravity="center_horizontal"/>
+                            android:gravity="center_horizontal"
+                            android:id="@+id/tv_forecast_d3" />
 
                     </LinearLayout>
 

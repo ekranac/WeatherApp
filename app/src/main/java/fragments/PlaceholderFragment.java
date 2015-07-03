@@ -120,6 +120,10 @@ class getWeather extends AsyncTask<Void, Void, Weather>
             TextView tv_temp = (TextView) rootView.findViewById(R.id.tv_current_temp);
             TextView tv_condition = (TextView) rootView.findViewById(R.id.tv_condition);
 
+            TextView tv_forecast_d1 = (TextView) rootView.findViewById(R.id.tv_forecast_d1);
+            TextView tv_forecast_d2 = (TextView) rootView.findViewById(R.id.tv_forecast_d2);
+            TextView tv_forecast_d3 = (TextView) rootView.findViewById(R.id.tv_forecast_d3);
+
             if(position==2)
             {
                 tv_city.setText(h.getCurrentCity());
@@ -130,6 +134,12 @@ class getWeather extends AsyncTask<Void, Void, Weather>
             }
             tv_temp.setText(weather.condition.getTemp() + weather.units.getTemperature());
             tv_condition.setText(weather.condition.getText());
+
+            List<String> forecast_day = Arrays.asList(weather.forecast.getDay().split("  "));
+            tv_forecast_d1.setText(forecast_day.get(1));
+            tv_forecast_d2.setText(forecast_day.get(2));
+            tv_forecast_d3.setText(forecast_day.get(3));
+
 
         }
 

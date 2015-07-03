@@ -1,6 +1,7 @@
 package fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -113,6 +114,12 @@ public class SearchFragment extends Fragment {
                 {
                     tv_unit.setText("°C");
                 }
+
+                // Restart app to refresh units
+                Intent i = getActivity().getBaseContext().getPackageManager()
+                        .getLaunchIntentForPackage(getActivity().getBaseContext().getPackageName());
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(i);
             }
         });
 
