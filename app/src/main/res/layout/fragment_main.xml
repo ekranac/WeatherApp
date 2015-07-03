@@ -19,19 +19,28 @@
         android:weightSum="1">
 
         <!-- Start icon layout half -->
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="fill_parent"
             android:layout_height="0dp"
-            android:gravity="center"
             android:layout_weight="0.5">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="35sp"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="10dp"
+                android:text="+"
+                android:id="@+id/tv_go2search"/>
 
             <ImageView
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:src="@drawable/abc_ic_go_search_api_mtrl_alpha"
+                android:layout_centerInParent="true"
                 android:id="@+id/weather_icon"/>
 
-        </LinearLayout>
+        </RelativeLayout>
         <!-- End icon layout half -->
 
         <!-- Start weather layout half -->

@@ -6,6 +6,8 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,7 +16,9 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Switch;
@@ -45,31 +49,16 @@ public class SearchFragment extends Fragment {
                              Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.fragment_search, container, false);
 
-        LinearLayout mainLayout = (LinearLayout) rootView.findViewById(R.id.search_layout);
-        mainLayout.requestFocus(); // Just so the clearFocus() on searchView works, because the method always sets focus back to the first focusable view in activity- to layout in this case
+        FrameLayout mainLayout = (FrameLayout) rootView.findViewById(R.id.search_layout);
+        mainLayout.requestFocus(); // Just so the clearFocus() on searchView works, because the method always sets focus back to the initially focused view in activity- to layout in this case
 
 
+        // Set adapter to searchView
         final AutoCompleteTextView searchView = (AutoCompleteTextView) rootView.findViewById(R.id.city_search);
         adpt = new CityAdapter(this.getActivity(), null);
         searchView.setAdapter(adpt);
 
-        Switch mSwitch = (Switch) rootView.findViewById(R.id.units_switch);
-        final TextView tv_unit = (TextView) rootView.findViewById(R.id.tv_unit);
-
         final OtherHelper helper = new OtherHelper(getActivity().getBaseContext());
-
-        Boolean isFahrenheit = helper.getUnits();
-        if(!isFahrenheit)
-        {
-            mSwitch.setChecked(false);
-            tv_unit.setText("°C");
-        }
-        else
-        {
-            mSwitch.setChecked(true);
-            tv_unit.setText("°F");
-        }
-
 
         searchView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -101,6 +90,20 @@ public class SearchFragment extends Fragment {
         });
 
 
+        Switch mSwitch = (Switch) rootView.findViewById(R.id.units_switch);
+        final TextView tv_unit = (TextView) rootView.findViewById(R.id.tv_unit);
+        Boolean isFahrenheit = helper.getUnits();
+        if(!isFahrenheit)
+        {
+            mSwitch.setChecked(false);
+            tv_unit.setText("°C");
+        }
+        else
+        {
+            mSwitch.setChecked(true);
+            tv_unit.setText("°F");
+        }
+
         final SharedPreferences prefs = helper.getMyPreferences();
         mSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -120,6 +123,38 @@ public class SearchFragment extends Fragment {
                         .getLaunchIntentForPackage(getActivity().getBaseContext().getPackageName());
                 i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(i);
+            }
+        });
+
+        final Button btn_clearSearch = (Button) rootView.findViewById(R.id.btn_clear_search);
+        searchView.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if(searchView.length()==0)
+                {
+                    btn_clearSearch.setVisibility(View.INVISIBLE);
+                }
+                else
+                {
+                    btn_clearSearch.setVisibility(View.VISIBLE);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        btn_clearSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                searchView.setText("");
             }
         });
 

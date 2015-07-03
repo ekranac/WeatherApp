@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.ziga.weatherapp.R;
+
+import org.w3c.dom.Text;
 
 import java.net.HttpURLConnection;
 import java.util.Arrays;
@@ -47,6 +50,15 @@ public class PlaceholderFragment extends Fragment {
         int sectionNumber = getArguments().getInt("section_number");
 
         Context c = getActivity().getBaseContext();
+
+        TextView tv_go2search = (TextView) rootView.findViewById(R.id.tv_go2search);
+        tv_go2search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ViewPager mViewPager = (ViewPager) getActivity().findViewById(R.id.pager);
+                mViewPager.setCurrentItem(1, true);
+            }
+        });
 
         new getWeather(c, rootView, sectionNumber).execute();
         return rootView;
