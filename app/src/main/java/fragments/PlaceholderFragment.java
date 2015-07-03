@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -136,6 +137,8 @@ class getWeather extends AsyncTask<Void, Void, Weather>
             TextView tv_forecast_d2 = (TextView) rootView.findViewById(R.id.tv_forecast_d2);
             TextView tv_forecast_d3 = (TextView) rootView.findViewById(R.id.tv_forecast_d3);
 
+            ImageView weatherIcon = (ImageView) rootView.findViewById(R.id.weather_icon);
+
             if(position==2)
             {
                 tv_city.setText(h.getCurrentCity());
@@ -152,6 +155,24 @@ class getWeather extends AsyncTask<Void, Void, Weather>
             tv_forecast_d2.setText(forecast_day.get(2));
             tv_forecast_d3.setText(forecast_day.get(3));
 
+
+            // TODO
+            // Add final icons, cases for all codes
+            switch(weather.condition.getCode())
+            {
+                case "32":
+                    weatherIcon.setImageResource(R.mipmap.sun);
+                    break;
+
+                case "30":
+                case "34":
+                    weatherIcon.setImageResource(R.mipmap.partly_cloudy);
+                    break;
+
+                default:
+                    weatherIcon.setImageResource(R.mipmap.ic_launcher);
+                    break;
+            }
 
         }
 

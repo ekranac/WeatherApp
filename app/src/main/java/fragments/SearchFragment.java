@@ -8,18 +8,15 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -27,12 +24,8 @@ import android.widget.Toast;
 
 import com.example.ziga.weatherapp.R;
 
-import java.util.Arrays;
-import java.util.List;
-
 import adapters.CityAdapter;
 import helpers.OtherHelper;
-import helpers.YahooClient;
 import helpers.setListContent;
 
 

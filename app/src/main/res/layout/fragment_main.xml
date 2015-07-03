@@ -34,9 +34,8 @@
                 android:id="@+id/tv_go2search"/>
 
             <ImageView
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:src="@drawable/abc_ic_go_search_api_mtrl_alpha"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:id="@+id/weather_icon"/>
 
@@ -109,7 +108,7 @@
                             android:layout_width="fill_parent"
                             android:layout_height="0dp"
                             android:layout_weight="0.64"
-                            android:src="@drawable/abc_ic_go_search_api_mtrl_alpha"/>
+                            android:src="@mipmap/sun"/>
 
                         <TextView
                             android:layout_width="fill_parent"
@@ -132,7 +131,7 @@
                             android:layout_width="fill_parent"
                             android:layout_height="0dp"
                             android:layout_weight="0.64"
-                            android:src="@drawable/abc_ic_go_search_api_mtrl_alpha"/>
+                            android:src="@mipmap/sun"/>
 
                         <TextView
                             android:layout_width="fill_parent"
@@ -155,7 +154,7 @@
                             android:layout_width="fill_parent"
                             android:layout_height="0dp"
                             android:layout_weight="0.64"
-                            android:src="@drawable/abc_ic_go_search_api_mtrl_alpha"/>
+                            android:src="@mipmap/sun"/>
 
                         <TextView
                             android:layout_width="fill_parent"

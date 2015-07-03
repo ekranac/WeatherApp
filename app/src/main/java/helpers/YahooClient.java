@@ -122,6 +122,7 @@ public class YahooClient {
                     else if (tagName.equals("yweather:condition")) {
                         weather.condition.setTemp(parser.getAttributeValue(null, "temp"));
                         weather.condition.setText(parser.getAttributeValue(null, "text"));
+                        weather.condition.setCode(parser.getAttributeValue(null, "code"));
                     }
 
                     else if (tagName.equals("yweather:units")) {

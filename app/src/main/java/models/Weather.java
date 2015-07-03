@@ -178,6 +178,7 @@ public class Weather {
     {
         private String text;
         private String temp;
+        private String code;
 
         public String getText() {
             return text;
@@ -193,6 +194,14 @@ public class Weather {
 
         public void setTemp(String temp) {
             this.temp = temp;
+        }
+
+        public String getCode() {
+            return code;
+        }
+
+        public void setCode(String code) {
+            this.code = code;
         }
     }
 
