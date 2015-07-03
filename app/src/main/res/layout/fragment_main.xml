@@ -11,23 +11,171 @@
         android:layout_centerInParent="true"
         android:id="@+id/progress_bar"/>
 
-
-
-    <TextView
+    <!-- Start visible layout -->
+    <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/tv_city"/>
+        android:layout_height="fill_parent"
+        android:orientation="vertical"
+        android:weightSum="1">
 
-    <TextView
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/tv_current_temp"
-        android:layout_below="@id/tv_city"/>
+        <!-- Start icon layout half -->
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:gravity="center"
+            android:layout_weight="0.5">
 
-    <TextView
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/tv_condition"
-        android:layout_below="@id/tv_current_temp"/>
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:src="@drawable/abc_ic_go_search_api_mtrl_alpha"
+                android:id="@+id/weather_icon"/>
+
+        </LinearLayout>
+        <!-- End icon layout half -->
+
+        <!-- Start weather layout half -->
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.5">
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tv_condition"
+                    android:textSize="35sp"
+                    android:layout_centerHorizontal="true"
+                    android:text="Clear"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tv_city"
+                    android:textSize="25sp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_below="@id/tv_condition"
+                    android:text="City Name, Country"/>
+
+
+                <!-- Start forecast layout half (banner) -->
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tv_city"
+                    android:layout_marginTop="50dp"
+                    android:paddingLeft="20dp"
+                    android:orientation="horizontal"
+                    android:weightSum="1"
+                    android:background="@color/white">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.32"
+                        android:orientation="vertical">
+
+                        <!-- This one manipulates the height of the banner -->
+                        <TextView
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/tv_current_temp"
+                            android:textSize="35sp"
+                            android:text="31°C"/>
+
+                        <TextView
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:textSize="20sp"
+                            android:text="H 34  L 14"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.22"
+                        android:orientation="vertical"
+                        android:weightSum="1">
+
+                        <ImageView
+                            android:layout_width="fill_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="0.64"
+                            android:src="@drawable/abc_ic_go_search_api_mtrl_alpha"/>
+
+                        <TextView
+                            android:layout_width="fill_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="0.36"
+                            android:text="Thu"
+                            android:textSize="20sp"
+                            android:gravity="center_horizontal"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.22"
+                        android:orientation="vertical"
+                        android:weightSum="1">
+
+                        <ImageView
+                            android:layout_width="fill_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="0.64"
+                            android:src="@drawable/abc_ic_go_search_api_mtrl_alpha"/>
+
+                        <TextView
+                            android:layout_width="fill_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="0.36"
+                            android:text="Fri"
+                            android:textSize="20sp"
+                            android:gravity="center_horizontal"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.22"
+                        android:orientation="vertical"
+                        android:weightSum="1">
+
+                        <ImageView
+                            android:layout_width="fill_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="0.64"
+                            android:src="@drawable/abc_ic_go_search_api_mtrl_alpha"/>
+
+                        <TextView
+                            android:layout_width="fill_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="0.36"
+                            android:text="Sat"
+                            android:textSize="20sp"
+                            android:gravity="center_horizontal"/>
+
+                    </LinearLayout>
+
+
+
+                </LinearLayout>
+                <!-- End forecast layout half (banner) -->
+
+            </RelativeLayout>
+        </LinearLayout>
+        <!-- End weather layout half -->
+
+
+    </LinearLayout>
+    <!-- End visible layout -->
+
+
 
 </RelativeLayout>
