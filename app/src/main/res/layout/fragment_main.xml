@@ -77,6 +77,7 @@
                     android:paddingLeft="20dp"
                     android:orientation="horizontal"
                     android:weightSum="1"
+                    android:id="@+id/white_banner"
                     android:background="@color/white">
 
                     <LinearLayout
@@ -90,8 +91,7 @@
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
                             android:id="@+id/tv_current_temp"
-                            android:textSize="45sp"
-                            android:text="35°C"/>
+                            android:textSize="45sp"/>
 
                         <TextView
                             android:layout_width="fill_parent"
