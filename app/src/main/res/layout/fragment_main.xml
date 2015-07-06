@@ -88,12 +88,17 @@
                         <!-- This one manipulates the height of the banner -->
                         <TextView
                             android:layout_width="fill_parent"
-                            android:layout_height="fill_parent"
-                            android:gravity="center_vertical"
-                            android:paddingBottom="10dp"
-                            android:paddingTop="10dp"
+                            android:layout_height="wrap_content"
                             android:id="@+id/tv_current_temp"
-                            android:textSize="45sp" />
+                            android:textSize="45sp"
+                            android:text="35°C"/>
+
+                        <TextView
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:textSize="20sp"
+                            android:id="@+id/tv_hi_lo"
+                            android:text="H 34  L 14"/>
 
                     </LinearLayout>
 
