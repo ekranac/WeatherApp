@@ -113,7 +113,8 @@
                             android:layout_width="fill_parent"
                             android:layout_height="0dp"
                             android:layout_weight="0.64"
-                            android:src="@mipmap/sun"/>
+                            android:src="@mipmap/sun"
+                            android:id="@+id/forecast_image_one"/>
 
                         <TextView
                             android:layout_width="fill_parent"
@@ -136,7 +137,8 @@
                             android:layout_width="fill_parent"
                             android:layout_height="0dp"
                             android:layout_weight="0.64"
-                            android:src="@mipmap/sun"/>
+                            android:src="@mipmap/sun"
+                            android:id="@+id/forecast_image_two"/>
 
                         <TextView
                             android:layout_width="fill_parent"
@@ -159,7 +161,8 @@
                             android:layout_width="fill_parent"
                             android:layout_height="0dp"
                             android:layout_weight="0.64"
-                            android:src="@mipmap/sun"/>
+                            android:src="@mipmap/sun"
+                            android:id="@+id/forecast_image_three"/>
 
                         <TextView
                             android:layout_width="fill_parent"

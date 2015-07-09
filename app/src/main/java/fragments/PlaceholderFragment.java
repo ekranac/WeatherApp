@@ -142,6 +142,10 @@ class getWeather extends AsyncTask<Void, Void, Weather>
             TextView tv_forecast_d3 = (TextView) rootView.findViewById(R.id.tv_forecast_d3);
 
             ImageView weatherIcon = (ImageView) rootView.findViewById(R.id.weather_icon);
+            ImageView forecastIconOne = (ImageView) rootView.findViewById(R.id.forecast_image_one);
+            ImageView forecastIconTwo = (ImageView) rootView.findViewById(R.id.forecast_image_two);
+            ImageView forecastIconThree = (ImageView) rootView.findViewById(R.id.forecast_image_three);
+
 
             if(position==2)
             {
