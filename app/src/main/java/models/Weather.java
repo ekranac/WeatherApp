@@ -212,6 +212,7 @@ public class Weather {
         private String low = "";
         private String high = "";
         private String text = "";
+        private String code = "";
         private Integer forecastCount = 0;
 
         public String getDay() {
@@ -264,6 +265,14 @@ public class Weather {
 
         public void addUpForecast(){
             this.forecastCount+=1;
+        }
+
+        public String getCode() {
+            return code;
+        }
+
+        public void setCode(String code) {
+            this.code = code;
         }
     }
 

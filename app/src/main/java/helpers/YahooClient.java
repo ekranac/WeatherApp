@@ -147,6 +147,10 @@ public class YahooClient {
                             weather.forecast.setLow(weather.forecast.getLow() + parser.getAttributeValue(null, "low") + "  ");
                             weather.forecast.setHigh(weather.forecast.getHigh() + parser.getAttributeValue(null, "high") + "  ");
                             weather.forecast.setText(weather.forecast.getText() + parser.getAttributeValue(null, "text") + "  ");
+                            if(weather.forecast.getForecastCount() < 3)
+                            {
+                                weather.forecast.setCode(weather.forecast.getText() + parser.getAttributeValue(null, "code") + "  ");
+                            }
                         }
                         else if(weather.forecast.getForecastCount() == 5)
                         {
@@ -155,6 +159,10 @@ public class YahooClient {
                             weather.forecast.setLow(weather.forecast.getLow() + parser.getAttributeValue(null, "low"));
                             weather.forecast.setHigh(weather.forecast.getHigh() + parser.getAttributeValue(null, "high"));
                             weather.forecast.setText(weather.forecast.getText() + parser.getAttributeValue(null, "text"));
+                            if(weather.forecast.getForecastCount() < 3)
+                            {
+                                weather.forecast.setCode(weather.forecast.getText() + parser.getAttributeValue(null, "code"));
+                            }
                         }
                     }
 
