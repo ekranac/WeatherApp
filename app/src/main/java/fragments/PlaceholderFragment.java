@@ -7,6 +7,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -167,21 +168,46 @@ class getWeather extends AsyncTask<Void, Void, Weather>
 
             // TODO
             // Add final icons, cases for all codes
-            switch(weather.condition.getCode())
+            List<String> codes = Arrays.asList((weather.condition.getCode() + "  " + weather.forecast.getCode()).split("  "));
+            String code;
+            int resource;
+            for(int i = 0; i < 4; i++)
             {
-                case "32":
-                    weatherIcon.setImageResource(R.mipmap.sun);
-                    break;
+                code = codes.get(i);
 
-                case "30":
-                case "34":
-                    weatherIcon.setImageResource(R.mipmap.partly_cloudy);
-                    break;
+                switch(code)
+                {
+                    case "32":
+                        resource = R.mipmap.sun;
+                        break;
 
-                default:
-                    weatherIcon.setImageResource(R.mipmap.ic_launcher);
-                    break;
+                    case "30":
+                    case "34":
+                        resource = R.mipmap.partly_cloudy;
+                        break;
+
+                    default:
+                        resource = R.mipmap.ic_launcher;
+                        break;
+                }
+
+                switch(i)
+                {
+                    case 0:
+                        weatherIcon.setImageResource(resource);
+                        break;
+                    case 1:
+                        forecastIconOne.setImageResource(resource);
+                        break;
+                    case 2:
+                        forecastIconTwo.setImageResource(resource);
+                        break;
+                    case 3:
+                        forecastIconThree.setImageResource(resource);
+                        break;
+                }
             }
+
 
         }
 
