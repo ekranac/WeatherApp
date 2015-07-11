@@ -3,6 +3,7 @@ package helpers;
 import android.content.Context;
 import android.location.Location;
 import android.location.LocationManager;
+import android.util.Log;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserFactory;
@@ -193,8 +194,8 @@ public class YahooClient {
         return YAHOO_CURRENT_LOCATION_URL + lat + "%2C" + lon + "%22%20and%20gflags%3D%22R%22&format=xml";
     }
 
-    public static Location getLastKnownLocation(LocationManager mLocationManager, Context c) {
-        mLocationManager = (LocationManager) c.getApplicationContext().getSystemService(c.LOCATION_SERVICE);
+    public static Location getLastKnownLocation(Context c) {
+        LocationManager mLocationManager = (LocationManager) c.getApplicationContext().getSystemService(c.LOCATION_SERVICE);
         List<String> providers = mLocationManager.getProviders(true);
         Location bestLocation = null;
         for (String provider : providers) {
@@ -207,7 +208,54 @@ public class YahooClient {
                 bestLocation = l;
             }
         }
+
         return bestLocation;
+    }
+
+    public static void setCurrentLocationData(Context context)
+    {
+        OtherHelper helper = new OtherHelper(context);
+        Location location = YahooClient.getLastKnownLocation(context);
+        String latitude = Double.toString(location.getLatitude());
+        String longitude = Double.toString(location.getLongitude());
+
+        String url = YahooClient.makeCurrentLocationURL(latitude, longitude); // Creates URL based on current location
+        Log.i("CURRENT URL", url);
+        HttpURLConnection yahooHttpConn = null;
+
+        try {
+            yahooHttpConn = (HttpURLConnection) (new URL(url)).openConnection();
+            yahooHttpConn.connect();
+            XmlPullParser parser = XmlPullParserFactory.newInstance().newPullParser();
+            parser.setInput(new InputStreamReader(yahooHttpConn.getInputStream()));
+
+            int event = parser.getEventType();
+
+            String tagName = null;
+            String currentTag = null;
+            while(event!=XmlPullParser.END_DOCUMENT) // Loop through XML data
+            {
+                tagName = parser.getName();
+
+                if (event == XmlPullParser.START_TAG) {
+                    currentTag = tagName;
+                }
+                else if(event == XmlPullParser.TEXT)
+                {
+                    if("woeid".equals(currentTag)) // If tag is woeid
+                    {
+                        helper.addWoeidToSharedPreferences(parser.getText(), 0); // Add the woeid to shared preferences
+                    }
+                    else if("city".equals(currentTag))
+                    {
+                        helper.addCityToSharedPreferences(parser.getText(), 0);
+                    }
+                }
+                event = parser.next();
+            }
+        }catch(Throwable t) {
+            t.printStackTrace();
+        }
     }
 }
 

@@ -25,6 +25,9 @@ import java.util.List;
 public class OtherHelper {
 
     Context context;
+    private String WOEIDS = "Woeids";
+    private String CITIES = "Cities";
+
 
     public OtherHelper(Context context)
     {
@@ -37,14 +40,14 @@ public class OtherHelper {
         SharedPreferences prefs = this.getMyPreferences();
         String woeidString = "";
 
-        if(prefs.getString("Woeids", null)==null)
+        if(prefs.getString(WOEIDS, null)==null)
         {
-            prefs.edit().putString("Woeids", woeid + "  ").apply();
+            prefs.edit().putString(WOEIDS, woeid + "  ").apply();
         }
         else
         {
 
-            woeidString = prefs.getString("Woeids", null);
+            woeidString = prefs.getString(WOEIDS, null);
 
             if(!woeidString.contains(woeid))
             {
@@ -65,7 +68,7 @@ public class OtherHelper {
 
             }
 
-            prefs.edit().putString("Woeids", woeidString).apply();
+            prefs.edit().putString(WOEIDS, woeidString).apply();
         }
 
     }
@@ -75,13 +78,13 @@ public class OtherHelper {
         SharedPreferences prefs = this.getMyPreferences();
         String cityString = "";
 
-        if(prefs.getString("Cities", null)==null)
+        if(prefs.getString(CITIES, null)==null)
         {
-            prefs.edit().putString("Cities", city + "  ").apply();
+            prefs.edit().putString(CITIES, city + "  ").apply();
         }
         else
         {
-            cityString = prefs.getString("Cities", null);
+            cityString = prefs.getString(CITIES, null);
 
             if(!cityString.contains(city))
             {
@@ -106,7 +109,7 @@ public class OtherHelper {
                 Toast.makeText(context, "Already added " + city, Toast.LENGTH_SHORT).show();
             }
 
-            prefs.edit().putString("Cities", cityString).apply();
+            prefs.edit().putString(CITIES, cityString).apply();
         }
     }
 
@@ -115,7 +118,7 @@ public class OtherHelper {
         SharedPreferences prefs = this.getMyPreferences();
         List<String> woeidsList = null;
         try {
-            woeidsList = Arrays.asList(prefs.getString("Woeids", null).split("  "));
+            woeidsList = Arrays.asList(prefs.getString(WOEIDS, null).split("  "));
         } catch(Throwable t) {}
 
         if(woeidsList==null || woeidsList.size()==1)
@@ -136,52 +139,6 @@ public class OtherHelper {
         return prefs;
     }
 
-    public void setCurrentLocationData()
-    {
-        LocationManager lm = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
-        Location location = YahooClient.getLastKnownLocation(lm, context);
-        String latitude = Double.toString(location.getLatitude());
-        String longitude = Double.toString(location.getLongitude());
-
-        String url = YahooClient.makeCurrentLocationURL(latitude, longitude); // Creates URL based on current location
-        Log.i("CURRENT URL", url);
-        HttpURLConnection yahooHttpConn = null;
-
-        try {
-            yahooHttpConn = (HttpURLConnection) (new URL(url)).openConnection();
-            yahooHttpConn.connect();
-            XmlPullParser parser = XmlPullParserFactory.newInstance().newPullParser();
-            parser.setInput(new InputStreamReader(yahooHttpConn.getInputStream()));
-
-            int event = parser.getEventType();
-
-            String tagName = null;
-            String currentTag = null;
-            while(event!=XmlPullParser.END_DOCUMENT) // Loop through XML data
-            {
-                tagName = parser.getName();
-
-                if (event == XmlPullParser.START_TAG) {
-                    currentTag = tagName;
-                }
-                else if(event == XmlPullParser.TEXT)
-                {
-                    if("woeid".equals(currentTag)) // If tag is woeid
-                    {
-                        this.addWoeidToSharedPreferences(parser.getText(), 0); // Add the woeid to shared preferences
-                    }
-                    else if("city".equals(currentTag))
-                    {
-                        this.addCityToSharedPreferences(parser.getText(), 0);
-                    }
-                }
-                event = parser.next();
-            }
-        }catch(Throwable t) {
-            t.printStackTrace();
-        }
-    }
-
     public String getCurrentCity()
     {
         SharedPreferences prefs = this.getMyPreferences();
@@ -195,8 +152,8 @@ public class OtherHelper {
     {
         SharedPreferences prefs = this.getMyPreferences();
 
-        String cityString = prefs.getString("Cities", null);
-        String woeidString = prefs.getString("Woeids", null);
+        String cityString = prefs.getString(CITIES, null);
+        String woeidString = prefs.getString(WOEIDS, null);
         List<String> cities = Arrays.asList(cityString.split("  "));
         List<String> woeids = Arrays.asList(woeidString.split("  "));
 
@@ -206,8 +163,8 @@ public class OtherHelper {
         cityString = cityString.replace(city, "");
         woeidString = woeidString.replace(woeid, "");
 
-        prefs.edit().putString("Cities", cityString).apply();
-        prefs.edit().putString("Woeids", woeidString).apply();
+        prefs.edit().putString(CITIES, cityString).apply();
+        prefs.edit().putString(WOEIDS, woeidString).apply();
 
 
 

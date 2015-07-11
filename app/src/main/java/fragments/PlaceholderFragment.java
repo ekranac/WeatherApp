@@ -95,7 +95,7 @@ class getWeather extends AsyncTask<Void, Void, Weather>
     {
         if(position==2)
         {
-            h.setCurrentLocationData();
+            YahooClient.setCurrentLocationData(c);
         }
 
         SharedPreferences prefs = h.getMyPreferences();
