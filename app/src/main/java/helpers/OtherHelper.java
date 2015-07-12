@@ -3,30 +3,23 @@ package helpers;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.location.Location;
-import android.location.LocationManager;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.ziga.weatherapp.R;
 
-import org.xmlpull.v1.XmlPullParser;
-import org.xmlpull.v1.XmlPullParserFactory;
-
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 
 
 public class OtherHelper {
 
     Context context;
-    private String WOEIDS = "Woeids";
-    private String CITIES = "Cities";
+    private String PREF_KEY_WOEIDS = "Woeids";
+    private String PREF_KEY_CITIES = "Cities";
 
 
     public OtherHelper(Context context)
@@ -40,16 +33,16 @@ public class OtherHelper {
         SharedPreferences prefs = this.getMyPreferences();
         String woeidString = "";
 
-        if(prefs.getString(WOEIDS, null)==null)
+        if(prefs.getString(PREF_KEY_WOEIDS, null)==null) // If woeids in prefrences equals null
         {
-            prefs.edit().putString(WOEIDS, woeid + "  ").apply();
+            prefs.edit().putString(PREF_KEY_WOEIDS, woeid + "  ").apply(); // Simply add woeid, without checking if it already exists
         }
         else
         {
 
-            woeidString = prefs.getString(WOEIDS, null);
+            woeidString = prefs.getString(PREF_KEY_WOEIDS, null);
 
-            if(!woeidString.contains(woeid))
+            if(!woeidString.toLowerCase().contains(woeid.toLowerCase()))
             {
 
                 if(position==null)
@@ -68,7 +61,7 @@ public class OtherHelper {
 
             }
 
-            prefs.edit().putString(WOEIDS, woeidString).apply();
+            prefs.edit().putString(PREF_KEY_WOEIDS, woeidString).apply();
         }
 
     }
@@ -78,13 +71,15 @@ public class OtherHelper {
         SharedPreferences prefs = this.getMyPreferences();
         String cityString = "";
 
-        if(prefs.getString(CITIES, null)==null)
+        if(prefs.getString(PREF_KEY_CITIES, null)==null)
         {
-            prefs.edit().putString(CITIES, city + "  ").apply();
+            prefs.edit().putString(PREF_KEY_CITIES, city + "  ").apply();
+            // TODO - StringSet ???
+            // Set<String> list = prefs.getStringSet("set", null);
         }
         else
         {
-            cityString = prefs.getString(CITIES, null);
+            cityString = prefs.getString(PREF_KEY_CITIES, null);
 
             if(!cityString.contains(city))
             {
@@ -109,7 +104,7 @@ public class OtherHelper {
                 Toast.makeText(context, "Already added " + city, Toast.LENGTH_SHORT).show();
             }
 
-            prefs.edit().putString(CITIES, cityString).apply();
+            prefs.edit().putString(PREF_KEY_CITIES, cityString).apply();
         }
     }
 
@@ -118,7 +113,7 @@ public class OtherHelper {
         SharedPreferences prefs = this.getMyPreferences();
         List<String> woeidsList = null;
         try {
-            woeidsList = Arrays.asList(prefs.getString(WOEIDS, null).split("  "));
+            woeidsList = Arrays.asList(prefs.getString(PREF_KEY_WOEIDS, null).split("  "));
         } catch(Throwable t) {}
 
         if(woeidsList==null || woeidsList.size()==1)
@@ -152,8 +147,8 @@ public class OtherHelper {
     {
         SharedPreferences prefs = this.getMyPreferences();
 
-        String cityString = prefs.getString(CITIES, null);
-        String woeidString = prefs.getString(WOEIDS, null);
+        String cityString = prefs.getString(PREF_KEY_CITIES, null);
+        String woeidString = prefs.getString(PREF_KEY_WOEIDS, null);
         List<String> cities = Arrays.asList(cityString.split("  "));
         List<String> woeids = Arrays.asList(woeidString.split("  "));
 
@@ -163,8 +158,8 @@ public class OtherHelper {
         cityString = cityString.replace(city, "");
         woeidString = woeidString.replace(woeid, "");
 
-        prefs.edit().putString(CITIES, cityString).apply();
-        prefs.edit().putString(WOEIDS, woeidString).apply();
+        prefs.edit().putString(PREF_KEY_CITIES, cityString).apply();
+        prefs.edit().putString(PREF_KEY_WOEIDS, woeidString).apply();
 
 
 
