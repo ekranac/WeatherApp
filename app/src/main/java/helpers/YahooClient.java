@@ -212,10 +212,9 @@ public class YahooClient {
         return bestLocation;
     }
 
-    public static void setCurrentLocationData(Context context)
+    public static void setCurrentLocationData(Context context, Location location)
     {
         OtherHelper helper = new OtherHelper(context);
-        Location location = YahooClient.getLastKnownLocation(context);
         String latitude = Double.toString(location.getLatitude());
         String longitude = Double.toString(location.getLongitude());
 

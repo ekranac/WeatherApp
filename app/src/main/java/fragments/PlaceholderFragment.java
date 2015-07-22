@@ -96,11 +96,6 @@ class getWeather extends AsyncTask<Void, Void, Weather>
     @Override
     protected Weather doInBackground(Void... params)
     {
-        if(position==2)
-        {
-            YahooClient.setCurrentLocationData(context);
-        }
-
         SharedPreferences prefs = h.getMyPreferences();
         List<String> list = Arrays.asList(prefs.getString("Woeids", null).split("  "));
 
