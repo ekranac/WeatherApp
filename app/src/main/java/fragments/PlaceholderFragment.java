@@ -48,7 +48,7 @@ public class PlaceholderFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-        int sectionNumber = getArguments().getInt("section_number");
+        int sectionNumber = getArguments().getInt(ARG_SECTION_NUMBER);
 
         Context c = getActivity().getBaseContext();
 
@@ -74,19 +74,22 @@ public class PlaceholderFragment extends Fragment {
 class getWeather extends AsyncTask<Void, Void, Weather>
 {
 
-    Context c;
+    Context context;
     View rootView;
     Integer position;
     OtherHelper h;
     Boolean isFahrenheit;
 
-    public getWeather(Context c, View rootView, Integer position)
+    private static final String UNIT_CELSIUS = "c";
+    private static final String UNIT_FAHRENHEIT = "f";
+
+    public getWeather(Context context, View rootView, Integer position)
     {
         super();
-        this.c = c;
+        this.context = context;
         this.rootView = rootView;
         this.position = position;
-        this.h = new OtherHelper(c);
+        this.h = new OtherHelper(context);
         this.isFahrenheit = h.getUnits();
     }
 
@@ -95,7 +98,7 @@ class getWeather extends AsyncTask<Void, Void, Weather>
     {
         if(position==2)
         {
-            YahooClient.setCurrentLocationData(c);
+            YahooClient.setCurrentLocationData(context);
         }
 
         SharedPreferences prefs = h.getMyPreferences();
@@ -111,11 +114,11 @@ class getWeather extends AsyncTask<Void, Void, Weather>
             woeid = list.get(position - 2);
             if(!isFahrenheit)
             {
-                url = YahooClient.makeWeatherURL(woeid, "c");
+                url = YahooClient.makeWeatherURL(woeid, UNIT_CELSIUS);
             }
             else
             {
-                url = YahooClient.makeWeatherURL(woeid, "f");
+                url = YahooClient.makeWeatherURL(woeid, UNIT_FAHRENHEIT);
             }
             weather = YahooClient.getWeatherData(url, yahooHttpConn);
         }

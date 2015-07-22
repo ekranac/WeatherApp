@@ -20,6 +20,7 @@ public class OtherHelper {
     Context context;
     private String PREF_KEY_WOEIDS = "Woeids";
     private String PREF_KEY_CITIES = "Cities";
+    private String MY_PREF_KEY = "MyPreferences";
 
 
     public OtherHelper(Context context)
@@ -130,7 +131,7 @@ public class OtherHelper {
 
     public SharedPreferences getMyPreferences()
     {
-        SharedPreferences prefs = context.getSharedPreferences("MyPreferences", Context.MODE_PRIVATE);
+        SharedPreferences prefs = context.getSharedPreferences(MY_PREF_KEY, Context.MODE_PRIVATE);
         return prefs;
     }
 
