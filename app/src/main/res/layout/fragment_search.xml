@@ -12,16 +12,17 @@
         <AutoCompleteTextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:hint="Search for city"
-            android:capitalize="sentences"
-            android:id="@+id/city_search"/>
+            android:hint="@string/search_placeholder"
+            android:inputType="textCapSentences"
+            android:textSize="@dimen/font_25"
+            android:id="@+id/city_search" />
 
         <Button
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="@dimen/size_30"
+            android:layout_height="@dimen/size_30"
+            android:layout_marginRight="@dimen/size_5"
+            android:layout_gravity="end|center_vertical"
             android:background="@drawable/abc_ic_clear_mtrl_alpha"
-            android:layout_marginRight="5dp"
-            android:layout_gravity="right|center_vertical"
             android:visibility="invisible"
             android:id="@+id/btn_clear_search"/>
 
@@ -33,7 +34,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="100dp"
+        android:layout_marginBottom="@dimen/size_100"
         android:id="@+id/units_switch"/>
 
     <TextView
@@ -41,8 +42,8 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
-        android:textSize="40sp"
-        android:layout_marginBottom="10dp"
+        android:textSize="@dimen/font_45"
+        android:layout_marginBottom="@dimen/size_10"
         android:text="U"
         android:id="@+id/tv_unit"/>
 

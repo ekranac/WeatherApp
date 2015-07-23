@@ -26,8 +26,6 @@ public class MainActivity extends ActionBarActivity implements GoogleApiClient.C
         com.google.android.gms.location.LocationListener
 
 {
-
-
     SectionsPagerAdapter mSectionsPagerAdapter;
 
     ViewPager mViewPager;
@@ -40,6 +38,8 @@ public class MainActivity extends ActionBarActivity implements GoogleApiClient.C
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getSupportActionBar().hide();
+
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
@@ -101,7 +101,6 @@ public class MainActivity extends ActionBarActivity implements GoogleApiClient.C
             mViewPager = (ViewPager) findViewById(R.id.pager);
             mViewPager.setAdapter(mSectionsPagerAdapter);
 
-            getSupportActionBar().hide();
 
             // Sets the fragment @ index 2 onCreate
             mViewPager.setCurrentItem(2);
@@ -119,6 +118,7 @@ public class MainActivity extends ActionBarActivity implements GoogleApiClient.C
     @Override
     public void onLocationChanged(Location location) {
         mLastLocation = location;
+        // FUCK YEAH!
         // Toast.makeText(this, "Latitude:" + mLastLocation.getLatitude() + ", Longitude:" + mLastLocation.getLongitude(), Toast.LENGTH_LONG).show();
 
     }

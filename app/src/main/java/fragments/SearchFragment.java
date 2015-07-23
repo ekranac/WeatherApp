@@ -71,7 +71,7 @@ public class SearchFragment extends Fragment {
                     vp.getAdapter().notifyDataSetChanged();
 
                     String city = parent.getItemAtPosition(position).toString();
-                    helper.addCityToSharedPreferences(city, null);
+                    helper.addCityToSharedPreferences(city, null, true);
 
                     ListView listView = (ListView) getActivity().findViewById(R.id.city_listview);
                     new setListContent(listView, helper, getActivity().getBaseContext()).execute(); // Refresh list

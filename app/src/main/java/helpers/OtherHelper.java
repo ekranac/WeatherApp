@@ -67,7 +67,7 @@ public class OtherHelper {
 
     }
 
-    public void addCityToSharedPreferences(String city, Integer position)
+    public void addCityToSharedPreferences(String city, Integer position, Boolean showToast)
     {
         SharedPreferences prefs = this.getMyPreferences();
         String cityString = "";
@@ -102,7 +102,10 @@ public class OtherHelper {
             }
             else
             {
-                Toast.makeText(context, "Already added " + city, Toast.LENGTH_SHORT).show();
+                if(showToast)
+                {
+                    Toast.makeText(context, "Already added " + city, Toast.LENGTH_SHORT).show();
+                }
             }
 
             prefs.edit().putString(PREF_KEY_CITIES, cityString).apply();

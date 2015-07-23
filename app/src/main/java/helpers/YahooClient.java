@@ -247,7 +247,7 @@ public class YahooClient {
                     }
                     else if("city".equals(currentTag))
                     {
-                        helper.addCityToSharedPreferences(parser.getText(), 0);
+                        helper.addCityToSharedPreferences(parser.getText(), 0, false);
                     }
                 }
                 event = parser.next();

@@ -20,16 +20,16 @@
         <!-- Start icon layout half -->
         <RelativeLayout
             android:layout_width="fill_parent"
-            android:layout_height="0dp"
+            android:layout_height="@dimen/size_0"
             android:layout_weight="0.5">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="35sp"
+                android:textSize="@dimen/font_35"
                 android:layout_alignParentRight="true"
-                android:layout_marginRight="10dp"
-                android:text="+"
+                android:layout_marginRight="@dimen/size_10"
+                android:text="@string/go_to_search"
                 android:id="@+id/tv_go2search"/>
 
             <ImageView
@@ -44,7 +44,7 @@
         <!-- Start weather layout half -->
         <LinearLayout
             android:layout_width="fill_parent"
-            android:layout_height="0dp"
+            android:layout_height="@dimen/size_0"
             android:layout_weight="0.5">
             <RelativeLayout
                 android:layout_width="fill_parent"
@@ -54,15 +54,16 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/tv_condition"
-                    android:textSize="35sp"
+                    android:textSize="@dimen/font_35"
                     android:layout_centerHorizontal="true" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/tv_city"
-                    android:textSize="25sp"
-                    android:text="Loading..."
+                    android:textSize="@dimen/font_25"
+                    android:textAlignment="center"
+                    android:text="@string/loading"
                     android:layout_centerHorizontal="true"
                     android:layout_below="@id/tv_condition" />
 
@@ -72,14 +73,14 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/tv_city"
-                    android:layout_marginTop="50dp"
-                    android:paddingLeft="20dp"
+                    android:layout_marginTop="@dimen/size_50"
+                    android:paddingLeft="@dimen/size_20"
                     android:orientation="horizontal"
                     android:id="@+id/white_banner"
                     android:background="@color/white">
 
                     <LinearLayout
-                        android:layout_width="0dp"
+                        android:layout_width="@dimen/size_0"
                         android:layout_height="wrap_content"
                         android:layout_weight="0.32"
                         android:orientation="vertical">
@@ -89,81 +90,77 @@
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
                             android:id="@+id/tv_current_temp"
-                            android:textSize="45sp"/>
+                            android:textSize="@dimen/font_45"/>
 
                         <TextView
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
-                            android:textSize="20sp"
-                            android:id="@+id/tv_hi_lo"
-                            android:text="H 34  L 14"/>
+                            android:textSize="@dimen/font_20"
+                            android:id="@+id/tv_hi_lo"/>
 
                     </LinearLayout>
 
                     <LinearLayout
-                        android:layout_width="0dp"
+                        android:layout_width="@dimen/size_0"
                         android:layout_height="match_parent"
                         android:layout_weight="0.22"
                         android:orientation="vertical">
 
                         <ImageView
                             android:layout_width="fill_parent"
-                            android:layout_height="0dp"
+                            android:layout_height="@dimen/size_0"
                             android:layout_weight="0.64"
-                            android:src="@mipmap/sun"
                             android:id="@+id/forecast_image_one"/>
 
                         <TextView
                             android:layout_width="fill_parent"
-                            android:layout_height="0dp"
+                            android:layout_height="@dimen/size_0"
                             android:layout_weight="0.36"
-                            android:textSize="20sp"
+                            android:textSize="@dimen/font_20"
                             android:gravity="center_horizontal"
                             android:id="@+id/tv_forecast_d1" />
 
                     </LinearLayout>
 
                     <LinearLayout
-                        android:layout_width="0dp"
+                        android:layout_width="@dimen/size_0"
                         android:layout_height="match_parent"
                         android:layout_weight="0.22"
                         android:orientation="vertical">
 
                         <ImageView
                             android:layout_width="fill_parent"
-                            android:layout_height="0dp"
+                            android:layout_height="@dimen/size_0"
                             android:layout_weight="0.64"
-                            android:src="@mipmap/sun"
                             android:id="@+id/forecast_image_two"/>
 
                         <TextView
                             android:layout_width="fill_parent"
-                            android:layout_height="0dp"
+                            android:layout_height="@dimen/size_0"
                             android:layout_weight="0.36"
-                            android:textSize="20sp"
+                            android:textSize="@dimen/font_20"
                             android:gravity="center_horizontal"
                             android:id="@+id/tv_forecast_d2" />
 
                     </LinearLayout>
 
                     <LinearLayout
-                        android:layout_width="0dp"
+                        android:layout_width="@dimen/size_0"
                         android:layout_height="match_parent"
                         android:layout_weight="0.22"
                         android:orientation="vertical">
 
                         <ImageView
                             android:layout_width="fill_parent"
-                            android:layout_height="0dp"
+                            android:layout_height="@dimen/size_0"
                             android:layout_weight="0.64"
-                            android:src="@mipmap/sun"
                             android:id="@+id/forecast_image_three"/>
 
                         <TextView
                             android:layout_width="fill_parent"
-                            android:layout_height="0dp"
+                            android:layout_height="@dimen/size_0"
                             android:layout_weight="0.36"
-                            android:textSize="20sp"
+                            android:textSize="@dimen/font_20"
                             android:gravity="center_horizontal"
                             android:id="@+id/tv_forecast_d3" />
 
