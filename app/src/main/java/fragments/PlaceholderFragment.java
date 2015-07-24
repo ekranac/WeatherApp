@@ -7,7 +7,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -65,13 +64,13 @@ public class PlaceholderFragment extends Fragment {
         Drawable background = banner.getBackground();
         background.setAlpha(80);
 
-        new getWeather(c, rootView, sectionNumber).execute();
+        new setWeather(c, rootView, sectionNumber).execute();
         return rootView;
     }
 }
 
 
-class getWeather extends AsyncTask<Void, Void, Weather>
+class setWeather extends AsyncTask<Void, Void, Weather>
 {
 
     Context context;
@@ -83,7 +82,7 @@ class getWeather extends AsyncTask<Void, Void, Weather>
     private static final String UNIT_CELSIUS = "c";
     private static final String UNIT_FAHRENHEIT = "f";
 
-    public getWeather(Context context, View rootView, Integer position)
+    public setWeather(Context context, View rootView, Integer position)
     {
         super();
         this.context = context;
@@ -169,23 +168,134 @@ class getWeather extends AsyncTask<Void, Void, Weather>
             List<String> codes = Arrays.asList((weather.condition.getCode() + "  " + weather.forecast.getCode()).split("  "));
             String code;
             int resource;
+            int color;
             for(int i = 0; i < 4; i++)
             {
                 code = codes.get(i);
 
                 switch(code)
                 {
-                    case "32":
-                        resource = R.mipmap.sun;
+                    case "0":
+                    case "2":
+                        resource = R.mipmap.tornado;
+                        color = context.getResources().getColor(R.color.tornado_gray);
+                        break;
+
+                    case "1":
+                    case "3":
+                    case "4":
+                    case "37":
+                    case "38":
+                    case "39":
+                    case "45":
+                    case "47":
+                        resource = R.mipmap.storm;
+                        color =  context.getResources().getColor(R.color.storm_blue);
+
+                        break;
+
+                    case "5":
+                    case "6":
+                    case "7":
+                    case "18":
+                        resource = R.mipmap.rainsnow;
+                        color = context.getResources().getColor(R.color.snow_blue);
+                        break;
+
+                    case "8":
+                    case "9":
+                    case "10":
+                    case "11":
+                    case "12":
+                    case "40":
+                        resource = R.mipmap.rain;
+                        color = context.getResources().getColor(R.color.rain_blue);
+
+                        break;
+
+                    case "13":
+                    case "14":
+                    case "15":
+                    case "16":
+                    case "41":
+                    case "42":
+                    case "43":
+                    case "46":
+                        resource = R.mipmap.snow;
+                        color = context.getResources().getColor(R.color.snow_blue);
+                        break;
+
+                    case "17":
+                    case "35":
+                        resource = R.mipmap.hail;
+                        color = context.getResources().getColor(R.color.rain_blue);
+                        break;
+
+                    case "19":
+                        resource = R.mipmap.dust;
+                        color = context.getResources().getColor(R.color.dust_yellow);
+                        break;
+
+                    case "20":
+                    case "21":
+                    case "22":
+                        resource = R.mipmap.fog;
+                        color = context.getResources().getColor(R.color.fog_gray);
+                        break;
+
+                    case "23":
+                    case "24":
+                        resource = R.mipmap.windy;
+                        color = context.getResources().getColor(R.color.wind_blue);
+                        break;
+
+                    case "25":
+                        resource = R.mipmap.cold;
+                        color = context.getResources().getColor(R.color.snow_blue);
+                        break;
+
+                    case "26":
+                        resource = R.mipmap.cloudy;
+                        color = context.getResources().getColor(R.color.cloud_blue);
+                        break;
+
+                    case "27":
+                        resource = R.mipmap.mostly_cloudy_n;
+                        color = context.getResources().getColor(R.color.night_blue);
+                        break;
+
+                    case "28":
+                        resource = R.mipmap.mostly_cloudy_d;
+                        color = context.getResources().getColor(R.color.cloud_blue);
+                        break;
+
+                    case "29":
+                    case "33":
+                        resource = R.mipmap.partly_cloudy_n;
+                        color = context.getResources().getColor(R.color.night_blue);
                         break;
 
                     case "30":
                     case "34":
-                        resource = R.mipmap.partly_cloudy;
+                    case "44":
+                        resource = R.mipmap.partly_cloudy_d;
+                        color = context.getResources().getColor(R.color.cloud_blue);
+                        break;
+
+                    case "31":
+                        resource = R.mipmap.clear_n;
+                        color = context.getResources().getColor(R.color.night_blue);
+                        break;
+
+                    case "32":
+                    case "36":
+                        resource = R.mipmap.sun;
+                        color = context.getResources().getColor(R.color.clear_blue);
                         break;
 
                     default:
-                        resource = R.mipmap.ic_launcher;
+                        resource = R.mipmap.no_data;
+                        color = context.getResources().getColor(R.color.wind_blue);
                         break;
                 }
 
@@ -193,6 +303,7 @@ class getWeather extends AsyncTask<Void, Void, Weather>
                 {
                     case 0:
                         weatherIcon.setImageResource(resource);
+                        rootView.setBackgroundColor(color);
                         break;
                     case 1:
                         forecastIconOne.setImageResource(resource);
@@ -208,6 +319,8 @@ class getWeather extends AsyncTask<Void, Void, Weather>
 
 
         }
+
+        // rootView.setBackgroundColor(context.getResources().getColor(R.color.white));
 
     }
 }

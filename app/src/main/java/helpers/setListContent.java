@@ -58,7 +58,7 @@ public class setListContent extends AsyncTask<Void, Void, List<CityListItem>>
             }
 
             Weather weather = YahooClient.getWeatherData(url, null);
-            CityListItem item = new CityListItem(city, weather.condition.getTemp() + weather.units.getTemperature());
+            CityListItem item = new CityListItem(city, weather.condition.getTemp() + weather.units.getTemperature(), weather.condition.getCode());
 
             list.add(item);
         }

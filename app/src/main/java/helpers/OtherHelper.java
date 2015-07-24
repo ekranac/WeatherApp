@@ -32,17 +32,14 @@ public class OtherHelper {
     public void addWoeidToSharedPreferences(String woeid, Integer position)
     {
         SharedPreferences prefs = this.getMyPreferences();
-        String woeidString = "";
+        String woeidString = prefs.getString(PREF_KEY_WOEIDS, null);
 
-        if(prefs.getString(PREF_KEY_WOEIDS, null)==null) // If woeids in prefrences equals null
+        if(woeidString==null) // If woeids in prefrences equals null
         {
             prefs.edit().putString(PREF_KEY_WOEIDS, woeid + "  ").apply(); // Simply add woeid, without checking if it already exists
         }
         else
         {
-
-            woeidString = prefs.getString(PREF_KEY_WOEIDS, null);
-
             if(!woeidString.toLowerCase().contains(woeid.toLowerCase()))
             {
 
@@ -70,9 +67,9 @@ public class OtherHelper {
     public void addCityToSharedPreferences(String city, Integer position, Boolean showToast)
     {
         SharedPreferences prefs = this.getMyPreferences();
-        String cityString = "";
+        String cityString = prefs.getString(PREF_KEY_CITIES, null);;
 
-        if(prefs.getString(PREF_KEY_CITIES, null)==null)
+        if(cityString==null)
         {
             prefs.edit().putString(PREF_KEY_CITIES, city + "  ").apply();
             // TODO - StringSet ???
@@ -80,8 +77,6 @@ public class OtherHelper {
         }
         else
         {
-            cityString = prefs.getString(PREF_KEY_CITIES, null);
-
             if(!cityString.contains(city))
             {
 

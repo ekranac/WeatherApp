@@ -7,11 +7,13 @@ public class CityListItem {
 
     String city;
     String currentTemp;
+    String code;
 
-    public CityListItem(String city, String currentTemp)
+    public CityListItem(String city, String currentTemp, String code)
     {
         this.city = city;
         this.currentTemp = currentTemp;
+        this.code = code;
     }
 
     public String getCity() {
@@ -21,4 +23,9 @@ public class CityListItem {
     public String getCurrentTemp() {
         return currentTemp;
     }
+
+    public String getCode() {
+        return code;
+    }
+
 }

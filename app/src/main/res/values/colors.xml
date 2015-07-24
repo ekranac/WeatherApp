@@ -2,4 +2,15 @@
 <resources>
     <color name="black">#000000</color>
     <color name="white">#ffffff</color>
+
+    <color name="storm_blue">#6E7587</color>
+    <color name="snow_blue">#B3CFFF</color>
+    <color name="tornado_gray">#A1ACBF</color>
+    <color name="rain_blue">#5E88D1</color>
+    <color name="dust_yellow">#FFDEA6</color>
+    <color name="fog_gray">#D1D1D1</color>
+    <color name="wind_blue">#7EA0CC</color>
+    <color name="cloud_blue">#82AEE8</color>
+    <color name="clear_blue">#75B1FF</color>
+    <color name="night_blue">#677991</color>
 </resources>
