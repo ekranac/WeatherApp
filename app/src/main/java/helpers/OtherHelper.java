@@ -9,10 +9,8 @@ import android.widget.Toast;
 
 import com.example.ziga.weatherapp.R;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Set;
 
 
 public class OtherHelper {

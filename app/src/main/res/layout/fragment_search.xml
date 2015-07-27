@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/snow_blue">
 
     <FrameLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:focusableInTouchMode="true"
-        android:id="@+id/search_layout">
+        android:id="@+id/search_layout"
+        android:background="@color/snow_blue">
 
         <AutoCompleteTextView
             android:layout_width="fill_parent"
@@ -15,6 +17,8 @@
             android:hint="@string/search_placeholder"
             android:inputType="textCapSentences"
             android:textSize="@dimen/font_25"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white"
             android:id="@+id/city_search" />
 
         <Button
@@ -28,23 +32,22 @@
 
     </FrameLayout>
 
-
-    <Switch
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/size_70"
+        android:background="@color/clear_blue"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="@dimen/size_100"
-        android:id="@+id/units_switch"/>
+        android:id="@+id/about_btn">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentBottom="true"
-        android:textSize="@dimen/font_45"
-        android:layout_marginBottom="@dimen/size_10"
-        android:text="U"
-        android:id="@+id/tv_unit"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:textSize="@dimen/font_35"
+            android:textColor="@color/white"
+            android:text="@string/about_button"/>
+
+    </RelativeLayout>
+
 
 </RelativeLayout>

@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="@dimen/size_50"
     android:textSize="@dimen/font_20"
-    android:background="@color/white"
+    android:textColor="@color/white"
+    android:background="@color/clear_blue"
     android:gravity="center|start"
     android:paddingLeft="@dimen/size_10"
     android:id="@+id/txtCityName">

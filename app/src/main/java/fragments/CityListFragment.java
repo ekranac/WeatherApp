@@ -2,7 +2,6 @@ package fragments;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -32,8 +31,6 @@ public class CityListFragment extends Fragment {
         helper = new OtherHelper(getActivity().getBaseContext());
 
         final ListView listView = (ListView) rootView.findViewById(R.id.city_listview);
-
-
         new setListContent(listView, helper, getActivity()).execute();
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

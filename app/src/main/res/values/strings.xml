@@ -4,4 +4,7 @@
     <string name="go_to_search">+</string>
     <string name="loading">Loading...</string>
     <string name="search_placeholder">Search for city</string>
+    <string name="about_title">About this app</string>
+    <string name="about_button">About</string>
+    <string name="about_text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sagittis tellus tincidunt sodales sodales. Curabitur sed ex sollicitudin, consectetur augue vitae, semper eros. Mauris viverra pulvinar consequat. Sed neque orci, condimentum at nibh vel, bibendum consequat nisl. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Maecenas interdum tortor nec sapien suscipit lacinia. Morbi venenatis nulla vitae risus placerat, ac volutpat ex feugiat. Aliquam gravida luctus urna, sed viverra velit bibendum vitae. Curabitur hendrerit, nunc et ornare euismod, magna massa lacinia ipsum, ac molestie urna mi eu dui. Suspendisse potenti.</string>
 </resources>

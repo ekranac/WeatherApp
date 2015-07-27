@@ -17,9 +17,6 @@ import java.util.List;
 import models.CityResult;
 import models.Weather;
 
-/**
- * Created by ziga on 15.5.2015.
- */
 public class YahooClient {
 
     public static String YAHOO_GEO_URL = "http://where.yahooapis.com/v1";

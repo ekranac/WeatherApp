@@ -1,13 +1,12 @@
 package activities;
 
 import android.location.Location;
-import android.location.LocationListener;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
-import android.widget.Toast;
 
 import com.example.ziga.weatherapp.R;
 import com.google.android.gms.common.ConnectionResult;
@@ -18,7 +17,6 @@ import com.google.android.gms.location.LocationServices;
 
 import adapters.SectionsPagerAdapter;
 import helpers.YahooClient;
-import models.Weather;
 
 
 public class MainActivity extends ActionBarActivity implements GoogleApiClient.ConnectionCallbacks,
@@ -33,28 +31,29 @@ public class MainActivity extends ActionBarActivity implements GoogleApiClient.C
     private GoogleApiClient mGoogleApiClient;
     private Location mLastLocation;
 
-    private static int REQUEST_CODE_RECOVER_PLAY_SERVICES = 200;
+    protected static int REQUEST_CODE_RECOVER_PLAY_SERVICES = 200;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         getSupportActionBar().hide();
 
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
-
-        if(checkGooglePlayServices())
+        if(checkGooglePlayServices() && isConnected())
         {
             buildGoogleApiClient();
             mGoogleApiClient.connect();
         }
     }
 
-    private boolean checkGooglePlayServices(){
-        int checkGooglePlayServices = GooglePlayServicesUtil
-                .isGooglePlayServicesAvailable(this);
-        if (checkGooglePlayServices != ConnectionResult.SUCCESS) {
+    private boolean checkGooglePlayServices()
+    {
+        int checkGooglePlayServices = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
+        if (checkGooglePlayServices != ConnectionResult.SUCCESS)
+        {
 		/*
 		* Google Play Services is missing or update is required
 		*  return code could be
@@ -71,6 +70,20 @@ public class MainActivity extends ActionBarActivity implements GoogleApiClient.C
         return true;
     }
 
+    private boolean isConnected()
+    {
+        Boolean isConnected = false;
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
+        NetworkInfo ni = cm.getActiveNetworkInfo();
+
+        if(ni!=null)
+        {
+            isConnected = true;
+        }
+
+        return isConnected;
+    }
+
     protected synchronized void buildGoogleApiClient()
     {
         mGoogleApiClient = new GoogleApiClient.Builder(this)
@@ -85,8 +98,7 @@ public class MainActivity extends ActionBarActivity implements GoogleApiClient.C
     {
         mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
         createLocationRequest();
-        LocationServices.FusedLocationApi.requestLocationUpdates(
-                mGoogleApiClient, mLocationRequest, this);
+        LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
 
         if (mLastLocation != null)
         {
@@ -116,7 +128,8 @@ public class MainActivity extends ActionBarActivity implements GoogleApiClient.C
 
 
     @Override
-    public void onLocationChanged(Location location) {
+    public void onLocationChanged(Location location)
+    {
         mLastLocation = location;
         // FUCK YEAH!
         // Toast.makeText(this, "Latitude:" + mLastLocation.getLatitude() + ", Longitude:" + mLastLocation.getLongitude(), Toast.LENGTH_LONG).show();

@@ -2,7 +2,7 @@ package fragments;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -15,15 +15,14 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.FrameLayout;
 import android.widget.ListView;
-import android.widget.Switch;
-import android.widget.TextView;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.example.ziga.weatherapp.R;
 
+import activities.AboutActivity;
 import adapters.CityAdapter;
 import helpers.OtherHelper;
 import helpers.setListContent;
@@ -44,14 +43,12 @@ public class SearchFragment extends Fragment {
 
         FrameLayout mainLayout = (FrameLayout) rootView.findViewById(R.id.search_layout);
         mainLayout.requestFocus(); // Just so the clearFocus() on searchView works, because the method always sets focus back to the initially focused view in activity- to layout in this case
-
+        final OtherHelper helper = new OtherHelper(getActivity().getBaseContext());
 
         // Set adapter to searchView
         final AutoCompleteTextView searchView = (AutoCompleteTextView) rootView.findViewById(R.id.city_search);
         adpt = new CityAdapter(this.getActivity(), null);
         searchView.setAdapter(adpt);
-
-        final OtherHelper helper = new OtherHelper(getActivity().getBaseContext());
 
         searchView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -64,14 +61,14 @@ public class SearchFragment extends Fragment {
 
 
                 // Get woeid, save to SharedPreferences
-                if (helper.getCityCount() < MAX_PAGES)
-                {
+                if (helper.getCityCount() < MAX_PAGES) {
                     helper.addWoeidToSharedPreferences(adpt.getItem(position).getWoeid(), null);
                     ViewPager vp = (ViewPager) getActivity().findViewById(R.id.pager);
                     vp.getAdapter().notifyDataSetChanged();
 
                     String city = parent.getItemAtPosition(position).toString();
                     helper.addCityToSharedPreferences(city, null, true);
+
 
                     ListView listView = (ListView) getActivity().findViewById(R.id.city_listview);
                     new setListContent(listView, helper, getActivity().getBaseContext()).execute(); // Refresh list
@@ -82,42 +79,6 @@ public class SearchFragment extends Fragment {
             }
         });
 
-
-        Switch mSwitch = (Switch) rootView.findViewById(R.id.units_switch);
-        final TextView tv_unit = (TextView) rootView.findViewById(R.id.tv_unit);
-        Boolean isFahrenheit = helper.getUnits();
-        if(!isFahrenheit)
-        {
-            mSwitch.setChecked(false);
-            tv_unit.setText("°C");
-        }
-        else
-        {
-            mSwitch.setChecked(true);
-            tv_unit.setText("°F");
-        }
-
-        final SharedPreferences prefs = helper.getMyPreferences();
-        mSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                prefs.edit().putBoolean("isFahrenheit", isChecked).apply();
-                if(isChecked)
-                {
-                    tv_unit.setText("°F");
-                }
-                else
-                {
-                    tv_unit.setText("°C");
-                }
-
-                // Restart app to refresh units
-                Intent i = getActivity().getBaseContext().getPackageManager()
-                        .getLaunchIntentForPackage(getActivity().getBaseContext().getPackageName());
-                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(i);
-            }
-        });
 
         final Button btn_clearSearch = (Button) rootView.findViewById(R.id.btn_clear_search);
         searchView.addTextChangedListener(new TextWatcher() {
@@ -151,8 +112,20 @@ public class SearchFragment extends Fragment {
             }
         });
 
+        RelativeLayout about_btn = (RelativeLayout) rootView.findViewById(R.id.about_btn);
+        about_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), AboutActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        RelativeLayout banner = (RelativeLayout) rootView.findViewById(R.id.about_btn);
+        Drawable background = banner.getBackground();
+        background.setAlpha(80);
+
         return rootView;
     }
-
 
 }

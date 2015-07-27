@@ -162,9 +162,6 @@ class setWeather extends AsyncTask<Void, Void, Weather>
             tv_forecast_d2.setText(forecast_day.get(2));
             tv_forecast_d3.setText(forecast_day.get(3));
 
-
-            // TODO
-            // Add final icons, cases for all codes
             List<String> codes = Arrays.asList((weather.condition.getCode() + "  " + weather.forecast.getCode()).split("  "));
             String code;
             int resource;
