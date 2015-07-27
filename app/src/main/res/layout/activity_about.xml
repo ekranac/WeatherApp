@@ -9,7 +9,6 @@
         android:layout_height="wrap_content"
         android:textSize="@dimen/font_35"
         android:text="@string/about_title"
-        android:textColor="@color/white"
         android:id="@+id/heading" />
 
     <TextView
@@ -35,7 +34,6 @@
         android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
         android:textSize="@dimen/font_45"
-        android:textColor="@color/white"
         android:layout_above="@id/units_switch"
         android:id="@+id/tv_unit"/>
 

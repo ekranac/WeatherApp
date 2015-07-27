@@ -17,7 +17,6 @@
             android:hint="@string/search_placeholder"
             android:inputType="textCapSentences"
             android:textSize="@dimen/font_25"
-            android:textColor="@color/white"
             android:textColorHint="@color/white"
             android:id="@+id/city_search" />
 
@@ -44,7 +43,6 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:textSize="@dimen/font_35"
-            android:textColor="@color/white"
             android:text="@string/about_button"/>
 
     </RelativeLayout>
