@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.text.method.LinkMovementMethod;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -33,6 +34,9 @@ public class AboutActivity extends ActionBarActivity
         OtherHelper helper = new OtherHelper(getBaseContext());
         Switch mSwitch = (Switch) findViewById(R.id.units_switch);
         final TextView tv_unit = (TextView) findViewById(R.id.tv_unit);
+
+        TextView tv_credits = (TextView) findViewById(R.id.about_credits);
+        tv_credits.setMovementMethod(LinkMovementMethod.getInstance());
 
 
         Boolean isFahrenheit = helper.getUnits();

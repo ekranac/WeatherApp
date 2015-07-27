@@ -4,37 +4,69 @@
     android:padding="@dimen/size_10"
     android:background="@color/wind_blue">
 
-    <TextView
+    <ScrollView
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:textSize="@dimen/font_35"
-        android:text="@string/about_title"
-        android:id="@+id/heading" />
+        android:layout_height="wrap_content">
 
-    <TextView
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/font_35"
+                android:text="@string/about_title"
+                android:textColor="@color/white"
+                android:id="@+id/heading" />
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/heading"
+                android:layout_marginTop="@dimen/size_10"
+                android:textColor="@color/white"
+                android:text="@string/about_text"
+                android:id="@+id/about_text"/>
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size_10"
+                android:textColor="@color/white"
+                android:text="@string/about_credits"
+                android:layout_below="@id/about_text"
+                android:id="@+id/about_credits"/>
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+
+    <RelativeLayout
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/heading"
-        android:layout_marginTop="@dimen/size_10"
-        android:textColor="@color/white"
-        android:text="@string/about_text"/>
+        android:layout_height="@dimen/size_100"
+        android:background="@color/wind_blue"
+        android:layout_alignParentBottom="true">
 
+        <Switch
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="@dimen/size_50"
+            android:id="@+id/units_switch"/>
 
-    <Switch
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="@dimen/size_50"
-        android:id="@+id/units_switch"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true"
+            android:textSize="@dimen/font_45"
+            android:layout_above="@id/units_switch"
+            android:textColor="@color/white"
+            android:id="@+id/tv_unit"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentBottom="true"
-        android:textSize="@dimen/font_45"
-        android:layout_above="@id/units_switch"
-        android:id="@+id/tv_unit"/>
+    </RelativeLayout>
 
 </RelativeLayout>

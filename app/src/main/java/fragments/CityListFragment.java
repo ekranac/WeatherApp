@@ -44,7 +44,8 @@ public class CityListFragment extends Fragment {
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(final AdapterView<?> parent, View view, final int position, long id) {
-                if (position != 0) {
+                if (position != 0)
+                {
                     new AlertDialog.Builder(getActivity())
                             .setTitle("Remove city")
                             .setMessage("Are you sure you want to remove this city?")

@@ -32,6 +32,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="@dimen/size_10"
                 android:text="@string/go_to_search"
+                android:textColor="@color/white"
                 android:id="@+id/tv_go2search"/>
 
             <ImageView
@@ -57,6 +58,7 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/tv_condition"
                     android:textSize="@dimen/font_35"
+                    android:textColor="@color/white"
                     android:layout_centerHorizontal="true" />
 
                 <TextView
@@ -67,6 +69,7 @@
                     android:textAlignment="center"
                     android:text="@string/loading"
                     android:layout_centerHorizontal="true"
+                    android:textColor="@color/white"
                     android:layout_below="@id/tv_condition" />
 
 
@@ -92,12 +95,14 @@
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
                             android:id="@+id/tv_current_temp"
+                            android:textColor="@color/white"
                             android:textSize="@dimen/font_45"/>
 
                         <TextView
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
                             android:textSize="@dimen/font_20"
+                            android:textColor="@color/white"
                             android:id="@+id/tv_hi_lo"/>
 
                     </LinearLayout>
@@ -120,6 +125,7 @@
                             android:layout_weight="0.36"
                             android:textSize="@dimen/font_20"
                             android:gravity="center_horizontal"
+                            android:textColor="@color/white"
                             android:id="@+id/tv_forecast_d1" />
 
                     </LinearLayout>
@@ -142,6 +148,7 @@
                             android:layout_weight="0.36"
                             android:textSize="@dimen/font_20"
                             android:gravity="center_horizontal"
+                            android:textColor="@color/white"
                             android:id="@+id/tv_forecast_d2" />
 
                     </LinearLayout>
@@ -164,6 +171,7 @@
                             android:layout_weight="0.36"
                             android:textSize="@dimen/font_20"
                             android:gravity="center_horizontal"
+                            android:textColor="@color/white"
                             android:id="@+id/tv_forecast_d3" />
 
                     </LinearLayout>

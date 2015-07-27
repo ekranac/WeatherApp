@@ -6,5 +6,6 @@
     android:background="@color/clear_blue"
     android:gravity="center|start"
     android:paddingLeft="@dimen/size_10"
+    android:textColor="@color/white"
     android:id="@+id/txtCityName">
 </TextView>

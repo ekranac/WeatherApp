@@ -18,6 +18,7 @@
             android:inputType="textCapSentences"
             android:textSize="@dimen/font_25"
             android:textColorHint="@color/white"
+            android:textColor="@color/white"
             android:id="@+id/city_search" />
 
         <Button
@@ -31,6 +32,12 @@
 
     </FrameLayout>
 
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:src="@mipmap/globe"/>
+
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="@dimen/size_70"
@@ -43,6 +50,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:textSize="@dimen/font_35"
+            android:textColor="@color/white"
             android:text="@string/about_button"/>
 
     </RelativeLayout>
