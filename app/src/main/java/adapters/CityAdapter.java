@@ -64,21 +64,13 @@ public class CityAdapter extends ArrayAdapter<CityResult> implements Filterable 
         String region = cityList.get(position).getRegion();
         String country = cityList.get(position).getCountry();
 
-        if(region==cityName || region==country)
+        if(region!=null || region!="" || region!="null")
         {
-            text = cityName + ", " + country;
+            text = cityName + ", " + region + ", " + country;
         }
         else
         {
-            if(region!=null || region!="" || region!="null")
-            {
-                text = cityName + ", " + region + ", " + country;
-            }
-            else
-            {
-                text = cityName + ", " + country;
-            }
-
+            text = cityName + ", " + country;
         }
 
         tv.setText(text);

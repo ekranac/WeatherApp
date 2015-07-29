@@ -93,13 +93,13 @@ public class CityResult {
     public String toString() {
         String result = "";
 
-        if(region==cityName || region==country)
+        if(region!=null || region!="" || region!="null")
         {
-            result = cityName + ", " + country;
+            result = cityName + ", " + region + ", " + country;
         }
         else
         {
-            result = cityName + ", " + region + ", " + country;
+            result = cityName + ", " + country;
         }
 
         return result;

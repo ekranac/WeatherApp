@@ -3,6 +3,7 @@ package helpers;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.util.Log;
 import android.widget.ListView;
 
 import com.example.ziga.weatherapp.R;

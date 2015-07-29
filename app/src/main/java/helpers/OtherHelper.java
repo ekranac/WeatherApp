@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -92,10 +93,12 @@ public class OtherHelper {
                     cityString = city + "  " + cityString;
                 }
 
+                Toast.makeText(context, "Added", Toast.LENGTH_SHORT).show();
+
             }
             else
             {
-                if(showToast)
+                if(showToast && cityString.contains(city))
                 {
                     Toast.makeText(context, "Already added " + city, Toast.LENGTH_SHORT).show();
                 }

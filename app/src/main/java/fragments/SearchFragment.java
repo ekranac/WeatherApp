@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,7 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.example.ziga.weatherapp.R;
+import com.nvanbenschoten.motion.ParallaxImageView;
 
 import activities.AboutActivity;
 import adapters.CityAdapter;
@@ -40,6 +42,9 @@ public class SearchFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.fragment_search, container, false);
+
+        ParallaxImageView globe = (ParallaxImageView) rootView.findViewById(R.id.globe_icon);
+        globe.registerSensorManager();
 
         FrameLayout mainLayout = (FrameLayout) rootView.findViewById(R.id.search_layout);
         mainLayout.requestFocus(); // Just so the clearFocus() on searchView works, because the method always sets focus back to the initially focused view in activity- to layout in this case
@@ -61,19 +66,20 @@ public class SearchFragment extends Fragment {
 
 
                 // Get woeid, save to SharedPreferences
-                if (helper.getCityCount() < MAX_PAGES) {
+                if (helper.getCityCount() < MAX_PAGES)
+                {
                     helper.addWoeidToSharedPreferences(adpt.getItem(position).getWoeid(), null);
                     ViewPager vp = (ViewPager) getActivity().findViewById(R.id.pager);
                     vp.getAdapter().notifyDataSetChanged();
 
                     String city = parent.getItemAtPosition(position).toString();
+                    String two = view.toString();
+                    Log.i("CITY", city);
                     helper.addCityToSharedPreferences(city, null, true);
 
 
                     ListView listView = (ListView) getActivity().findViewById(R.id.city_listview);
                     new setListContent(listView, helper, getActivity().getBaseContext()).execute(); // Refresh list
-
-                    Toast.makeText(getActivity().getBaseContext(), "Added", Toast.LENGTH_SHORT).show();
                 }
 
             }

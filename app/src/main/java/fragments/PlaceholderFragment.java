@@ -16,6 +16,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.ziga.weatherapp.R;
+import com.nvanbenschoten.motion.ParallaxImageView;
 
 import java.net.HttpURLConnection;
 import java.util.Arrays;
