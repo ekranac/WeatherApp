@@ -111,7 +111,8 @@
                         android:layout_width="@dimen/size_0"
                         android:layout_height="match_parent"
                         android:layout_weight="0.22"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:layout_marginTop="@dimen/size_10">
 
                         <ImageView
                             android:layout_width="fill_parent"
@@ -134,7 +135,8 @@
                         android:layout_width="@dimen/size_0"
                         android:layout_height="match_parent"
                         android:layout_weight="0.22"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:layout_marginTop="@dimen/size_10">
 
                         <ImageView
                             android:layout_width="fill_parent"
@@ -157,7 +159,8 @@
                         android:layout_width="@dimen/size_0"
                         android:layout_height="match_parent"
                         android:layout_weight="0.22"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:layout_marginTop="@dimen/size_10">
 
                         <ImageView
                             android:layout_width="fill_parent"

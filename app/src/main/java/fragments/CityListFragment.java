@@ -31,7 +31,7 @@ public class CityListFragment extends Fragment {
         helper = new OtherHelper(getActivity().getBaseContext());
 
         final ListView listView = (ListView) rootView.findViewById(R.id.city_listview);
-        new setListContent(listView, helper, getActivity()).execute();
+        new setListContent(listView, rootView, getActivity()).execute();
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -52,7 +52,7 @@ public class CityListFragment extends Fragment {
                             .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    helper.removeCity(position, listView, getActivity());
+                                    helper.removeCity(position, rootView, listView, getActivity());
                                 }
                             })
 

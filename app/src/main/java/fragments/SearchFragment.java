@@ -79,7 +79,10 @@ public class SearchFragment extends Fragment {
 
 
                     ListView listView = (ListView) getActivity().findViewById(R.id.city_listview);
-                    new setListContent(listView, helper, getActivity().getBaseContext()).execute(); // Refresh list
+                    new setListContent(listView, rootView, getActivity().getBaseContext()).execute(); // Refresh list
+
+                    ViewPager mViewPager = (ViewPager) getActivity().findViewById(R.id.pager);
+                    mViewPager.setCurrentItem(helper.getCityCount()+2, true);
                 }
 
             }

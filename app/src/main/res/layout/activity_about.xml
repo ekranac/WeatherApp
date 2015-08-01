@@ -13,21 +13,56 @@
             android:layout_height="match_parent">
 
             <TextView
-                android:layout_width="fill_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/font_35"
                 android:text="@string/about_title"
                 android:textColor="@color/white"
+                android:layout_centerHorizontal="true"
                 android:id="@+id/heading" />
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="2dp"
+                android:background="@color/white"
+                android:layout_below="@id/heading"
+                android:id="@+id/horizontal_line"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/font_25"
+                android:text="@string/author_signature"
+                android:textColor="@color/white"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/horizontal_line"
+                android:id="@+id/author"/>
+
+
+            <!--<TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/author"
+                android:layout_marginTop="@dimen/size_10"
+                android:textColor="@color/white"
+                android:text="@string/about_text"
+                android:id="@+id/about_text"/>-->
 
             <TextView
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/heading"
-                android:layout_marginTop="@dimen/size_10"
+                android:layout_below="@id/author"
                 android:textColor="@color/white"
-                android:text="@string/about_text"
-                android:id="@+id/about_text"/>
+                android:text="@string/contact_ziga"
+                android:id="@+id/contact_ziga"/>
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/contact_ziga"
+                android:textColor="@color/white"
+                android:text="@string/contact_zak"
+                android:id="@+id/contact_zak"/>
 
             <TextView
                 android:layout_width="fill_parent"
@@ -35,7 +70,7 @@
                 android:layout_marginTop="@dimen/size_10"
                 android:textColor="@color/white"
                 android:text="@string/about_credits"
-                android:layout_below="@id/about_text"
+                android:layout_below="@id/contact_zak"
                 android:id="@+id/about_credits"/>
 
         </RelativeLayout>

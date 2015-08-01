@@ -4,7 +4,9 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.view.View;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 
 import com.example.ziga.weatherapp.R;
 
@@ -23,15 +25,30 @@ public class setListContent extends AsyncTask<Void, Void, List<CityListItem>>
     OtherHelper helper;
     Context c;
     Boolean isFahrenheit;
+    View rootView;
 
-    public setListContent(ListView listView, OtherHelper helper, Context c)
+    ProgressBar bar;
+
+    public setListContent(ListView listView, View rootView, Context c)
     {
         super();
         this.listView = listView;
-        this.helper = helper;
+        this.rootView = rootView;
         this.c = c;
+        this.helper = new OtherHelper(c);
         this.isFahrenheit = helper.getUnits();
 
+        bar = (ProgressBar) rootView.findViewById(R.id.list_progress_bar);
+
+    }
+
+    @Override
+    protected void onPreExecute()
+    {
+        if(bar!=null)
+        {
+            bar.bringToFront();
+        }
     }
 
     @Override
@@ -70,6 +87,11 @@ public class setListContent extends AsyncTask<Void, Void, List<CityListItem>>
     @Override
     protected void onPostExecute(List<CityListItem> list)
     {
+        if(bar!=null)
+        {
+            bar.setVisibility(View.INVISIBLE);
+        }
+
         ListViewAdapter adapter = new ListViewAdapter(c, R.layout.list_city, list);
         listView.setAdapter(adapter);
     }

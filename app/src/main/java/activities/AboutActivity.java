@@ -6,6 +6,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.text.method.LinkMovementMethod;
+import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -37,6 +38,33 @@ public class AboutActivity extends ActionBarActivity
 
         TextView tv_credits = (TextView) findViewById(R.id.about_credits);
         tv_credits.setMovementMethod(LinkMovementMethod.getInstance());
+
+        TextView contact_zak = (TextView) findViewById(R.id.contact_zak);
+        TextView contact_ziga = (TextView) findViewById(R.id.contact_ziga);
+
+        contact_zak.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try
+                {
+                    Intent intent = Intent.parseUri("mailto:zak.teki@gmail.com", Intent.URI_INTENT_SCHEME);
+                    startActivity(intent);
+                } catch(Throwable t) {}
+
+            }
+        });
+
+        contact_ziga.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try
+                {
+                    Intent intent = Intent.parseUri("mailto:besal.ziga@gmail.com", Intent.URI_INTENT_SCHEME);
+                    startActivity(intent);
+                } catch(Throwable t) {}
+            }
+        });
+
 
 
         Boolean isFahrenheit = helper.getUnits();

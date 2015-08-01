@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
+import android.view.View;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -143,7 +144,7 @@ public class OtherHelper {
         return cityList.get(0);
     }
 
-    public void removeCity(Integer position, ListView listView,  Activity activity)
+    public void removeCity(Integer position, View rootView, ListView listView,  Activity activity)
     {
         SharedPreferences prefs = this.getMyPreferences();
 
@@ -165,7 +166,7 @@ public class OtherHelper {
 
         ViewPager vp = (ViewPager) activity.findViewById(R.id.pager);
         vp.getAdapter().notifyDataSetChanged();
-        new setListContent(listView, new OtherHelper(context), context).execute(); // Refresh list
+        new setListContent(listView, rootView, context).execute(); // Refresh list
 
 
         Toast.makeText(context, "Removed :)", Toast.LENGTH_SHORT).show();
