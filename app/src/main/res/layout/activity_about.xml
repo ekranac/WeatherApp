@@ -34,24 +34,32 @@
                 android:textSize="@dimen/font_25"
                 android:text="@string/author_signature"
                 android:textColor="@color/white"
+                android:alpha="0.7"
                 android:layout_centerHorizontal="true"
                 android:layout_below="@id/horizontal_line"
                 android:id="@+id/author"/>
 
 
-            <!--<TextView
+            <TextView
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/author"
                 android:layout_marginTop="@dimen/size_10"
                 android:textColor="@color/white"
                 android:text="@string/about_text"
-                android:id="@+id/about_text"/>-->
+                android:id="@+id/about_text"/>
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="2dp"
+                android:background="@color/white"
+                android:layout_below="@id/about_text"
+                android:id="@+id/horizontal_line_bottom"/>
 
             <TextView
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/author"
+                android:layout_below="@id/horizontal_line_bottom"
                 android:textColor="@color/white"
                 android:text="@string/contact_ziga"
                 android:id="@+id/contact_ziga"/>
