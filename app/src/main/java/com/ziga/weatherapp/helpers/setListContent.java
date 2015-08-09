@@ -1,22 +1,21 @@
-package helpers;
+package com.ziga.weatherapp.helpers;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
-import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 
-import com.example.ziga.weatherapp.R;
+import com.ziga.weatherapp.R;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import adapters.ListViewAdapter;
-import models.CityListItem;
-import models.Weather;
+import com.ziga.weatherapp.adapters.ListViewAdapter;
+import com.ziga.weatherapp.models.CityListItem;
+import com.ziga.weatherapp.models.Weather;
 
 
 public class setListContent extends AsyncTask<Void, Void, List<CityListItem>>

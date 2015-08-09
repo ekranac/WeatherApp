@@ -1,4 +1,4 @@
-package fragments;
+package com.ziga.weatherapp.fragments;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -15,16 +15,15 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.example.ziga.weatherapp.R;
-import com.nvanbenschoten.motion.ParallaxImageView;
+import com.ziga.weatherapp.R;
 
 import java.net.HttpURLConnection;
 import java.util.Arrays;
 import java.util.List;
 
-import helpers.OtherHelper;
-import helpers.YahooClient;
-import models.Weather;
+import com.ziga.weatherapp.helpers.OtherHelper;
+import com.ziga.weatherapp.helpers.YahooClient;
+import com.ziga.weatherapp.models.Weather;
 
 
 public class PlaceholderFragment extends Fragment {

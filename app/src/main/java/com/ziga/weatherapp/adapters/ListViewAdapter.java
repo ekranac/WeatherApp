@@ -1,4 +1,4 @@
-package adapters;
+package com.ziga.weatherapp.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -7,11 +7,11 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.example.ziga.weatherapp.R;
+import com.ziga.weatherapp.R;
 
 import java.util.List;
 
-import models.CityListItem;
+import com.ziga.weatherapp.models.CityListItem;
 
 
 public class ListViewAdapter extends BaseAdapter

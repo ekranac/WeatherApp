@@ -1,4 +1,4 @@
-package fragments;
+package com.ziga.weatherapp.fragments;
 
 import android.content.Context;
 import android.content.Intent;
@@ -19,15 +19,14 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
-import com.example.ziga.weatherapp.R;
+import com.ziga.weatherapp.R;
 import com.nvanbenschoten.motion.ParallaxImageView;
 
-import activities.AboutActivity;
-import adapters.CityAdapter;
-import helpers.OtherHelper;
-import helpers.setListContent;
+import com.ziga.weatherapp.activities.AboutActivity;
+import com.ziga.weatherapp.adapters.CityAdapter;
+import com.ziga.weatherapp.helpers.OtherHelper;
+import com.ziga.weatherapp.helpers.setListContent;
 
 
 public class SearchFragment extends Fragment {

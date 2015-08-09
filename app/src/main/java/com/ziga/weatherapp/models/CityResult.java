@@ -1,4 +1,4 @@
-package models;
+package com.ziga.weatherapp.models;
 
 public class CityResult {
 

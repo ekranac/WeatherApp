@@ -1,14 +1,14 @@
-package adapters;
+package com.ziga.weatherapp.adapters;
 
 import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import fragments.CityListFragment;
-import fragments.PlaceholderFragment;
-import fragments.SearchFragment;
-import helpers.OtherHelper;
+import com.ziga.weatherapp.fragments.CityListFragment;
+import com.ziga.weatherapp.fragments.PlaceholderFragment;
+import com.ziga.weatherapp.fragments.SearchFragment;
+import com.ziga.weatherapp.helpers.OtherHelper;
 
 public class SectionsPagerAdapter extends FragmentPagerAdapter {
 

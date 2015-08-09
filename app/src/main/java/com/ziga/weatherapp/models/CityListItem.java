@@ -1,4 +1,4 @@
-package models;
+package com.ziga.weatherapp.models;
 
 /**
  * Created by ziga on 30.6.2015.

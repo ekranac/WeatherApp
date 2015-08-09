@@ -1,4 +1,4 @@
-package adapters;
+package com.ziga.weatherapp.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -9,13 +9,13 @@ import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.TextView;
 
-import com.example.ziga.weatherapp.R;
+import com.ziga.weatherapp.R;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import helpers.YahooClient;
-import models.CityResult;
+import com.ziga.weatherapp.helpers.YahooClient;
+import com.ziga.weatherapp.models.CityResult;
 
 /**
  * Created by ziga on 10.6.2015.

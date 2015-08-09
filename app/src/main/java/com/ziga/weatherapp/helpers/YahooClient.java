@@ -1,4 +1,4 @@
-package helpers;
+package com.ziga.weatherapp.helpers;
 
 import android.content.Context;
 import android.location.Location;
@@ -14,8 +14,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-import models.CityResult;
-import models.Weather;
+import com.ziga.weatherapp.models.CityResult;
+import com.ziga.weatherapp.models.Weather;
 
 public class YahooClient {
 

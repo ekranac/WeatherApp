@@ -5,7 +5,7 @@ android {
     buildToolsVersion "21.1.2"
 
     defaultConfig {
-        applicationId "com.example.ziga.weatherapp"
+        applicationId "com.ziga.weatherapp"
         minSdkVersion 15
         targetSdkVersion 22
         versionCode 1
@@ -22,7 +22,6 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:22.2.0'
-    compile files('libs/gson-2.3.1.jar')
     compile 'com.google.android.gms:play-services:7.5.0'
     compile 'com.nvanbenschoten.motion:library:1.1.0'
 }

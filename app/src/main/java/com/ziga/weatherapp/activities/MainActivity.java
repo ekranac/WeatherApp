@@ -1,4 +1,4 @@
-package activities;
+package com.ziga.weatherapp.activities;
 
 import android.location.Location;
 import android.net.ConnectivityManager;
@@ -8,15 +8,15 @@ import android.os.StrictMode;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
 
-import com.example.ziga.weatherapp.R;
+import com.ziga.weatherapp.R;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 
-import adapters.SectionsPagerAdapter;
-import helpers.YahooClient;
+import com.ziga.weatherapp.adapters.SectionsPagerAdapter;
+import com.ziga.weatherapp.helpers.YahooClient;
 
 
 public class MainActivity extends ActionBarActivity implements GoogleApiClient.ConnectionCallbacks,
@@ -37,7 +37,10 @@ public class MainActivity extends ActionBarActivity implements GoogleApiClient.C
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        getSupportActionBar().hide();
+        if(getSupportActionBar()!=null)
+        {
+            getSupportActionBar().hide();
+        }
 
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);

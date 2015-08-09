@@ -1,21 +1,18 @@
-package activities;
+package com.ziga.weatherapp.activities;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.text.method.LinkMovementMethod;
 import android.view.View;
 import android.widget.CompoundButton;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 
-import com.example.ziga.weatherapp.R;
+import com.ziga.weatherapp.R;
 
-import helpers.OtherHelper;
+import com.ziga.weatherapp.helpers.OtherHelper;
 
 public class AboutActivity extends ActionBarActivity
 {

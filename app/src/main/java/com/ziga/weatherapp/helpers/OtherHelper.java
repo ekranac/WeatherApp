@@ -1,15 +1,14 @@
-package helpers;
+package com.ziga.weatherapp.helpers;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.example.ziga.weatherapp.R;
+import com.ziga.weatherapp.R;
 
 import java.util.Arrays;
 import java.util.List;

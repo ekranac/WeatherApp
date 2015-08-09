@@ -1,4 +1,4 @@
-package fragments;
+package com.ziga.weatherapp.fragments;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -11,10 +11,10 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.example.ziga.weatherapp.R;
+import com.ziga.weatherapp.R;
 
-import helpers.OtherHelper;
-import helpers.setListContent;
+import com.ziga.weatherapp.helpers.OtherHelper;
+import com.ziga.weatherapp.helpers.setListContent;
 
 
 public class CityListFragment extends Fragment {
