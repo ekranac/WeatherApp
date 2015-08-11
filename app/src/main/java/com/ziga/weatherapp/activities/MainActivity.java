@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 
 import com.ziga.weatherapp.R;
 import com.google.android.gms.common.ConnectionResult;
@@ -52,6 +53,13 @@ public class MainActivity extends ActionBarActivity implements GoogleApiClient.C
         }
     }
 
+    @Override
+    public void onPause()
+    {
+        super.onPause();
+        mGoogleApiClient.disconnect();
+    }
+    
     private boolean checkGooglePlayServices()
     {
         int checkGooglePlayServices = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);

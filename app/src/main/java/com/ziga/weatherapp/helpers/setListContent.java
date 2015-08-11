@@ -92,6 +92,9 @@ public class setListContent extends AsyncTask<Void, Void, List<CityListItem>>
         }
 
         ListViewAdapter adapter = new ListViewAdapter(c, R.layout.list_city, list);
-        listView.setAdapter(adapter);
+        if(listView!=null)
+        {
+            listView.setAdapter(adapter);
+        }
     }
 }

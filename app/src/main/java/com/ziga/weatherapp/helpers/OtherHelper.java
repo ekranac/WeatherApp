@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -41,7 +42,6 @@ public class OtherHelper {
         {
             if(!woeidString.toLowerCase().contains(woeid.toLowerCase()))
             {
-
                 if(position==null)
                 {
                     woeidString = woeidString + woeid + "  ";
@@ -63,7 +63,7 @@ public class OtherHelper {
 
     }
 
-    public void addCityToSharedPreferences(String city, Integer position, Boolean showToast)
+    public void addCityToSharaedPreferences(String city, Integer position, Boolean showToast)
     {
         SharedPreferences prefs = this.getMyPreferences();
         String cityString = prefs.getString(PREF_KEY_CITIES, null);;
@@ -71,9 +71,8 @@ public class OtherHelper {
         if(cityString==null)
         {
             prefs.edit().putString(PREF_KEY_CITIES, city + "  ").apply();
-            // TODO - StringSet ???
-            // Set<String> list = prefs.getStringSet("set", null);
         }
+
         else
         {
             if(!cityString.contains(city))
@@ -108,6 +107,58 @@ public class OtherHelper {
         }
     }
 
+    public void addDataToSharedPreferences(String woeid, String city, Boolean callFromSearch)
+    {
+        SharedPreferences prefs = this.getMyPreferences();
+
+        String woeidString = prefs.getString(PREF_KEY_WOEIDS, null);
+        String cityString = prefs.getString(PREF_KEY_CITIES, null);
+
+        if(woeidString==null && cityString==null)
+        {
+            prefs.edit().putString(PREF_KEY_WOEIDS, woeid + "  ").apply();
+            prefs.edit().putString(PREF_KEY_CITIES, city + "  ").apply();
+        }
+
+        else
+        {
+            if(!cityString.toLowerCase().contains(city.toLowerCase()) || !woeidString.toLowerCase().contains(woeid.toLowerCase()))
+            {
+
+                if(callFromSearch)
+                {
+                    cityString = cityString + city + "  ";
+                    woeidString = woeidString + woeid + "  ";
+                }
+
+                else
+                {
+                    if(woeidString==null || woeidString=="" || cityString==null || cityString=="")
+                    {
+                        woeidString="";
+                        cityString="";
+                    }
+                    woeidString = woeid + "  " + woeidString;
+                    cityString = city + "  " + cityString;
+                }
+
+                Toast.makeText(context, "Added", Toast.LENGTH_SHORT).show();
+            }
+
+            else
+            {
+                if(callFromSearch && (cityString.contains(city) || woeidString.contains(woeid)))
+                {
+                    Toast.makeText(context, "Already added " + city, Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            prefs.edit().putString(PREF_KEY_WOEIDS, woeidString).apply();
+            prefs.edit().putString(PREF_KEY_CITIES, cityString).apply();
+        }
+
+
+    }
     public int getCityCount()
     {
         SharedPreferences prefs = this.getMyPreferences();
@@ -137,8 +188,7 @@ public class OtherHelper {
     public String getCurrentCity()
     {
         SharedPreferences prefs = this.getMyPreferences();
-        List<String> cityList = Arrays.asList(prefs.getString("Cities", null).split("  "));
-
+        List<String> cityList = Arrays.asList(prefs.getString(PREF_KEY_CITIES, null).split("  "));
 
         return cityList.get(0);
     }

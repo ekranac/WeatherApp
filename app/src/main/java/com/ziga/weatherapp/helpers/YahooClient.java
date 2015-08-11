@@ -1,5 +1,6 @@
 package com.ziga.weatherapp.helpers;
 
+import android.app.Activity;
 import android.content.Context;
 import android.location.Location;
 import android.location.LocationManager;
@@ -209,8 +210,9 @@ public class YahooClient {
         return bestLocation;
     }
 
-    public static void setCurrentLocationData(Context context, Location location)
+    public static void setCurrentLocationData(Activity activity, Location location)
     {
+        Context context = activity.getBaseContext();
         OtherHelper helper = new OtherHelper(context);
         String latitude = Double.toString(location.getLatitude());
         String longitude = Double.toString(location.getLongitude());
@@ -229,6 +231,9 @@ public class YahooClient {
 
             String tagName = null;
             String currentTag = null;
+
+            String woeid = null;
+            String city = null;
             while(event!=XmlPullParser.END_DOCUMENT) // Loop through XML data
             {
                 tagName = parser.getName();
@@ -240,15 +245,17 @@ public class YahooClient {
                 {
                     if("woeid".equals(currentTag)) // If tag is woeid
                     {
-                        helper.addWoeidToSharedPreferences(parser.getText(), 0); // Add the woeid to shared preferences
+                        woeid = parser.getText();
                     }
                     else if("city".equals(currentTag))
                     {
-                        helper.addCityToSharedPreferences(parser.getText(), 0, false);
+                        city = parser.getText();
                     }
                 }
                 event = parser.next();
             }
+
+            helper.addDataToSharedPreferences(woeid, city, false);
         }catch(Throwable t) {
             t.printStackTrace();
         }

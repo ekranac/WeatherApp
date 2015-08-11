@@ -42,15 +42,19 @@ public class SearchFragment extends Fragment {
                              Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.fragment_search, container, false);
 
+        FrameLayout mainLayout = (FrameLayout) rootView.findViewById(R.id.search_layout);
+        RelativeLayout about_btn = (RelativeLayout) rootView.findViewById(R.id.about_btn);
         ParallaxImageView globe = (ParallaxImageView) rootView.findViewById(R.id.globe_icon);
+
+        final AutoCompleteTextView searchView = (AutoCompleteTextView) rootView.findViewById(R.id.city_search);
+        final OtherHelper helper = new OtherHelper(getActivity().getBaseContext());
+        final Button btn_clearSearch = (Button) rootView.findViewById(R.id.btn_clear_search);
+
         globe.registerSensorManager();
 
-        FrameLayout mainLayout = (FrameLayout) rootView.findViewById(R.id.search_layout);
         mainLayout.requestFocus(); // Just so the clearFocus() on searchView works, because the method always sets focus back to the initially focused view in activity- to layout in this case
-        final OtherHelper helper = new OtherHelper(getActivity().getBaseContext());
 
         // Set adapter to searchView
-        final AutoCompleteTextView searchView = (AutoCompleteTextView) rootView.findViewById(R.id.city_search);
         adpt = new CityAdapter(this.getActivity(), null);
         searchView.setAdapter(adpt);
 
@@ -67,28 +71,24 @@ public class SearchFragment extends Fragment {
                 // Get woeid, save to SharedPreferences
                 if (helper.getCityCount() < MAX_PAGES)
                 {
-                    helper.addWoeidToSharedPreferences(adpt.getItem(position).getWoeid(), null);
+                    String woeid = adpt.getItem(position).getWoeid();
+                    String city = parent.getItemAtPosition(position).toString();
+
+                    helper.addDataToSharedPreferences(woeid, city, true);
                     ViewPager vp = (ViewPager) getActivity().findViewById(R.id.pager);
                     vp.getAdapter().notifyDataSetChanged();
 
-                    String city = parent.getItemAtPosition(position).toString();
-                    String two = view.toString();
-                    Log.i("CITY", city);
-                    helper.addCityToSharedPreferences(city, null, true);
+                    vp.setCurrentItem(helper.getCityCount(), true);
 
 
                     ListView listView = (ListView) getActivity().findViewById(R.id.city_listview);
                     new setListContent(listView, rootView, getActivity().getBaseContext()).execute(); // Refresh list
-
-                    ViewPager mViewPager = (ViewPager) getActivity().findViewById(R.id.pager);
-                    mViewPager.setCurrentItem(helper.getCityCount()+2, true);
                 }
 
             }
         });
 
 
-        final Button btn_clearSearch = (Button) rootView.findViewById(R.id.btn_clear_search);
         searchView.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -120,7 +120,7 @@ public class SearchFragment extends Fragment {
             }
         });
 
-        RelativeLayout about_btn = (RelativeLayout) rootView.findViewById(R.id.about_btn);
+
         about_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -134,6 +134,14 @@ public class SearchFragment extends Fragment {
         background.setAlpha(80);
 
         return rootView;
+    }
+
+    @Override
+    public void onPause()
+    {
+        super.onPause();
+        ParallaxImageView globe = (ParallaxImageView) getActivity().findViewById(R.id.globe_icon);
+        globe.unregisterSensorManager();
     }
 
 }
