@@ -59,7 +59,7 @@ public class MainActivity extends ActionBarActivity implements GoogleApiClient.C
         super.onPause();
         mGoogleApiClient.disconnect();
     }
-    
+
     private boolean checkGooglePlayServices()
     {
         int checkGooglePlayServices = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
