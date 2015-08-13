@@ -59,6 +59,7 @@
                     android:id="@+id/tv_condition"
                     android:textSize="@dimen/font_35"
                     android:textColor="@color/white"
+                    android:layout_marginTop="@dimen/size_20"
                     android:layout_centerHorizontal="true" />
 
                 <TextView
@@ -78,7 +79,7 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/tv_city"
-                    android:layout_marginTop="@dimen/size_50"
+                    android:layout_marginTop="@dimen/size_30"
                     android:paddingLeft="@dimen/size_20"
                     android:orientation="horizontal"
                     android:id="@+id/white_banner"

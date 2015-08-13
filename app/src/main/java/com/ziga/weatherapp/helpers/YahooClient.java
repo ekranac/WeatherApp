@@ -87,12 +87,12 @@ public class YahooClient {
         return result;
     }
 
-    public static Weather getWeatherData(String url, HttpURLConnection yahooHttpConn)
+    public static Weather getWeatherData(String url)
     {
         Weather weather = new Weather();
         try {
 
-            yahooHttpConn = (HttpURLConnection) (new URL(url)).openConnection();
+            HttpURLConnection yahooHttpConn = (HttpURLConnection) (new URL(url)).openConnection();
             yahooHttpConn.connect();
             XmlPullParser parser = XmlPullParserFactory.newInstance().newPullParser();
             parser.setInput(new InputStreamReader(yahooHttpConn.getInputStream()));
@@ -190,24 +190,6 @@ public class YahooClient {
     public static String makeCurrentLocationURL(String lat, String lon)
     {
         return YAHOO_CURRENT_LOCATION_URL + lat + "%2C" + lon + "%22%20and%20gflags%3D%22R%22&format=xml";
-    }
-
-    public static Location getLastKnownLocation(Context c) {
-        LocationManager mLocationManager = (LocationManager) c.getApplicationContext().getSystemService(c.LOCATION_SERVICE);
-        List<String> providers = mLocationManager.getProviders(true);
-        Location bestLocation = null;
-        for (String provider : providers) {
-            Location l = mLocationManager.getLastKnownLocation(provider);
-            if (l == null) {
-                continue;
-            }
-            if (bestLocation == null || l.getAccuracy() < bestLocation.getAccuracy()) {
-                // Found best last known location: %s", l);
-                bestLocation = l;
-            }
-        }
-
-        return bestLocation;
     }
 
     public static void setCurrentLocationData(Activity activity, Location location)

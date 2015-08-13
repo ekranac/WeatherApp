@@ -28,6 +28,9 @@ public class setListContent extends AsyncTask<Void, Void, List<CityListItem>>
 
     ProgressBar bar;
 
+    private static final String PREF_KEY_WOEIDS = "Woeids";
+    private static final String PREF_KEY_CITIES = "Cities";
+
     public setListContent(ListView listView, View rootView, Context c)
     {
         super();
@@ -54,8 +57,8 @@ public class setListContent extends AsyncTask<Void, Void, List<CityListItem>>
     protected List<CityListItem> doInBackground(Void... params)
     {
         SharedPreferences prefs = helper.getMyPreferences();
-        List<String> woeids = Arrays.asList(prefs.getString("Woeids", null).split("  "));
-        List<String> cities = Arrays.asList(prefs.getString("Cities", null).split("  "));
+        List<String> woeids = Arrays.asList(prefs.getString(PREF_KEY_WOEIDS, null).split("  "));
+        List<String> cities = Arrays.asList(prefs.getString(PREF_KEY_CITIES, null).split("  "));
 
         List<CityListItem> list = new ArrayList<CityListItem>();
 
@@ -74,7 +77,7 @@ public class setListContent extends AsyncTask<Void, Void, List<CityListItem>>
                 url = YahooClient.makeWeatherURL(woeid, "f");
             }
 
-            Weather weather = YahooClient.getWeatherData(url, null);
+            Weather weather = YahooClient.getWeatherData(url);
             CityListItem item = new CityListItem(city, weather.condition.getTemp() + weather.units.getTemperature(), weather.condition.getCode());
 
             list.add(item);

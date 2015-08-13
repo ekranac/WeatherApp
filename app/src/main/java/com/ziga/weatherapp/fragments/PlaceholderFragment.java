@@ -30,8 +30,8 @@ public class PlaceholderFragment extends Fragment {
 
     private static final String ARG_SECTION_NUMBER = "section_number";
 
-    public static PlaceholderFragment newInstance(int sectionNumber) {
-
+    public static PlaceholderFragment newInstance(int sectionNumber)
+    {
         PlaceholderFragment fragment = new PlaceholderFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_SECTION_NUMBER, sectionNumber);
@@ -79,6 +79,9 @@ class setWeather extends AsyncTask<Void, Void, Weather>
     OtherHelper h;
     Boolean isFahrenheit;
 
+
+    private static final String PREF_KEY_WOEIDS = "Woeids";
+
     private static final String UNIT_CELSIUS = "c";
     private static final String UNIT_FAHRENHEIT = "f";
 
@@ -96,12 +99,11 @@ class setWeather extends AsyncTask<Void, Void, Weather>
     protected Weather doInBackground(Void... params)
     {
         SharedPreferences prefs = h.getMyPreferences();
-        List<String> list = Arrays.asList(prefs.getString("Woeids", null).split("  "));
+        List<String> list = Arrays.asList(prefs.getString(PREF_KEY_WOEIDS, null).split("  "));
 
         String url="";
         String woeid="";
         Weather weather = new Weather();
-        HttpURLConnection yahooHttpConn = null;
 
         if(position>1)
         {
@@ -114,7 +116,7 @@ class setWeather extends AsyncTask<Void, Void, Weather>
             {
                 url = YahooClient.makeWeatherURL(woeid, UNIT_FAHRENHEIT);
             }
-            weather = YahooClient.getWeatherData(url, yahooHttpConn);
+            weather = YahooClient.getWeatherData(url);
         }
 
         return weather;
@@ -153,6 +155,8 @@ class setWeather extends AsyncTask<Void, Void, Weather>
             {
                 tv_city.setText(weather.location.getCity());
             }
+
+
             tv_temp.setText(weather.condition.getTemp() + weather.units.getTemperature());
             tv_hi_lo.setText("H " + Arrays.asList(weather.forecast.getHigh().split("  ")).get(0) + "  L " + Arrays.asList(weather.forecast.getLow().split("  ")).get(0));
             tv_condition.setText(weather.condition.getText());

@@ -28,85 +28,6 @@ public class OtherHelper {
         this.context = context;
     }
 
-
-    public void addWoeidToSharedPreferences(String woeid, Integer position)
-    {
-        SharedPreferences prefs = this.getMyPreferences();
-        String woeidString = prefs.getString(PREF_KEY_WOEIDS, null);
-
-        if(woeidString==null) // If woeids in prefrences equals null
-        {
-            prefs.edit().putString(PREF_KEY_WOEIDS, woeid + "  ").apply(); // Simply add woeid, without checking if it already exists
-        }
-        else
-        {
-            if(!woeidString.toLowerCase().contains(woeid.toLowerCase()))
-            {
-                if(position==null)
-                {
-                    woeidString = woeidString + woeid + "  ";
-                }
-
-                else
-                {
-                    if(woeidString==null || woeidString=="")
-                    {
-                        woeidString="";
-                    }
-                    woeidString = woeid + "  " + woeidString;
-                }
-
-            }
-
-            prefs.edit().putString(PREF_KEY_WOEIDS, woeidString).apply();
-        }
-
-    }
-
-    public void addCityToSharaedPreferences(String city, Integer position, Boolean showToast)
-    {
-        SharedPreferences prefs = this.getMyPreferences();
-        String cityString = prefs.getString(PREF_KEY_CITIES, null);;
-
-        if(cityString==null)
-        {
-            prefs.edit().putString(PREF_KEY_CITIES, city + "  ").apply();
-        }
-
-        else
-        {
-            if(!cityString.contains(city))
-            {
-
-                if(position==null)
-                {
-                    cityString = cityString + city + "  ";
-                }
-
-                else
-                {
-                    if(cityString==null || cityString=="")
-                    {
-                        cityString="";
-                    }
-                    cityString = city + "  " + cityString;
-                }
-
-                Toast.makeText(context, "Added", Toast.LENGTH_SHORT).show();
-
-            }
-            else
-            {
-                if(showToast && cityString.contains(city))
-                {
-                    Toast.makeText(context, "Already added " + city, Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            prefs.edit().putString(PREF_KEY_CITIES, cityString).apply();
-        }
-    }
-
     public void addDataToSharedPreferences(String woeid, String city, Boolean callFromSearch)
     {
         SharedPreferences prefs = this.getMyPreferences();
@@ -129,20 +50,28 @@ public class OtherHelper {
                 {
                     cityString = cityString + city + "  ";
                     woeidString = woeidString + woeid + "  ";
+
+                    Toast.makeText(context, "Added", Toast.LENGTH_SHORT).show();
                 }
 
                 else
                 {
-                    if(woeidString==null || woeidString=="" || cityString==null || cityString=="")
+                    /*if(woeidString==null || woeidString=="" || cityString==null || cityString=="")
                     {
                         woeidString="";
                         cityString="";
                     }
-                    woeidString = woeid + "  " + woeidString;
-                    cityString = city + "  " + cityString;
-                }
 
-                Toast.makeText(context, "Added", Toast.LENGTH_SHORT).show();
+                    woeidString = woeid + "  " + woeidString;
+                    cityString = city + "  " + cityString;*/
+                    List<String> woeids = Arrays.asList(woeidString.split("  "));
+                    List<String> cities = Arrays.asList(cityString.split("  "));
+                    woeids.set(0, woeid);
+                    cities.set(0, city);
+
+                    woeidString = woeids.toString();
+                    cityString  = cities.toString();
+                }
             }
 
             else
