@@ -60,6 +60,7 @@
                     android:textSize="@dimen/font_35"
                     android:textColor="@color/white"
                     android:layout_marginTop="@dimen/size_20"
+                    android:gravity="center"
                     android:layout_centerHorizontal="true" />
 
                 <TextView
