@@ -59,7 +59,7 @@
                     android:id="@+id/tv_condition"
                     android:textSize="@dimen/font_35"
                     android:textColor="@color/white"
-                    android:layout_marginTop="@dimen/size_20"
+                    android:layout_marginTop="@dimen/size_10"
                     android:gravity="center"
                     android:layout_centerHorizontal="true" />
 

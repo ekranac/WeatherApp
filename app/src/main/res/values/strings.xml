@@ -36,4 +36,5 @@
     <string name="author_signature">Made by Ziga Besal</string>
     <string name="contact_ziga"><b>Ziga (Software developer): besal.ziga@gmail.com</b> \n</string>
     <string name="contact_zak"><b>Zak (Lead Designer): zak.teki@gmail.com</b></string>
+    <string name="no_connection">No connection :(</string>
 </resources>

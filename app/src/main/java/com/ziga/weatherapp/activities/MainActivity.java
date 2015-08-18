@@ -51,13 +51,20 @@ public class MainActivity extends ActionBarActivity implements GoogleApiClient.C
             buildGoogleApiClient();
             mGoogleApiClient.connect();
         }
+        else
+        {
+            setContentView(R.layout.layout_no_connection);
+        }
     }
 
     @Override
     public void onPause()
     {
         super.onPause();
-        mGoogleApiClient.disconnect();
+        if(mGoogleApiClient!=null)
+        {
+            mGoogleApiClient.disconnect();
+        }
     }
 
     private boolean checkGooglePlayServices()
@@ -127,6 +134,8 @@ public class MainActivity extends ActionBarActivity implements GoogleApiClient.C
 
             // Sets the fragment @ index 2 onCreate
             mViewPager.setCurrentItem(2);
+
+            mGoogleApiClient.disconnect();
         }
 
     }

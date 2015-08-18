@@ -3,7 +3,6 @@ package com.ziga.weatherapp.helpers;
 import android.app.Activity;
 import android.content.Context;
 import android.location.Location;
-import android.location.LocationManager;
 import android.util.Log;
 
 import org.xmlpull.v1.XmlPullParser;
@@ -20,11 +19,11 @@ import com.ziga.weatherapp.models.Weather;
 
 public class YahooClient {
 
-    public static String YAHOO_GEO_URL = "http://where.yahooapis.com/v1";
-    public static String YAHOO_WEATHER_URL = "http://weather.yahooapis.com/forecastrss";
-    public static String YAHOO_CURRENT_LOCATION_URL = "http://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20geo.placefinder%20where%20text%3D%22";
+    public static final String YAHOO_GEO_URL = "http://where.yahooapis.com/v1";
+    public static final String YAHOO_WEATHER_URL = "http://weather.yahooapis.com/forecastrss";
+    public static final String YAHOO_CURRENT_LOCATION_URL = "http://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20geo.placefinder%20where%20text%3D%22";
 
-    private static String APPID = "7655292f7edf8406f7c080d64baa1c43910976c0--";
+    private static final String APP_ID = "7655292f7edf8406f7c080d64baa1c43910976c0--";
 
     public static List<CityResult> getCityList(String cityName) {
         List<CityResult> result = new ArrayList<CityResult>();
@@ -177,11 +176,11 @@ public class YahooClient {
         return weather;
     }
 
-    private static String makeQueryCityURL(String cityName) {
-        // We remove spaces in cityName
-        cityName = cityName.replaceAll(" ", "%20");
-        return YAHOO_GEO_URL + "/places.q(" + cityName + "%2A);count=" + 10 + "?appid=" + APPID; // 10- number of results
-    }
+        private static String makeQueryCityURL(String cityName) {
+            // We remove spaces in cityName
+            cityName = cityName.replaceAll(" ", "%20");
+            return YAHOO_GEO_URL + "/places.q(" + cityName + "%2A);count=" + 10 + "?appid=" + APP_ID; // 10- number of results
+        }
 
     public static String makeWeatherURL(String woeid, String unit) {
         return  YAHOO_WEATHER_URL + "?w=" + woeid + "&u=" + unit;

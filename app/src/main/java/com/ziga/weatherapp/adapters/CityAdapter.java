@@ -90,7 +90,6 @@ public class CityAdapter extends ArrayAdapter<CityResult> implements Filterable 
     public Filter getFilter() {
         Filter cityFilter = new Filter() {
 
-
             @Override
             protected FilterResults performFiltering(CharSequence constraint) {
                 FilterResults results = new Filter.FilterResults();
