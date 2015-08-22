@@ -47,7 +47,6 @@ public class OtherHelper {
         {
             if(!cityString.toLowerCase().contains(city.toLowerCase()) || !woeidString.toLowerCase().contains(woeid.toLowerCase()))
             {
-
                 if(callFromSearch)
                 {
                     cityString = cityString + city + "  ";

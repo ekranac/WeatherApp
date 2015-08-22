@@ -10,9 +10,10 @@
     <string name="about_text">
         First of all, thanks for downloading mWeather! I truly hope you like it and find it easy to use, but if you run into any problems or if you wish to criticize/ express your opinion, feel free to send me an email which you can find below. Your feedback means a lot to me and gives me the guidelines on what I should change and update.
         \n
+        \n
         I set mWeather as a challenge to myself since I was pretty new with Android development, I did some other, more simple apps, but nothing like this before. I had no plan, no idea how I was going to do anything, all I knew was that I wanted a cool, simple weather app that me and others would love to use. So this is it- my first attempt to do just that.
         \n
-        mWeather is open source.
+        mWeather is open source, you can <a href="https://github.com/ekranac/WeatherApp">find it on GitHub</a>.
     </string>
 
     <string name="about_credits">

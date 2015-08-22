@@ -35,7 +35,10 @@ public class AboutActivity extends AppCompatActivity
         final TextView tv_unit = (TextView) findViewById(R.id.tv_unit);
 
         TextView tv_credits = (TextView) findViewById(R.id.about_credits);
+        TextView aboutText = (TextView) findViewById(R.id.about_text);
+
         tv_credits.setMovementMethod(LinkMovementMethod.getInstance());
+        aboutText.setMovementMethod(LinkMovementMethod.getInstance());
 
 
 
