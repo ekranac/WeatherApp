@@ -55,13 +55,13 @@ public class YahooClient {
                 else if (event == XmlPullParser.TEXT) {
                     // We found some text. let's see the tagName to know the tag related to the text
                     if ("woeid".equals(currentTag))
-                        cty.setWoeid(parser.getText());
+                        cty.setWoeid(parser.getText().replace("[", "").replace("]", ""));
                     else if ("name".equals(currentTag))
-                        cty.setCityName(parser.getText());
+                        cty.setCityName(parser.getText().replace("[", "").replace("]", ""));
                     else if ("country".equals(currentTag))
-                        cty.setCountry(parser.getText());
+                        cty.setCountry(parser.getText().replace("[", "").replace("]", ""));
                     else if ("admin1".equals(currentTag))
-                        cty.setRegion(parser.getText());
+                        cty.setRegion(parser.getText().replace("[", "").replace("]", ""));
 
                     // We don't want to analyze other tag at the moment
                 }
@@ -183,7 +183,7 @@ public class YahooClient {
         }
 
     public static String makeWeatherURL(String woeid, String unit) {
-        return  YAHOO_WEATHER_URL + "?w=" + woeid + "&u=" + unit;
+        return  YAHOO_WEATHER_URL + "?w=" + woeid.replace("[", "").replace("]", "") + "&u=" + unit;
     }
 
     public static String makeCurrentLocationURL(String lat, String lon)
@@ -226,11 +226,11 @@ public class YahooClient {
                 {
                     if("woeid".equals(currentTag)) // If tag is woeid
                     {
-                        woeid = parser.getText();
+                        woeid = parser.getText().replace("[", "").replace("]", "");
                     }
                     else if("city".equals(currentTag))
                     {
-                        city = parser.getText();
+                        city = parser.getText().replace("[", "").replace("]", "");
                     }
                 }
                 event = parser.next();

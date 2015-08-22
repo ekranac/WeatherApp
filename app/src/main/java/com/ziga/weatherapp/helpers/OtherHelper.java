@@ -30,6 +30,8 @@ public class OtherHelper {
 
     public void addDataToSharedPreferences(String woeid, String city, Boolean callFromSearch)
     {
+        woeid = woeid.replace("[", "").replace("]", "");
+        city = city.replace("[", "").replace("]", "");
         SharedPreferences prefs = this.getMyPreferences();
 
         String woeidString = prefs.getString(PREF_KEY_WOEIDS, null);
@@ -49,7 +51,7 @@ public class OtherHelper {
                 if(callFromSearch)
                 {
                     cityString = cityString + city + "  ";
-                    woeidString = woeidString + woeid + "  ";
+                    woeidString = woeidString +  woeid + "  ";
 
                     Toast.makeText(context, "Added", Toast.LENGTH_SHORT).show();
                 }
@@ -69,8 +71,14 @@ public class OtherHelper {
                     woeids.set(0, woeid);
                     cities.set(0, city);
 
-                    woeidString = woeids.toString();
-                    cityString  = cities.toString();
+                    woeidString = woeids.get(0);
+                    cityString = cities.get(0);
+
+                    for(int i = 0; i < woeids.size(); i++)
+                    {
+                        woeidString = woeidString + "  " + woeids.get(i);
+                        cityString = cityString + "  " + cities.get(i);
+                    }
                 }
             }
 

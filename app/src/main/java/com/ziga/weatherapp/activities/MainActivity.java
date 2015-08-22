@@ -1,5 +1,6 @@
 package com.ziga.weatherapp.activities;
 
+import android.content.Intent;
 import android.location.Location;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -7,7 +8,10 @@ import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 
 import com.ziga.weatherapp.R;
 import com.google.android.gms.common.ConnectionResult;
@@ -20,7 +24,7 @@ import com.ziga.weatherapp.adapters.SectionsPagerAdapter;
 import com.ziga.weatherapp.helpers.YahooClient;
 
 
-public class MainActivity extends ActionBarActivity implements GoogleApiClient.ConnectionCallbacks,
+public class MainActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
         com.google.android.gms.location.LocationListener
 
@@ -54,6 +58,15 @@ public class MainActivity extends ActionBarActivity implements GoogleApiClient.C
         else
         {
             setContentView(R.layout.layout_no_connection);
+            Button refreshButton = (Button) findViewById(R.id.refresh_btn);
+            refreshButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = getIntent();
+                    finish();
+                    startActivity(intent);
+                }
+            });
         }
     }
 

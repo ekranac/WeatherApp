@@ -7,6 +7,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -108,6 +109,10 @@ class setWeather extends AsyncTask<Void, Void, Weather>
         if(position>1)
         {
             woeid = list.get(position - 2);
+            if(woeid.contains("[") || woeid.contains("]"))
+            {
+                woeid = woeid.replace("[", "").replace("]", "");
+            }
             if(!isFahrenheit)
             {
                 url = YahooClient.makeWeatherURL(woeid, UNIT_CELSIUS);

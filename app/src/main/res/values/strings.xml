@@ -33,8 +33,6 @@
         Icon \'Moon phase outline\' made by <a href="http://RamiMcM.in">Rami McMin</a>
         \n \n \n \n \n \n \n \n \n
     </string>
-    <string name="author_signature">Made by Ziga Besal</string>
-    <string name="contact_ziga"><b>Ziga (Software developer): besal.ziga@gmail.com</b> \n</string>
-    <string name="contact_zak"><b>Zak (Lead Designer): zak.teki@gmail.com</b></string>
     <string name="no_connection">No connection :(</string>
+    <string name="refresh_btn">Refresh</string>
 </resources>

@@ -8,6 +8,20 @@
         android:textSize="@dimen/font_35"
         android:gravity="center"
         android:layout_centerInParent="true"
-        android:text="@string/no_connection"/>
+        android:text="@string/no_connection"
+        android:id="@+id/no_connection_tv"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/size_20"
+        android:text="@string/refresh_btn"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/size_10"
+        android:layout_below="@id/no_connection_tv"
+        android:background="@color/clear_blue"
+        android:textColor="@color/white"
+        android:textSize="@dimen/font_20"
+        android:id="@+id/refresh_btn"/>
 
 </RelativeLayout>
