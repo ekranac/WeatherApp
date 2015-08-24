@@ -17,11 +17,11 @@ import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 
 import com.ziga.weatherapp.R;
-import com.nvanbenschoten.motion.ParallaxImageView;
 
 import com.ziga.weatherapp.activities.AboutActivity;
 import com.ziga.weatherapp.adapters.CityAdapter;
@@ -44,13 +44,11 @@ public class SearchFragment extends Fragment {
 
         FrameLayout mainLayout = (FrameLayout) rootView.findViewById(R.id.search_layout);
         RelativeLayout about_btn = (RelativeLayout) rootView.findViewById(R.id.about_btn);
-        ParallaxImageView globe = (ParallaxImageView) rootView.findViewById(R.id.globe_icon);
+        ImageView globe = (ImageView) rootView.findViewById(R.id.globe_icon);
 
         final AutoCompleteTextView searchView = (AutoCompleteTextView) rootView.findViewById(R.id.city_search);
         final OtherHelper helper = new OtherHelper(getActivity().getBaseContext());
         final Button btn_clearSearch = (Button) rootView.findViewById(R.id.btn_clear_search);
-
-        globe.registerSensorManager();
 
         mainLayout.requestFocus(); // Just so the clearFocus() on searchView works, because the method always sets focus back to the initially focused view in activity- to layout in this case
 
@@ -134,14 +132,6 @@ public class SearchFragment extends Fragment {
         background.setAlpha(80);
 
         return rootView;
-    }
-
-    @Override
-    public void onPause()
-    {
-        super.onPause();
-        ParallaxImageView globe = (ParallaxImageView) getActivity().findViewById(R.id.globe_icon);
-        globe.unregisterSensorManager();
     }
 
 }

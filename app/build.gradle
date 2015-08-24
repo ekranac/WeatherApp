@@ -23,5 +23,4 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:22.2.0'
     compile 'com.google.android.gms:play-services:7.5.0'
-    compile 'com.nvanbenschoten.motion:library:1.1.0'
 }
