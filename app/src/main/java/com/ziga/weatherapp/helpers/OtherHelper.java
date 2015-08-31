@@ -57,14 +57,6 @@ public class OtherHelper {
 
                 else
                 {
-                    /*if(woeidString==null || woeidString=="" || cityString==null || cityString=="")
-                    {
-                        woeidString="";
-                        cityString="";
-                    }
-
-                    woeidString = woeid + "  " + woeidString;
-                    cityString = city + "  " + cityString;*/
                     List<String> woeids = Arrays.asList(woeidString.split("  "));
                     List<String> cities = Arrays.asList(cityString.split("  "));
                     woeids.set(0, woeid);
@@ -73,11 +65,15 @@ public class OtherHelper {
                     woeidString = woeids.get(0);
                     cityString = cities.get(0);
 
-                    for(int i = 0; i < woeids.size(); i++)
+                    if(woeids.size() > 1)
                     {
-                        woeidString = woeidString + "  " + woeids.get(i);
-                        cityString = cityString + "  " + cities.get(i);
+                        for(int i = 1; i < woeids.size(); i++)
+                        {
+                            woeidString = woeidString + "  " + woeids.get(i);
+                            cityString = cityString + "  " + cities.get(i);
+                        }
                     }
+
                 }
             }
 

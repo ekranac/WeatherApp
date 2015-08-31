@@ -12,19 +12,16 @@ import android.os.Bundle;
 import android.os.StrictMode;
 import android.provider.Settings;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
-import com.ziga.weatherapp.R;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
-
+import com.ziga.weatherapp.R;
 import com.ziga.weatherapp.adapters.SectionsPagerAdapter;
 import com.ziga.weatherapp.helpers.YahooClient;
 
@@ -47,6 +44,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.layout_loading);
         if(getSupportActionBar()!=null)
         {
             getSupportActionBar().hide();
@@ -200,7 +198,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
             // notify user
             AlertDialog.Builder dialog = new AlertDialog.Builder(this);
             dialog.setMessage("Location services seem to be disabled :(");
-            dialog.setPositiveButton("Open location services", new DialogInterface.OnClickListener() {
+            dialog.setPositiveButton("Enable location services", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface paramDialogInterface, int paramInt) {
                     Intent myIntent = new Intent( Settings.ACTION_LOCATION_SOURCE_SETTINGS);
